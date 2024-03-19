@@ -2,6 +2,7 @@ package com.travel.vietnamtravel.service;
 
 import com.travel.vietnamtravel.dto.user.sdi.UserRegisterSdi;
 import com.travel.vietnamtravel.entity.User;
+import com.travel.vietnamtravel.entity.UserInfo;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,12 @@ public class UserServiceImp {
             throw new CustomException("Error: Email is already taken!");
         }
 
-        User user = User.builder().username(req.getUsername())
+        User user = User.builder()
                 .password(encoder.encode(req.getPassword()))
                 .email(req.getEmail())
-//                .createTime(LocalDateTime.now())
                 .build();
         user = userRepository.save(user);
+        UserInfo userInfo = UserInfo.builder().userId(user.getId()).build();
         return user;
     }
 
