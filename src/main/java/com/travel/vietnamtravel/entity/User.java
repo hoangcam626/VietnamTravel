@@ -28,7 +28,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "")
-    private LocalDateTime createTime;
+    @Column(name = "avatar_id")
+    private Long avatarImageID;
 //    private int level;
 }

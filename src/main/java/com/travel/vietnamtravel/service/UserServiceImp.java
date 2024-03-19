@@ -24,7 +24,7 @@ public class UserServiceImp {
         User user = User.builder().username(req.getUsername())
                 .password(encoder.encode(req.getPassword()))
                 .email(req.getEmail())
-                .createTime(LocalDateTime.now())
+//                .createTime(LocalDateTime.now())
                 .build();
         user = userRepository.save(user);
         return user;
