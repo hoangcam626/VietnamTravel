@@ -32,7 +32,7 @@ public class UserInfoService {
     }
 
     public UserInfoSdo setAvatar(Long userId, MultipartFile image){
-        Long avatarId = imageService.saveUploadedFile(image);
+        Long avatarId = imageService.uploadFile(image);
         UserInfo userInfo = userInfoRepository.findByUserId(userId);
         userInfo.setAvatarId(avatarId);
         return new UserInfoSdo(userInfo);

@@ -15,13 +15,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class ImageServiceImp implements ImageService{
+public class ImageServiceImp implements ImageService {
     private final ImageRepository imageRepository;
 
     @Value("${media.img_path}")
@@ -47,18 +48,18 @@ public class ImageServiceImp implements ImageService{
         return path;
     }
 
-    public Long saveUploadedFile(MultipartFile file) {
+    public Long uploadFile(MultipartFile req) {
 
-        if (file.isEmpty()) {
+        if (req.isEmpty()) {
             throw new CustomException("Error: File is empty, cannot save!!");
         }
 
-        String contentType = file.getContentType();
+        String contentType = req.getContentType();
         if (!ACCEPTED_CONTENT_TYPES.contains(contentType)) {
             throw new CustomException("Error: Invalid file type, cannot save!!");
         }
 
-        if (file.getSize() > MAX_FILE_SIZE) {
+        if (req.getSize() > MAX_FILE_SIZE) {
             throw new CustomException("Error: File size exceeds the allowed limit, cannot save!!");
         }
 
@@ -73,11 +74,11 @@ public class ImageServiceImp implements ImageService{
 
             Random rand = new Random();
             int ranNum = rand.nextInt();
-            String fileName = file.getName() + ranNum + getFileExtension(file.getOriginalFilename());
+            String fileName = req.getName() + ranNum + getFileExtension(req.getOriginalFilename());
             Path filePath = Paths.get(dir.getAbsolutePath(), fileName);
 
             try (OutputStream outputStream = new FileOutputStream(filePath.toFile())) {
-                outputStream.write(file.getBytes());
+                outputStream.write(req.getBytes());
             }
 
             Image image = new Image();
@@ -90,10 +91,18 @@ public class ImageServiceImp implements ImageService{
         }
     }
 
+    public List<Long> uploadFiles(MultipartFile[] reqs){
+        List<Long> imagesId = new ArrayList<>();
+        Arrays.stream(reqs).forEach(file -> {
+            imagesId.add(uploadFile(file));
+        });
+        return imagesId;
+    }
+
     public void deleteImage(Long id) {
 
         Image image = imageRepository.findById(id)
-                .orElseThrow(()-> new CustomException("Error: no image"));
+                .orElseThrow(() -> new CustomException("Error: no image"));
         try {
             Path filePath = Paths.get(imgFolder, image.getFilename());
             File file = filePath.toFile();
