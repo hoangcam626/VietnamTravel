@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import static com.travel.vietnamtravel.constant.Error.*;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImp {
@@ -19,15 +21,17 @@ public class UserServiceImp {
 
     public User saveUser(UserRegisterSdi req) {
         if (userRepository.existsByEmail(req.getEmail())) {
-            throw new CustomException("Error: Email is already taken!");
+            throw new CustomException(ERROR_EXIT_EMAIL);
         }
-
+        String username = req.getEmail().split("@")[0];
         User user = User.builder()
+                .username(username)
                 .password(encoder.encode(req.getPassword()))
                 .email(req.getEmail())
                 .build();
         user = userRepository.save(user);
-        UserInfo userInfo = UserInfo.builder().userId(user.getId()).build();
+
+
         return user;
     }
 
@@ -64,7 +68,7 @@ public class UserServiceImp {
     public void updatePassword(String prePassword, String password, Long userId) {
         User user = this.getUser(userId);
         if (!encoder.matches(prePassword, user.getPassword())) {
-            throw new CustomException("Old password is not collect.");
+            throw new CustomException(ERROR_OLD_PASSWORD);
         }
         user.setPassword(encoder.encode(password));
         userRepository.save(user);

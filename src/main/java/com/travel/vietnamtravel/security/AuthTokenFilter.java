@@ -15,6 +15,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static com.travel.vietnamtravel.constant.Error.*;
+
 public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
@@ -41,7 +43,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            new CustomException("Cannot set user authentication: {}");
+            throw new CustomException(ERROR_SET_AUTHENTICATION);
         }
 
         filterChain.doFilter(request, response);

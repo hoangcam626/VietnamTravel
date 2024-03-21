@@ -39,6 +39,6 @@ public class Place {
     @OneToMany
     private Set<Image> images= new HashSet<>();
 
-    @ManyToMany(mappedBy = "likedPlaces")
-    private Set<Schedule> inSchedules;
+//    @ManyToMany(mappedBy = "likedPlaces")
+//    private Set<Schedule> inSchedules;
 }

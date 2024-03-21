@@ -21,6 +21,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static com.travel.vietnamtravel.constant.Error.ERROR_OPEN_IMAGE;
+
 @Controller
 @RequiredArgsConstructor
 public class ImageController {
@@ -35,7 +37,7 @@ public class ImageController {
         return ResponseEntity.ok( "Success: "+imgId);
     }
     @PostMapping("/api/v1/image/upload-images")
-    public ResponseEntity<List<Long>> uploadImages(@RequestParam("reqs") MultipartFile[] reqs)throws IOException {
+    public ResponseEntity<List<Long>> uploadImages(@RequestParam("reqs") MultipartFile[] reqs) {
 
         return ResponseEntity.ok(imageService.uploadFiles(reqs) );
     }
@@ -51,7 +53,7 @@ public class ImageController {
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.valueOf(media.getType()).toString())
                     .body(resource);
         } else {
-            throw new CustomException("Error: can open image");
+            throw new CustomException(ERROR_OPEN_IMAGE);
         }
     }
 }

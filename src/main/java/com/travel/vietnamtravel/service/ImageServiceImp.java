@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static com.travel.vietnamtravel.constant.Error.*;
+
 @Service
 @RequiredArgsConstructor
 public class ImageServiceImp implements ImageService {
@@ -51,16 +53,16 @@ public class ImageServiceImp implements ImageService {
     public Long uploadFile(MultipartFile req) {
 
         if (req.isEmpty()) {
-            throw new CustomException("Error: File is empty, cannot save!!");
+            throw new CustomException(ERROR_EMPTY_FILE);
         }
 
         String contentType = req.getContentType();
         if (!ACCEPTED_CONTENT_TYPES.contains(contentType)) {
-            throw new CustomException("Error: Invalid file type, cannot save!!");
+            throw new CustomException(ERROR_TYPE_FILE );
         }
 
         if (req.getSize() > MAX_FILE_SIZE) {
-            throw new CustomException("Error: File size exceeds the allowed limit, cannot save!!");
+            throw new CustomException(ERROR_LIMIT_SIZE_FILE);
         }
 
         try {
@@ -68,7 +70,7 @@ public class ImageServiceImp implements ImageService {
             if (!dir.exists()) {
                 boolean created = dir.mkdirs();
                 if (!created) {
-                    throw new CustomException("Error: Failed to create directory.");
+                    throw new CustomException(ERROR_DIRECTORY_FILE);
                 }
             }
 
@@ -87,7 +89,7 @@ public class ImageServiceImp implements ImageService {
             image = imageRepository.save(image);
             return image.getId();
         } catch (IOException e) {
-            throw new CustomException("Error: Failed to save file.");
+            throw new CustomException(ERROR_SAVE_FILE);
         }
     }
 
@@ -102,20 +104,20 @@ public class ImageServiceImp implements ImageService {
     public void deleteImage(Long id) {
 
         Image image = imageRepository.findById(id)
-                .orElseThrow(() -> new CustomException("Error: no image"));
+                .orElseThrow(() -> new CustomException(ERROR_FIND_IMAGE));
         try {
             Path filePath = Paths.get(imgFolder, image.getFilename());
             File file = filePath.toFile();
             if (file.exists()) {
                 boolean deleted = file.delete();
                 if (!deleted) {
-                    throw new CustomException("Error: Failed to delete file from storage.");
+                    throw new CustomException(ERROR_DELETE_IMAGE);
                 }
             } else {
-                throw new CustomException("Error: File not found in storage.");
+                throw new CustomException(ERROR_NOT_FOUND_IMAGE);
             }
         } catch (Exception e) {
-            throw new CustomException("Error: Failed to delete file from storage.");
+            throw new CustomException(ERROR_DELETE_IMAGE);
         }
         imageRepository.deleteById(id);
 

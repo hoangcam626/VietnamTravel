@@ -2,8 +2,11 @@ package com.travel.vietnamtravel.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.travel.vietnamtravel.entity.User;
+import com.travel.vietnamtravel.entity.UserInfo;
+import com.travel.vietnamtravel.repository.UserInfoRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,12 +28,14 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     public static UserDetailsImpl build(User user) {
+
 
         return new UserDetailsImpl(
                 user.getId(),
