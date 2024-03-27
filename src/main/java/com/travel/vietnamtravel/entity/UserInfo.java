@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,11 +14,11 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "user_info")
-public class UserInfo {
+public class UserInfo extends AbstractAudit{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 
     @Column(name = "user_id")
     private Long userId;
@@ -39,4 +40,10 @@ public class UserInfo {
 
     @Column(name = "level")
     private int level;
+
+//    @Column(name = "created_at")
+//    private LocalDateTime createAt;
+//
+//    @Column(name = "updated_at")
+//    private LocalDateTime updatedAt;
 }

@@ -1,6 +1,5 @@
 package com.travel.vietnamtravel.dto.user.sdo;
 
-import com.travel.vietnamtravel.entity.User;
 import lombok.Data;
 
 @Data

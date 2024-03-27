@@ -1,13 +1,14 @@
 package com.travel.vietnamtravel.entity;
 
+import com.travel.vietnamtravel.entity.media.Image;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,13 +17,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review extends AbstractAudit{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 
-    @Column(name = "user_id")
+    @Column(name = "createBy")
     private Long userId;
 
     @Column(name = "place_id")
@@ -34,9 +35,12 @@ public class Review {
     @Column(name = "description")
     private String description;
 
-//    @Column(name = "likes")
-//    private int likes;
-
     @OneToMany
-    private Set<Image> images = new HashSet<>();
+    private List<Image> images = new ArrayList<>();
+
+//    @Column(name = "created_at")
+//    private LocalDateTime createAt;
+//
+//    @Column(name = "updated_at")
+//    private LocalDateTime updatedAt;
 }

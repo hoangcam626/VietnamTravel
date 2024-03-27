@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
-public class User {
+public class User extends AbstractAudit{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 
     @Column(name = "username")
     private String username;
@@ -27,4 +27,10 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+//    @Column(name = "created_at")
+//    private LocalDateTime createAt;
+//
+//    @Column(name = "updated_at")
+//    private LocalDateTime updatedAt;
 }

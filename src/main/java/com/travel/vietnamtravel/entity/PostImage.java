@@ -10,14 +10,14 @@ import lombok.*;
 @Builder
 @Table
 @Entity
-public class PostImage {
+public class PostImage extends AbstractAudit{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 
-    @Column(name = "owner_id")
-    private Long ownerId;
+    @Column(name = "created_by")
+    private Long createdBy;
 
     @Column(name = "image_id")
     private Long imageId;
