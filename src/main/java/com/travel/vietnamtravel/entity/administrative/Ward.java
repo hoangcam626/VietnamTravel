@@ -1,16 +1,19 @@
-package com.travel.vietnamtravel.entity;
+package com.travel.vietnamtravel.entity.administrative;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@Builder
+
 @Entity
-@Table(name = "districts")
-public class District {
+@Table(name = "wards")
+public class Ward {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +37,9 @@ public class District {
     @Column(name = "code_name")
     private String codeName;
 
-    @Column(name = "province_code")
-    private String provinceCode;
+    @Column(name = "district_code ")
+    private String districtCode;
 
-    @Column(name = "administrative_unit_id ")
+    @Column(name = "administrative_unit_id")
     private Long administrativeUnitId;
 }

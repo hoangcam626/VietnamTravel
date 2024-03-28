@@ -1,5 +1,4 @@
-package com.travel.vietnamtravel.entity;
-
+package com.travel.vietnamtravel.entity.administrative;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,25 +13,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-
 @Entity
-@Table(name = "administrative_units")
-public class AdministrativeUnit {
+@Table(name = "administrative_regions")
+public class AdministrativeRegions {
 
     @Id
     private Long id;
 
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "full_name_en")
-    private String fullNameEn;
-
-    @Column(name = "short_name")
-    private String shortName;
-
-    @Column(name = "short_name_en")
-    private String shortNameEn;
+    @Column(name = "name_en")
+    private String nameEn;
 
     @Column(name = "code_name")
     private String code;
