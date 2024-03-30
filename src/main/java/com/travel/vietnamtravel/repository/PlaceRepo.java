@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PlaceRepo extends JpaRepository<Place, Long> {
-    List<Place> findAllByProvinceId(Long provinceId);
-    List<Place> findAllByDistrictId(Long districtId);
-    List<Place> findAllByWardId(Long wardId);
+    List<Place> findAllByProvinceCode(String provinceCode);
+    List<Place> findAllByDistrictCode(String districtCode);
+    List<Place> findAllByWardCode(String wardCod);
 }

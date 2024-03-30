@@ -1,5 +1,6 @@
-package com.travel.vietnamtravel.entity;
+package com.travel.vietnamtravel.entity.relationship;
 
+import com.travel.vietnamtravel.entity.AbstractAudit;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "liked_place")
-public class LikePlace extends AbstractAudit{
+public class LikePlace extends AbstractAudit {
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,8 @@
-package com.travel.vietnamtravel.entity;
+package com.travel.vietnamtravel.entity.relationship;
 
+import com.travel.vietnamtravel.entity.AbstractAudit;
+import com.travel.vietnamtravel.entity.Place;
+import com.travel.vietnamtravel.entity.ScheduleTrip;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +17,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "place_schudule")
 
-public class PlaceSchedule extends AbstractAudit{
+public class PlaceSchedule extends AbstractAudit {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
@@ -32,4 +35,6 @@ public class PlaceSchedule extends AbstractAudit{
 
     @Column(name = "description")
     private String description;
+
+    private Boolean isComplete ;
 }

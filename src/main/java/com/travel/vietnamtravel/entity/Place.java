@@ -24,11 +24,11 @@ public class Place extends AbstractAudit{
     @Column(name = "name")
     private String name;
 
-    @Column(name = "province_Code")
+    @Column(name = "province_code")
     private String provinceCode;
 
     @Column(name = "district_code")
-    private String districtId;
+    private String districtCode;
 
     @Column(name = "ward_code")
     private String wardCode;
@@ -36,6 +36,6 @@ public class Place extends AbstractAudit{
     @Column(name = "description")
     private String description;
 
-    @OneToMany
-    private Set<Image> images= new HashSet<>();
+    @Column(name = "typical_image_id")
+    private Long imageId;
 }

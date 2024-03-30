@@ -1,6 +1,6 @@
 package com.travel.vietnamtravel.repository;
 
-import com.travel.vietnamtravel.entity.LikePlace;
+import com.travel.vietnamtravel.entity.relationship.LikePlace;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

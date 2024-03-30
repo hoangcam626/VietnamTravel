@@ -10,7 +10,7 @@ import com.travel.vietnamtravel.dto.review.sdi.ReviewSelfSdi;
 import com.travel.vietnamtravel.dto.review.sdo.ReviewSelfSdo;
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
-import com.travel.vietnamtravel.entity.LikeReview;
+import com.travel.vietnamtravel.entity.relationship.LikeReview;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikeReviewRepo;
 import com.travel.vietnamtravel.service.LikedReviewService;

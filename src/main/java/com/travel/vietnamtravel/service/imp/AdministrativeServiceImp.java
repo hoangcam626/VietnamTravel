@@ -18,6 +18,7 @@ import com.travel.vietnamtravel.dto.administrative.wards.sdo.WardShortSelfSdo;
 import com.travel.vietnamtravel.entity.administrative.*;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.*;
+import com.travel.vietnamtravel.service.AdministrativeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 
 @Service
 @RequiredArgsConstructor
-public class AdministrativeServiceImp {
+public class AdministrativeServiceImp implements AdministrativeService {
 
     private final AdministrativeRegionRepo administrativeRegionRepo;
     private final AdministrativeUnitRepo administrativeUnitRepo;
