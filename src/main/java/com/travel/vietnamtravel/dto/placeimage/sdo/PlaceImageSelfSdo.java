@@ -5,6 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class PlaceImageDeleteSdo {
-    private Boolean success;
+public class PlaceImageSelfSdo {
+    private Long id;
+    private long placeId;
+    private Long imageId;
 }

@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class PlaceImageUpdateSdi {
-    private Long id;
+public class PlaceJoinImageSdi {
     private Long placeId;
 }

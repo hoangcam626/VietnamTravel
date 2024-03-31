@@ -42,9 +42,9 @@ public class LikedPlaceServiceImp {
 
     public LikePlaceDeleteSdo unlike(LikePlaceDeleteSdi req) {
 
-        if (likePlaceRepo.existsByUserIDAndPlaceId(req.getLikedId(), req.getPlaceId())) {
+        if (likePlaceRepo.existsByUserIDAndPlaceId(req.getUserId(), req.getPlaceId())) {
 
-            LikePlace likePlace = likePlaceRepo.findByUserIDAndPlaceId(req.getLikedId(), req.getPlaceId());
+            LikePlace likePlace = likePlaceRepo.findByUserIDAndPlaceId(req.getUserId(), req.getPlaceId());
             likePlaceRepo.delete(likePlace);
 
             return LikePlaceDeleteSdo.of(Boolean.TRUE);

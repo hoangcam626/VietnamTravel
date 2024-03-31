@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class LikeReviewDeleteSdi {
     private Long id;
-    private Long likedBy;
+    private Long userId;
     private Long reviewId;
 }

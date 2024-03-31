@@ -13,5 +13,6 @@ public interface Error {
     String ERROR_OLD_PASSWORD = "Error: Old password is not collect.";
     String ERROR_SET_AUTHENTICATION = "Error: Cannot set user authentication: {}";
     String ERROR_NOT_EXIT = "Error: Not exit";
+    String ERROR_ALREADY_EXIT = "Error: Already exit.";
 
 }

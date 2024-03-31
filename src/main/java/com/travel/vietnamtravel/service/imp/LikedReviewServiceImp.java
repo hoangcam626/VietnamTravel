@@ -44,9 +44,9 @@ public class LikedReviewServiceImp implements LikedReviewService {
 
     public LikeReviewDeleteSdo unlike(LikeReviewDeleteSdi req) {
 
-        if (likedReviewRepository.existsByUserIDAndReviewId(req.getLikedBy(), req.getReviewId())) {
+        if (likedReviewRepository.existsByUserIDAndReviewId(req.getUserId(), req.getReviewId())) {
 
-            LikeReview likeReview = likedReviewRepository.findByUserIDAndReviewId(req.getLikedBy(), req.getReviewId());
+            LikeReview likeReview = likedReviewRepository.findByUserIDAndReviewId(req.getUserId(), req.getReviewId());
             likedReviewRepository.delete(likeReview);
 
             return LikeReviewDeleteSdo.of(Boolean.TRUE);
