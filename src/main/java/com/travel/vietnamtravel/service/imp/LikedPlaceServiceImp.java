@@ -75,10 +75,11 @@ public class LikedPlaceServiceImp {
         List<LikePlace> likePlaces = likePlaceRepo.findByUserID(req.getUserId());
         List<PlaceSelfSdo> res = new ArrayList<>();
 
-//        likePlaces.forEach(lr -> {
-//            ReviewSelfSdo reviewSelfSdo = reviewService.self(ReviewSelfSdi.of(lr.getReviewId()));
-//            res.add(reviewSelfSdo);
-//        });
+        likePlaces.forEach(lr -> {
+            PlaceSelfSdo placeSelfSdo = pl
+            Service.self(ReviewSelfSdi.of(lr.getReviewId()));
+            res.add(placeSelfSdo);
+        });
         return res;
     }
 }

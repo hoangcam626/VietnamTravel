@@ -1,12 +1,8 @@
 package com.travel.vietnamtravel.entity;
 
 
-import com.travel.vietnamtravel.entity.media.Image;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,9 +13,6 @@ import java.util.Set;
 @Entity
 @Table(name = "place")
 public class Place extends AbstractAudit{
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
 
     @Column(name = "name")
     private String name;

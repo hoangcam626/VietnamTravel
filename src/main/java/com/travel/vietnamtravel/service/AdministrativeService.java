@@ -15,7 +15,6 @@ import com.travel.vietnamtravel.dto.administrative.provinces.sdo.ProvinceShortSe
 import com.travel.vietnamtravel.dto.administrative.wards.sdi.WardSelfSdi;
 import com.travel.vietnamtravel.dto.administrative.wards.sdo.WardSelfSdo;
 import com.travel.vietnamtravel.dto.administrative.wards.sdo.WardShortSelfSdo;
-import com.travel.vietnamtravel.repository.WardRepo;
 import org.springframework.stereotype.Service;
 
 @Service
