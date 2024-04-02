@@ -1,10 +1,7 @@
 package com.travel.vietnamtravel.service;
 
 import com.travel.vietnamtravel.dto.comment.sdi.*;
-import com.travel.vietnamtravel.dto.comment.sdo.CommentCreateSdo;
-import com.travel.vietnamtravel.dto.comment.sdo.CommentDeleteSdo;
-import com.travel.vietnamtravel.dto.comment.sdo.CommentSelfSdo;
-import com.travel.vietnamtravel.dto.comment.sdo.CommentUpdateSdo;
+import com.travel.vietnamtravel.dto.comment.sdo.*;
 
 import java.util.List;
 
@@ -20,4 +17,6 @@ public interface CommentService {
     List<CommentSelfSdo> createBy(CommentJoinUserSdi req);
 
     List<CommentSelfSdo> commentInPost(CommentJoinPostSdi req);
+
+    List<CommentSelfSdo> subComments(CommentSelfSdi req);
 }

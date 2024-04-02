@@ -12,4 +12,6 @@ public interface CommentRepo extends JpaRepository<Comment, Long> {
 
     @Query("SELECT c.id FROM Comment c WHERE c.createdBy =: userId ORDER BY c.createdAt")
     List<Long> findByUserId(Long userId);
+    @Query("SELECT c.id FROM Comment c WHERE c.superCommentId =: superCommentId ORDER BY c.createdAt")
+    List<Long> findBySuperCommentId(Long superCommentId);
 }

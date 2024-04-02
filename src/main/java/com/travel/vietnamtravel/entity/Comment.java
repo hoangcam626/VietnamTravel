@@ -25,4 +25,7 @@ public class Comment extends AbstractAudit{
 
     @Column(name = "post_id")
     private Long postID;
+
+    @Column(name = "super_comment_id")
+    private Long superCommentId;
 }

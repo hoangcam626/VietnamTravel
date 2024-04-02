@@ -1,10 +1,7 @@
 package com.travel.vietnamtravel.service.imp;
 
 import com.travel.vietnamtravel.dto.comment.sdi.*;
-import com.travel.vietnamtravel.dto.comment.sdo.CommentCreateSdo;
-import com.travel.vietnamtravel.dto.comment.sdo.CommentDeleteSdo;
-import com.travel.vietnamtravel.dto.comment.sdo.CommentSelfSdo;
-import com.travel.vietnamtravel.dto.comment.sdo.CommentUpdateSdo;
+import com.travel.vietnamtravel.dto.comment.sdo.*;
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.entity.Comment;
 import com.travel.vietnamtravel.exception.CustomException;
@@ -38,7 +35,6 @@ public class CommentServiceImp implements CommentService {
         }
         commentRepo.save(comment);
         return CommentCreateSdo.of(comment.getId());
-
     }
 
     public CommentDeleteSdo delete(CommentDeleteSdi req) {
@@ -73,26 +69,33 @@ public class CommentServiceImp implements CommentService {
     public List<CommentSelfSdo> createBy(CommentJoinUserSdi req) {
         List<Long> commentsId = commentRepo.findByUserId(req.getUserId());
         List<CommentSelfSdo> res = new ArrayList<>();
-        commentsId.forEach(id -> {
-            CommentSelfSdo commentSelf = self(CommentSelfSdi.of(id));
-            res.add(commentSelf);
-        });
+        commentsId.stream()
+                .map(id -> self(CommentSelfSdi.of(id)))
+                .forEach(res::add);
+
         return res;
     }
 
     public List<CommentSelfSdo> commentInPost(CommentJoinPostSdi req) {
         List<Long> commentsId = commentRepo.findByPostID(req.getPostId());
         List<CommentSelfSdo> res = new ArrayList<>();
-        commentsId.forEach(id -> {
-            CommentSelfSdo commentSelf = self(CommentSelfSdi.of(id));
-            res.add(commentSelf);
-        });
+        commentsId.stream()
+                .map(id -> self(CommentSelfSdi.of(id)))
+                .forEach(res::add);
         return res;
     }
+    public List<CommentSelfSdo> subComments(CommentSelfSdi req){
+        List<Long> commentsId = commentRepo.findBySuperCommentId(req.getId());
+        List<CommentSelfSdo> res = new ArrayList<>();
+        commentsId.stream()
+                .map(id -> self(CommentSelfSdi.of(id)))
+                .forEach(res::add);
+        return res;
+    }
+
 
     public Comment getComment(Long id) {
         return commentRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }
-
-
+    
 }
