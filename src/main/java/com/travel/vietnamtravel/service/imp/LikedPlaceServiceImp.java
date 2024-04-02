@@ -7,12 +7,15 @@ import com.travel.vietnamtravel.dto.likeplace.sdi.LikePlaceJoinUserSdi;
 import com.travel.vietnamtravel.dto.likeplace.sdo.LikePlaceCreateSdo;
 import com.travel.vietnamtravel.dto.likeplace.sdo.LikePlaceDeleteSdo;
 import com.travel.vietnamtravel.dto.likereview.sdi.LikeJoinReviewSdi;
+import com.travel.vietnamtravel.dto.place.sdi.PlaceSelfSdi;
 import com.travel.vietnamtravel.dto.place.sdo.PlaceSelfSdo;
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import com.travel.vietnamtravel.entity.relationship.LikePlace;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikePlaceRepo;
+import com.travel.vietnamtravel.service.LikedPlaceService;
+import com.travel.vietnamtravel.service.PlaceService;
 import com.travel.vietnamtravel.service.ReviewService;
 import com.travel.vietnamtravel.service.UserInfoService;
 import com.travel.vietnamtravel.util.DataUtil;
@@ -23,12 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
+
 @Service
 @RequiredArgsConstructor
-public class LikedPlaceServiceImp {
+public class LikedPlaceServiceImp implements LikedPlaceService {
     private final LikePlaceRepo likePlaceRepo;
     private final UserInfoService userInfoService;
-    private final ReviewService reviewService;
+    private final PlaceService placeService;
 
     public LikePlaceCreateSdo like(LikePlaceCreateSdi req) {
         if (likePlaceRepo.existsByUserIDAndPlaceId(req.getLikedBy(), req.getPlaceID())) {
@@ -76,8 +80,8 @@ public class LikedPlaceServiceImp {
         List<PlaceSelfSdo> res = new ArrayList<>();
 
         likePlaces.forEach(lr -> {
-            PlaceSelfSdo placeSelfSdo = pl
-            Service.self(ReviewSelfSdi.of(lr.getReviewId()));
+            PlaceSelfSdo placeSelfSdo =
+                    placeService.self(PlaceSelfSdi.of(lr.getPlaceId()));
             res.add(placeSelfSdo);
         });
         return res;
