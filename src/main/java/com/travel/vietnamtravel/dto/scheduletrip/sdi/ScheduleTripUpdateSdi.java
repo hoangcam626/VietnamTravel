@@ -9,6 +9,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor(staticName = "of")
 public class ScheduleTripUpdateSdi {
+
+    private Long id;
+
     private String nameSchedule;
 
     private MultipartFile imageLabel;

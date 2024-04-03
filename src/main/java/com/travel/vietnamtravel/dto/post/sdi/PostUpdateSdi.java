@@ -9,7 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor(staticName = "of")
 public class PostUpdateSdi {
 
-    private MultipartFile image;
+    private Long id;
+
+    private Long placeId;
 
     private String content;
 }

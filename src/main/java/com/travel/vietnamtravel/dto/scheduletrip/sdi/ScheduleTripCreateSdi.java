@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(staticName = "of")
 public class ScheduleTripCreateSdi {
 
-    private Long userId;
+//    private Long userId;
 
     private String nameSchedule;
 

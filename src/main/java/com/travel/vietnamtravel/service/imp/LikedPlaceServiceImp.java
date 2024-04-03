@@ -64,14 +64,11 @@ public class LikedPlaceServiceImp implements LikedPlaceService {
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinPlaceSdi req) {
 
         List<LikePlace> likePlaces = likePlaceRepo.findByPlaceId(req.getPlaceId());
-
         List<UserInfoShortSelfSdo> res = new ArrayList<>();
 
-        likePlaces.forEach(lp -> {
-            UserInfoShortSelfSdo userInfoShort = userInfoService.shortSelf(UserInfoSelfSdi.of(lp.getUserID()));
-            res.add(userInfoShort);
-        });
-
+        likePlaces.stream()
+                .map(lp -> userInfoService.shortSelf(UserInfoSelfSdi.of(lp.getUserID())))
+                .forEach(res::add);
         return res;
     }
 
@@ -79,11 +76,10 @@ public class LikedPlaceServiceImp implements LikedPlaceService {
         List<LikePlace> likePlaces = likePlaceRepo.findByUserID(req.getUserId());
         List<PlaceSelfSdo> res = new ArrayList<>();
 
-        likePlaces.forEach(lr -> {
-            PlaceSelfSdo placeSelfSdo =
-                    placeService.self(PlaceSelfSdi.of(lr.getPlaceId()));
-            res.add(placeSelfSdo);
-        });
+        likePlaces.stream()
+                .map(lp -> placeService.self(PlaceSelfSdi.of(lp.getPlaceId())))
+                .forEach(res::add);
+
         return res;
     }
 }

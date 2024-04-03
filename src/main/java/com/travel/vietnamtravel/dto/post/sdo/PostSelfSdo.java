@@ -4,6 +4,8 @@ import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor(staticName = "of")
 public class PostSelfSdo {
@@ -16,4 +18,8 @@ public class PostSelfSdo {
     private Long imageId;
 
     private String content;
+
+    private Timestamp createAt;
+
+    private Timestamp updateAt;
 }
