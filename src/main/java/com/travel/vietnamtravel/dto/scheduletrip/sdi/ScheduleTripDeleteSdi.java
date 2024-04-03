@@ -1,10 +1,11 @@
-package com.travel.vietnamtravel.dto.placeschedule.sdo;
+package com.travel.vietnamtravel.dto.scheduletrip.sdi;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class PlaceScheduleCreateSdo {
+public class ScheduleTripDeleteSdi {
+
     private Long id;
 }

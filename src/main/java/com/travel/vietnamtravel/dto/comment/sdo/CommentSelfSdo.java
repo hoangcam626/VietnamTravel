@@ -8,6 +8,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(staticName = "of")
 public class CommentSelfSdo {
+
+    private Long id;
+
     private UserInfoShortSelfSdo createdBy;
 
     private String content;
@@ -15,4 +18,6 @@ public class CommentSelfSdo {
     private Long imageId;
 
     private Long postID;
+
+    private Long superCommentId;
 }

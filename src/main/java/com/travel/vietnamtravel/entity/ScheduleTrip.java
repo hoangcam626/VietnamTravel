@@ -28,6 +28,9 @@ public class ScheduleTrip extends AbstractAudit{
     @Column(name = "image_label_id")
     private Long imageLabelId;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "start_date")
     private LocalDate startDate;
 

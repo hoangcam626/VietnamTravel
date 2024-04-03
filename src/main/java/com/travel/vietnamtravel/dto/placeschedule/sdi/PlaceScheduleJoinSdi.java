@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class PlaceScheduleDeleteSdi {
-    private Long id;
+public class PlaceScheduleJoinSdi {
 
+    private Long scheduleId;
 }

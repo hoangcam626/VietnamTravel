@@ -21,14 +21,11 @@ public class PlaceSchedule extends AbstractAudit {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
+    @Column(name = "schedule_id")
+    private Long scheduleId;
 
-    @ManyToOne
-    @JoinColumn(name = "schedule_id")
-    private ScheduleTrip schedule;
-
-    @ManyToOne
-    @JoinColumn(name = "place_id")
-    private Place place;
+    @Column(name = "schedule_id")
+    private Long placeId;
 
     @Column(name = "schedule_date")
     private LocalDate scheduledDate;
