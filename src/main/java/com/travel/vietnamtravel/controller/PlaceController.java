@@ -1,8 +1,41 @@
 package com.travel.vietnamtravel.controller;
 
-import org.springframework.stereotype.Controller;
+import com.travel.vietnamtravel.dto.place.sdi.PlaceCreateSdi;
+import com.travel.vietnamtravel.dto.place.sdi.PlaceDeleteSdi;
+import com.travel.vietnamtravel.dto.place.sdi.PlaceSelfSdi;
+import com.travel.vietnamtravel.dto.place.sdi.PlaceUpdateSdi;
+import com.travel.vietnamtravel.dto.place.sdo.PlaceCreateSdo;
+import com.travel.vietnamtravel.dto.place.sdo.PlaceDeleteSdo;
+import com.travel.vietnamtravel.dto.place.sdo.PlaceSelfSdo;
+import com.travel.vietnamtravel.dto.place.sdo.PlaceUpdateSdo;
+import com.travel.vietnamtravel.service.PlaceService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@AllArgsConstructor
+@RequestMapping("/api/v1/place")
 public class PlaceController {
+    private final PlaceService placeService;
+
+    @PostMapping
+    public ResponseEntity<PlaceCreateSdo> create(@RequestBody PlaceCreateSdi req){
+        return ResponseEntity.ok(placeService.create(req));
+    }
+    @PutMapping
+    public ResponseEntity<PlaceUpdateSdo> update(@RequestBody PlaceUpdateSdi req){
+        return ResponseEntity.ok(placeService.update(req));
+    }
+    @DeleteMapping
+    public ResponseEntity<PlaceDeleteSdo> delete(@RequestBody PlaceDeleteSdi req){
+        return ResponseEntity.ok(placeService.delete(req));
+    }
+
+    @GetMapping
+    public ResponseEntity<PlaceSelfSdo> self(@RequestBody PlaceSelfSdi req){
+        return ResponseEntity.ok(placeService.self(req));
+    }
 
 }

@@ -1,14 +1,16 @@
 package com.travel.vietnamtravel.dto.place.sdo;
 
 import com.travel.vietnamtravel.entity.media.Image;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class PlaceSelfSdo {@Column(name = "name")
-private String name;
+@Data
+@AllArgsConstructor(staticName = "of")
+public class PlaceSelfSdo {
+    private String name;
 
     private String provinceCode;
 
@@ -18,5 +20,7 @@ private String name;
 
     private String description;
 
-    private Set<Image> images= new HashSet<>();
+//    private Set<Image> images = new HashSet<>();
+    private int countLike;
+    private Boolean isLike;
 }
