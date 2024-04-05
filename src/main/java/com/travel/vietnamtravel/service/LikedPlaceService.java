@@ -17,7 +17,7 @@ public interface LikedPlaceService {
 
     LikePlaceDeleteSdo unlike(LikePlaceDeleteSdi req);
 
-    int totalLikes(LikeJoinReviewSdi req);
+    int totalLikes(LikeJoinPlaceSdi req);
 
     List<UserInfoShortSelfSdo> likedBy(LikeJoinPlaceSdi req);
 

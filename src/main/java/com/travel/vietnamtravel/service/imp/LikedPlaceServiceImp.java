@@ -57,8 +57,8 @@ public class LikedPlaceServiceImp implements LikedPlaceService {
 
     }
 
-    public int totalLikes(LikeJoinReviewSdi req) {
-        return likePlaceRepo.countAllByPlaceId(req.getReviewID());
+    public int totalLikes(LikeJoinPlaceSdi req) {
+        return likePlaceRepo.countLikeByPlaceId(req.getPlaceId());
     }
 
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinPlaceSdi req) {
