@@ -7,6 +7,7 @@ import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.ScheduleTripRepo;
 import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
+import com.travel.vietnamtravel.service.ScheduleTripService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ScheduleTripServiceImp {
+public class ScheduleTripServiceImp  implements ScheduleTripService {
     private final ScheduleTripRepo scheduleTripRepo;
     private final CommonService commonService;
     private final ImageService imageService;

@@ -1,7 +1,6 @@
 package com.travel.vietnamtravel.dto.comment.sdo;
 
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,4 +19,6 @@ public class CommentSelfSdo {
     private Long postID;
 
     private Long superCommentId;
+
+    private Boolean isLike;
 }

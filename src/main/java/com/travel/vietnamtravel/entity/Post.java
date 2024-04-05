@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @Table
 @Entity
-public class PostImage extends AbstractAudit{
+public class Post extends AbstractAudit{
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)

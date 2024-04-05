@@ -16,7 +16,7 @@ public interface CommentService {
 
     List<CommentSelfSdo> createBy(CommentJoinUserSdi req);
 
-    List<CommentSelfSdo> commentInPost(CommentJoinPostSdi req);
+    List<CommentSelfSdo> commentsInPost(CommentJoinPostSdi req);
 
     List<CommentSelfSdo> subComments(CommentSelfSdi req);
 }

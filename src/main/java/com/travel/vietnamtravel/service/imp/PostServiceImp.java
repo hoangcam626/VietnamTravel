@@ -7,7 +7,7 @@ import com.travel.vietnamtravel.dto.post.sdo.PostSelfSdo;
 import com.travel.vietnamtravel.dto.post.sdo.PostUpdateSdo;
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
-import com.travel.vietnamtravel.entity.PostImage;
+import com.travel.vietnamtravel.entity.Post;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.PostImageRepo;
 import com.travel.vietnamtravel.service.ImageService;
@@ -31,27 +31,27 @@ public class PostServiceImp implements PostService {
     private final ImageService imageService;
     private final UserInfoService userInfoService;
     public PostCreateSdo create(PostCreateSdi req){
-        PostImage postImage = copyProperties(req, PostImage.class);
+        Post postImage = copyProperties(req, Post.class);
         Long imageId = imageService.uploadFile(req.getImage());
         postImage.setImageId(imageId);
         postImageRepo.save(postImage);
         return PostCreateSdo.of(postImage.getId());
     }
     public PostDeleteSdo delete(PostDeleteSdi req){
-        PostImage postImage = getPost(req.getId());
+        Post postImage = getPost(req.getId());
         imageService.delete(postImage.getImageId());
         postImageRepo.delete(postImage);
         return PostDeleteSdo.of(Boolean.TRUE);
     }
     public PostUpdateSdo update(PostUpdateSdi req){
-        PostImage postImage = getPost(req.getId());
+        Post postImage = getPost(req.getId());
         postImage.setContent(req.getContent());
         postImage.setPlaceId(req.getPlaceId());
         postImageRepo.save(postImage);
         return PostUpdateSdo.of(Boolean.TRUE);
     }
     public PostSelfSdo self(PostSelfSdi req){
-        PostImage postImage = getPost(req.getId());
+        Post postImage = getPost(req.getId());
         PostSelfSdo res = copyProperties(req, PostSelfSdo.class);
         UserInfoShortSelfSdo userInfoShortSelf = userInfoService.shortSelf(UserInfoSelfSdi.of(postImage.getCreatedBy()));
         res.setCreateBy(userInfoShortSelf);
@@ -70,7 +70,7 @@ public class PostServiceImp implements PostService {
         return listSelf(postImageIds);
     }
 
-    public PostImage getPost(Long id){
+    public Post getPost(Long id){
         return postImageRepo.findById(id).orElseThrow(()-> new CustomException(ERROR_NOT_EXIT));
     }
     public List<PostSelfSdo> listSelf(List<Long> req){

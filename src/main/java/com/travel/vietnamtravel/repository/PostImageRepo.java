@@ -1,20 +1,20 @@
 package com.travel.vietnamtravel.repository;
 
-import com.travel.vietnamtravel.entity.PostImage;
+import com.travel.vietnamtravel.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PostImageRepo extends JpaRepository<PostImage, Long> {
+public interface PostImageRepo extends JpaRepository<Post, Long> {
 
-    @Query("SELECT pi.id FROM PostImage pi WHERE pi.placeId =: placeId")
+    @Query("SELECT p.id FROM Post p WHERE p.placeId =: placeId")
     List<Long> findByPlaceId(Long placeId);
 
-    @Query("SELECT pi.id FROM PostImage pi WHERE pi.createdBy =: userId")
+    @Query("SELECT p.id FROM Post p WHERE p.createdBy =: userId")
     List<Long> findByUserId(Long userID);
 
-    @Query("SELECT pi.id FROM PostImage pi ORDER BY pi.createdAt")
+    @Query("SELECT p.id FROM Post p ORDER BY p.createdAt")
     List<Long> findAllOrderByCreatAt();
 
 }

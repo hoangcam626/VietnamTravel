@@ -76,7 +76,7 @@ public class CommentServiceImp implements CommentService {
         return res;
     }
 
-    public List<CommentSelfSdo> commentInPost(CommentJoinPostSdi req) {
+    public List<CommentSelfSdo> commentsInPost(CommentJoinPostSdi req) {
         List<Long> commentsId = commentRepo.findByPostID(req.getPostId());
         List<CommentSelfSdo> res = new ArrayList<>();
         commentsId.stream()
