@@ -18,6 +18,7 @@ import java.util.List;
 
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DataUtil.isNullObject;
 
 @Service
 @Transactional
@@ -28,33 +29,46 @@ public class CommentServiceImp implements CommentService {
     private final UserInfoService userInfoService;
 
     public CommentCreateSdo create(CommentCreateSdi req) {
+
+        if(!isNullObject(req.getSuperCommentId())){
+            getComment(req.getSuperCommentId());
+        }
+
         Comment comment = copyProperties(req, Comment.class);
+
         if (req.getImage() != null) {
             Long imageId = imageService.uploadFile(req.getImage());
             comment.setImageId(imageId);
         }
+
         commentRepo.save(comment);
         return CommentCreateSdo.of(comment.getId());
     }
 
     public CommentDeleteSdo delete(CommentDeleteSdi req) {
+
         Comment comment = getComment(req.getId());
+
         if (comment.getImageId() != null) {
             imageService.delete(comment.getImageId());
         }
+
         commentRepo.delete(comment);
         return CommentDeleteSdo.of(Boolean.TRUE);
     }
 
     public CommentUpdateSdo update(CommentUpdateSdi req) {
+
         Comment comment = getComment(req.getId());
-        if (req.getImage() == null && comment.getImageId() != null) {
+
+        if (isNullObject(req.getImage()) && !isNullObject(comment.getImageId())) {
             imageService.delete(comment.getImageId());
             comment.setImageId(null);
-        } else if (req.getImage() != null) {
+        } else if (!isNullObject(req.getImage())) {
             Long imageId = imageService.uploadFile(req.getImage());
             comment.setImageId(imageId);
         }
+
         return CommentUpdateSdo.of(Boolean.TRUE);
 
     }

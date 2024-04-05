@@ -9,7 +9,9 @@ import com.travel.vietnamtravel.dto.placeimage.sdo.PlaceImageUpdateSdo;
 import com.travel.vietnamtravel.entity.relationship.PlaceImage;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.PlaceImageRepo;
+import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.PlaceImageService;
+import com.travel.vietnamtravel.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +22,21 @@ import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 @RequiredArgsConstructor
 public class PlaceImageServiceImp implements PlaceImageService {
     private final PlaceImageRepo placeImageRepo;
-
+    private final ImageService imageService;
+    private final PlaceService placeService;
     public PlaceImageCreateSdo create(PlaceImageCreateSdi req) {
-        if (placeImageRepo.existsByImageId(req.getImageId())) {
-            throw new CustomException(ERROR_ALREADY_EXIT);
-        }
-        PlaceImage placeImage = copyProperties(req, PlaceImage.class);
+        placeService.getPlace(req.getPlaceId());
+        Long imageId = imageService.uploadFile(req.getImage());
+        PlaceImage placeImage = new PlaceImage(req.getPlaceId(), imageId);
         placeImageRepo.save(placeImage);
         return PlaceImageCreateSdo.of(placeImage.getId());
     }
 
     public PlaceImageUpdateSdo update(PlaceImageUpdateSdi req) {
         PlaceImage placeImage = getPlaceImage(req.getId());
-        placeImage.setPlaceId(req.getPlaceId());
+        Long placeId = req.getPlaceId();
+        placeService.getPlace(placeId);
+        placeImage.setPlaceId(placeId);
         placeImageRepo.save(placeImage);
         return PlaceImageUpdateSdo.of(Boolean.TRUE);
     }

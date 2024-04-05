@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class PlaceImageSelfSdo {
     private Long id;
-    private long placeId;
+    private Long placeId;
     private Long imageId;
 }

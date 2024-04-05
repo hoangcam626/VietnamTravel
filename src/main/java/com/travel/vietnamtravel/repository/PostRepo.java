@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PostImageRepo extends JpaRepository<Post, Long> {
+public interface PostRepo extends JpaRepository<Post, Long> {
 
     @Query("SELECT p.id FROM Post p WHERE p.placeId =: placeId")
     List<Long> findByPlaceId(Long placeId);

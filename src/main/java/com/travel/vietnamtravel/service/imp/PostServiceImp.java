@@ -9,7 +9,7 @@ import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import com.travel.vietnamtravel.entity.Post;
 import com.travel.vietnamtravel.exception.CustomException;
-import com.travel.vietnamtravel.repository.PostImageRepo;
+import com.travel.vietnamtravel.repository.PostRepo;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.PostService;
 import com.travel.vietnamtravel.service.UserInfoService;
@@ -27,27 +27,27 @@ import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 @Transactional
 @RequiredArgsConstructor
 public class PostServiceImp implements PostService {
-    private final PostImageRepo postImageRepo;
+    private final PostRepo postRepo;
     private final ImageService imageService;
     private final UserInfoService userInfoService;
     public PostCreateSdo create(PostCreateSdi req){
         Post postImage = copyProperties(req, Post.class);
         Long imageId = imageService.uploadFile(req.getImage());
         postImage.setImageId(imageId);
-        postImageRepo.save(postImage);
+        postRepo.save(postImage);
         return PostCreateSdo.of(postImage.getId());
     }
     public PostDeleteSdo delete(PostDeleteSdi req){
         Post postImage = getPost(req.getId());
         imageService.delete(postImage.getImageId());
-        postImageRepo.delete(postImage);
+        postRepo.delete(postImage);
         return PostDeleteSdo.of(Boolean.TRUE);
     }
     public PostUpdateSdo update(PostUpdateSdi req){
         Post postImage = getPost(req.getId());
         postImage.setContent(req.getContent());
         postImage.setPlaceId(req.getPlaceId());
-        postImageRepo.save(postImage);
+        postRepo.save(postImage);
         return PostUpdateSdo.of(Boolean.TRUE);
     }
     public PostSelfSdo self(PostSelfSdi req){
@@ -59,19 +59,19 @@ public class PostServiceImp implements PostService {
     }
 
     public List<PostSelfSdo> allPosts(){
-        List<Long> postImageIds = postImageRepo.findAllOrderByCreatAt();
+        List<Long> postImageIds = postRepo.findAllOrderByCreatAt();
         return listSelf(postImageIds);
     }
     public List<PostSelfSdo> createBy(PostJoinUserSdi req){
-        List<Long> postImageIds = postImageRepo.findByUserId(req.getUserId());
+        List<Long> postImageIds = postRepo.findByUserId(req.getUserId());
         return listSelf(postImageIds);
     }public List<PostSelfSdo> postsInPlace(PostJoinPlaceSdi req){
-        List<Long> postImageIds = postImageRepo.findByPlaceId(req.getPlaceId());
+        List<Long> postImageIds = postRepo.findByPlaceId(req.getPlaceId());
         return listSelf(postImageIds);
     }
 
     public Post getPost(Long id){
-        return postImageRepo.findById(id).orElseThrow(()-> new CustomException(ERROR_NOT_EXIT));
+        return postRepo.findById(id).orElseThrow(()-> new CustomException(ERROR_NOT_EXIT));
     }
     public List<PostSelfSdo> listSelf(List<Long> req){
         List<PostSelfSdo> res = new ArrayList<>();

@@ -12,7 +12,6 @@ import com.travel.vietnamtravel.entity.Place;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.PlaceRepo;
 import com.travel.vietnamtravel.service.ImageService;
-import com.travel.vietnamtravel.service.PlaceImageService;
 import com.travel.vietnamtravel.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,6 @@ import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 public class PlaceServiceImp implements PlaceService {
     private final PlaceRepo placeRepo;
     private final ImageService imageService;
-    private final PlaceImageService placeImageService;
 
     public PlaceCreateSdo create(PlaceCreateSdi req) {
         Place place = copyProperties(req, Place.class);

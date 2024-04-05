@@ -6,6 +6,7 @@ import com.travel.vietnamtravel.entity.relationship.PlaceSchedule;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.PlaceScheduleRepo;
 import com.travel.vietnamtravel.service.PlaceScheduleService;
+import com.travel.vietnamtravel.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,8 @@ import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 @Transactional
 @RequiredArgsConstructor
 public class PlaceScheduleImp implements PlaceScheduleService {
-    private PlaceScheduleRepo placeScheduleRepo;
+    private final PlaceScheduleRepo placeScheduleRepo;
+    private final PlaceService placeService;
 
     public PlaceScheduleCreateSdo create(PlaceScheduleCreateSdi req) {
         PlaceSchedule placeSchedule = copyProperties(req, PlaceSchedule.class);
@@ -30,10 +32,14 @@ public class PlaceScheduleImp implements PlaceScheduleService {
 
     public PlaceScheduleUpdateSdo update(PlaceScheduleUpdateSdi req) {
         PlaceSchedule placeSchedule = getPlaceSchedule(req.getId());
+
+        placeService.getPlace(req.getPlaceId());
         placeSchedule.setPlaceId(req.getPlaceId());
+
         placeSchedule.setDescription(req.getDescription());
         placeSchedule.setScheduledDate(req.getScheduledDate());
         placeScheduleRepo.save(placeSchedule);
+
         return PlaceScheduleUpdateSdo.of(Boolean.TRUE);
     }
 

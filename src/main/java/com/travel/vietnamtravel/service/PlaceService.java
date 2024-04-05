@@ -8,6 +8,7 @@ import com.travel.vietnamtravel.dto.place.sdo.PlaceCreateSdo;
 import com.travel.vietnamtravel.dto.place.sdo.PlaceDeleteSdo;
 import com.travel.vietnamtravel.dto.place.sdo.PlaceSelfSdo;
 import com.travel.vietnamtravel.dto.place.sdo.PlaceUpdateSdo;
+import com.travel.vietnamtravel.entity.Place;
 
 public interface PlaceService {
 
@@ -18,4 +19,6 @@ public interface PlaceService {
     PlaceUpdateSdo update(PlaceUpdateSdi req);
 
     PlaceSelfSdo self(PlaceSelfSdi req);
+
+    Place getPlace(Long id);
 }
