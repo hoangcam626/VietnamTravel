@@ -17,9 +17,12 @@ public class PlaceSelfSdo {
     private String description;
 
 //    private Set<Image> images = new HashSet<>();
-    private int countLike;
 
     private Boolean isLike;
 
     private Double rating;
+
+    private Long totalLike;
+
+    private Long totalReview;
 }

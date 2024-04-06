@@ -13,6 +13,8 @@ public interface ReviewRepo extends JpaRepository<Review, Long> {
     List<Review> findAllByPlaceId(Long placeId);
 
     @Query("SELECT sum(r.rating)/count(r) FROM Review r WHERE r.placeId =: placeId")
-    Double ranking(Long placeId);
+    Double rating(Long placeId);
 
+    @Query("SELECT count(r) FROM Review r WHERE r.placeId =: placeId")
+    Long countReviewByPlaceId(Long place);
 }

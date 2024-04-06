@@ -1,8 +1,6 @@
 package com.travel.vietnamtravel.entity.relationship;
 
 import com.travel.vietnamtravel.entity.AbstractAudit;
-import com.travel.vietnamtravel.entity.Place;
-import com.travel.vietnamtravel.entity.ScheduleTrip;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +22,7 @@ public class PlaceSchedule extends AbstractAudit {
     @Column(name = "schedule_id")
     private Long scheduleId;
 
-    @Column(name = "schedule_id")
+    @Column(name = "place_id")
     private Long placeId;
 
     @Column(name = "schedule_date")

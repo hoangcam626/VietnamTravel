@@ -17,4 +17,6 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     @Query("SELECT p.id FROM Post p ORDER BY p.createdAt")
     List<Long> findAllOrderByCreatAt();
 
+    Long countPostByPlaceId(Long placeId);
+
 }

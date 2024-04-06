@@ -22,4 +22,12 @@ public class PostSelfSdo {
     private Timestamp createAt;
 
     private Timestamp updateAt;
+
+    private Boolean isUpdate;
+
+    private Boolean isLike;
+
+    private Long countLike;
+
+    private Long countComment;
 }

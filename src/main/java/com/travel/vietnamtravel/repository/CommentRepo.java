@@ -14,4 +14,7 @@ public interface CommentRepo extends JpaRepository<Comment, Long> {
     List<Long> findByUserId(Long userId);
     @Query("SELECT c.id FROM Comment c WHERE c.superCommentId =: superCommentId ORDER BY c.createdAt")
     List<Long> findBySuperCommentId(Long superCommentId);
+
+    @Query("SELECT count(c) FROM Comment c WHERE c.superCommentId =: superCommentId ORDER BY c.createdAt")
+    Long countAllBySuperCommentId(Long superCommentId);
 }

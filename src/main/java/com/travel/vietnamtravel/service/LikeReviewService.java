@@ -11,10 +11,10 @@ import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 
 import java.util.List;
 
-public interface LikedReviewService {
+public interface LikeReviewService {
     LikeReviewCreateSdo like(LikeReviewCreateSdi req);
     LikeReviewDeleteSdo unlike(LikeReviewDeleteSdi req);
-//    int totalLikes(LikedReviewJoinReviewSdi req);
     List<UserInfoShortSelfSdo> likedBy(LikeJoinReviewSdi req);
     List<ReviewSelfSdo> favorites(LikeReviewJoinUserSdi req);
+    int totalLikes(LikeJoinReviewSdi req);
 }

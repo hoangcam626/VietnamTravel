@@ -10,7 +10,10 @@ import com.travel.vietnamtravel.dto.place.sdo.PlaceSelfSdo;
 import com.travel.vietnamtravel.dto.place.sdo.PlaceUpdateSdo;
 import com.travel.vietnamtravel.entity.Place;
 import com.travel.vietnamtravel.exception.CustomException;
+import com.travel.vietnamtravel.repository.LikePlaceRepo;
 import com.travel.vietnamtravel.repository.PlaceRepo;
+import com.travel.vietnamtravel.repository.ReviewRepo;
+import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,9 @@ import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 public class PlaceServiceImp implements PlaceService {
     private final PlaceRepo placeRepo;
     private final ImageService imageService;
+    private final LikePlaceRepo likePlaceRepo;
+    private final ReviewRepo reviewRepo;
+    private final CommonService commonService;
 
     public PlaceCreateSdo create(PlaceCreateSdi req) {
         Place place = copyProperties(req, Place.class);
@@ -62,8 +68,17 @@ public class PlaceServiceImp implements PlaceService {
     }
 
     public PlaceSelfSdo self(PlaceSelfSdi req) {
+
         Place place = getPlace(req.getId());
-        return copyProperties(place, PlaceSelfSdo.class);
+
+        PlaceSelfSdo res = copyProperties(place, PlaceSelfSdo.class);
+        res.setRating(reviewRepo.rating(place.getId()));
+        res.setTotalReview(reviewRepo.countReviewByPlaceId(place.getId()));
+        Long userId = commonService.getIdLogin();
+        res.setIsLike(likePlaceRepo.existsByUserIDAndPlaceId(userId, place.getId()));
+        res.setTotalLike(likePlaceRepo.countLikeByPlaceId(place.getId()));
+
+        return res;
     }
 
     public Place getPlace(Long id) {

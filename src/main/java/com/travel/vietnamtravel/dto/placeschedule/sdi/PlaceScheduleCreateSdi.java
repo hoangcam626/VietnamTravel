@@ -1,6 +1,5 @@
 package com.travel.vietnamtravel.dto.placeschedule.sdi;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

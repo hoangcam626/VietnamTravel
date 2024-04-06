@@ -1,6 +1,5 @@
 package com.travel.vietnamtravel.dto.userinfo.sdo;
 
-import com.travel.vietnamtravel.entity.UserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

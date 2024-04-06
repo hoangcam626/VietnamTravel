@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("/api/v1/comment")
 public class CommentController {
     private final CommentService commentService;
-
     @PostMapping
     public ResponseEntity<CommentCreateSdo> create(@RequestBody CommentCreateSdi req){
         return ResponseEntity.ok(commentService.create(req));
@@ -51,4 +50,6 @@ public class CommentController {
     public ResponseEntity<List<CommentSelfSdo>> subComments(@RequestBody CommentSelfSdi req){
         return ResponseEntity.ok(commentService.subComments(req));
     }
+
+
 }

@@ -18,7 +18,7 @@ public interface LikePlaceRepo extends JpaRepository<LikePlace, Long> {
     List<LikePlace> findByPlaceId(Long placeId);
 
     @Query("SELECT count(lp) FROM  LikePlace lp WHERE lp.placeId = :placeId")
-    int countLikeByPlaceId(Long placeId);
+    Long countLikeByPlaceId(Long placeId);
 
     Boolean existsByUserIDAndPlaceId(Long userId, Long placeId);
     LikePlace findByUserIDAndPlaceId(Long userId, Long placeId);

@@ -25,5 +25,5 @@ public class ReviewSelfSdo {
 
     private Timestamp updatedAt;
 
-    private int liked;
+    private Long totalLike;
 }

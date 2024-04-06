@@ -1,6 +1,5 @@
 package com.travel.vietnamtravel.dto.post.sdi;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

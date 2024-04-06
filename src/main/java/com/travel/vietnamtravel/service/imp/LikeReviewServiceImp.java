@@ -13,7 +13,7 @@ import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import com.travel.vietnamtravel.entity.relationship.LikeReview;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikeReviewRepo;
-import com.travel.vietnamtravel.service.LikedReviewService;
+import com.travel.vietnamtravel.service.LikeReviewService;
 import com.travel.vietnamtravel.service.ReviewService;
 import com.travel.vietnamtravel.service.UserInfoService;
 import com.travel.vietnamtravel.util.DataUtil;
@@ -27,7 +27,7 @@ import static com.travel.vietnamtravel.constant.Error.*;
 
 @Service
 @RequiredArgsConstructor
-public class LikedReviewServiceImp implements LikedReviewService {
+public class LikeReviewServiceImp implements LikeReviewService {
     private final LikeReviewRepo likedReviewRepository;
     private final UserInfoService userInfoService;
     private final ReviewService reviewService;
