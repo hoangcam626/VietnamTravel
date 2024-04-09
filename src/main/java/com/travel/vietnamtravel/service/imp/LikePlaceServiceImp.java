@@ -13,6 +13,7 @@ import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import com.travel.vietnamtravel.entity.relationship.LikePlace;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikePlaceRepo;
+import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.LikePlaceService;
 import com.travel.vietnamtravel.service.PlaceService;
 import com.travel.vietnamtravel.service.UserInfoService;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.travel.vietnamtravel.constant.Error.ERROR_ALREADY_EXIT;
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
 
 @Service
@@ -31,11 +33,13 @@ public class LikePlaceServiceImp implements LikePlaceService {
     private final LikePlaceRepo likePlaceRepo;
     private final UserInfoService userInfoService;
     private final PlaceService placeService;
+    private final CommonService commonService;
 
     public LikePlaceCreateSdo like(LikePlaceCreateSdi req) {
+        req.setLikedBy(commonService.getIdLogin());
         if (likePlaceRepo.existsByUserIDAndPlaceId(req.getLikedBy(), req.getPlaceID())) {
 //            unlike(LikedReviewDeleteSdi.of(req.getLikedBy(), req.getReviewId()));
-            throw new CustomException("Error: exit.");
+            throw new CustomException(ERROR_ALREADY_EXIT);
         }
         LikePlace likePlace = DataUtil.copyProperties(req, LikePlace.class);
         likePlaceRepo.save(likePlace);
@@ -44,21 +48,15 @@ public class LikePlaceServiceImp implements LikePlaceService {
 
     public LikePlaceDeleteSdo unlike(LikePlaceDeleteSdi req) {
 
-        if (likePlaceRepo.existsByUserIDAndPlaceId(req.getUserId(), req.getPlaceId())) {
-
-            LikePlace likePlace = likePlaceRepo.findByUserIDAndPlaceId(req.getUserId(), req.getPlaceId());
+        Long loginId = commonService.getIdLogin();
+        LikePlace likePlace = getLikePlace(req.getId());
+        if (likePlace.getUserID().equals(loginId)) {
             likePlaceRepo.delete(likePlace);
-
             return LikePlaceDeleteSdo.of(Boolean.TRUE);
         }
         throw new CustomException(ERROR_NOT_EXIT);
 
     }
-
-    public Long totalLikes(LikeJoinPlaceSdi req) {
-        return likePlaceRepo.countLikeByPlaceId(req.getPlaceId());
-    }
-
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinPlaceSdi req) {
 
         List<LikePlace> likePlaces = likePlaceRepo.findByPlaceId(req.getPlaceId());
@@ -80,4 +78,11 @@ public class LikePlaceServiceImp implements LikePlaceService {
 
         return res;
     }
+//    public Long totalLikes(LikeJoinPlaceSdi req) {
+//        return likePlaceRepo.countLikeByPlaceId(req.getPlaceId());
+//    }
+    public LikePlace getLikePlace(Long id) {
+        return likePlaceRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
+    }
 }
+

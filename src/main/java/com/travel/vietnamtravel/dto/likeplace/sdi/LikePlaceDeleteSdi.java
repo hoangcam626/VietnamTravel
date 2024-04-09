@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class LikePlaceDeleteSdi {
     private Long id;
-    private Long userId;
-    private Long placeId;
+//    private Long userId;
+//    private Long placeId;
 }

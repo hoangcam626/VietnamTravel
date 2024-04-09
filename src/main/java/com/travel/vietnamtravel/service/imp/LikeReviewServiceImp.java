@@ -13,6 +13,7 @@ import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import com.travel.vietnamtravel.entity.relationship.LikeReview;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikeReviewRepo;
+import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.LikeReviewService;
 import com.travel.vietnamtravel.service.ReviewService;
 import com.travel.vietnamtravel.service.UserInfoService;
@@ -31,8 +32,10 @@ public class LikeReviewServiceImp implements LikeReviewService {
     private final LikeReviewRepo likedReviewRepository;
     private final UserInfoService userInfoService;
     private final ReviewService reviewService;
+    private final CommonService commonService;
 
     public LikeReviewCreateSdo like(LikeReviewCreateSdi req) {
+        req.setLikedBy(commonService.getIdLogin());
         if (likedReviewRepository.existsByUserIDAndReviewId(req.getLikedBy(), req.getReviewId())) {
 //            unlike(LikedReviewDeleteSdi.of(req.getLikedBy(), req.getReviewId()));
             throw new CustomException("Error: exit.");
@@ -44,27 +47,21 @@ public class LikeReviewServiceImp implements LikeReviewService {
 
     public LikeReviewDeleteSdo unlike(LikeReviewDeleteSdi req) {
 
-        if (likedReviewRepository.existsByUserIDAndReviewId(req.getUserId(), req.getReviewId())) {
+        Long loginId = commonService.getIdLogin();
+        LikeReview likeReview = getLikeReview(req.getId());
+        if (likeReview.getUserID().equals(loginId)) {
 
-            LikeReview likeReview = likedReviewRepository.findByUserIDAndReviewId(req.getUserId(), req.getReviewId());
             likedReviewRepository.delete(likeReview);
-
             return LikeReviewDeleteSdo.of(Boolean.TRUE);
         }
         throw new CustomException(ERROR_NOT_EXIT);
 
     }
 
-    public int totalLikes(LikeJoinReviewSdi req) {
-        return likedReviewRepository.countAllByReviewId(req.getReviewID());
-    }
-
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinReviewSdi req) {
 
         List<LikeReview> likeReviews = likedReviewRepository.findByReviewId(req.getReviewID());
-
         List<UserInfoShortSelfSdo> res = new ArrayList<>();
-
         likeReviews.forEach(lr -> {
             UserInfoShortSelfSdo userInfoShort = userInfoService.shortSelf(UserInfoSelfSdi.of(lr.getUserID()));
             res.add(userInfoShort);
@@ -74,13 +71,21 @@ public class LikeReviewServiceImp implements LikeReviewService {
     }
 
     public List<ReviewSelfSdo> favorites(LikeReviewJoinUserSdi req) {
+
         List<LikeReview> likeReviews = likedReviewRepository.findByUserId(req.getUserId());
         List<ReviewSelfSdo> res = new ArrayList<>();
-
         likeReviews.forEach(lr -> {
             ReviewSelfSdo reviewSelfSdo = reviewService.self(ReviewSelfSdi.of(lr.getReviewId()));
             res.add(reviewSelfSdo);
         });
         return res;
+    }
+
+    public Long totalLikes(LikeJoinReviewSdi req) {
+        return likedReviewRepository.countAllByReviewId(req.getReviewID());
+    }
+
+    public LikeReview getLikeReview(Long id) {
+        return likedReviewRepository.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }
 }

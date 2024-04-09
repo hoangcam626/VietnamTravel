@@ -10,6 +10,7 @@ import com.travel.vietnamtravel.entity.UserInfo;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.UserInfoRepo;
 import com.travel.vietnamtravel.repository.UserRepo;
+import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,7 @@ public class UserInfoServiceImp implements UserInfoService {
     private final UserRepo userRepo;
     private final UserInfoRepo userInfoRepo;
     private final ImageService imageService;
-
-    public UserInfoUpdateSdo update(UserInfoUpdateSdi req) {
+     public UserInfoUpdateSdo update(UserInfoUpdateSdi req) {
         UserInfo userInfo = userInfoRepo.findByUserId(req.getUserId());
 
         String address = req.getAddress();

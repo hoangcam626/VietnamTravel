@@ -18,7 +18,7 @@ public interface LikeReviewRepo extends JpaRepository<LikeReview, Long> {
     List<LikeReview> findByReviewId(Long reviewId);
 
     @Query("SELECT count(l) FROM  LikeReview l WHERE l.reviewId = :reviewId")
-    int countAllByReviewId(Long reviewId);
+    Long countAllByReviewId(Long reviewId);
 
     LikeReview findByUserIDAndReviewId(Long userId, Long reviewID);
     Boolean existsByUserIDAndReviewId(Long userID, Long reviewId);

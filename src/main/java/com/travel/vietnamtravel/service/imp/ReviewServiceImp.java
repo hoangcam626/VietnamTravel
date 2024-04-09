@@ -118,7 +118,7 @@ public class ReviewServiceImp implements ReviewService {
 
         ReviewSelfSdo res = copyProperties(review, ReviewSelfSdo.class);
         res.setCreateBy(userInfoService.shortSelf(UserInfoSelfSdi.of(review.getUserId())));
-        res.setLiked(likedReviewRepository.countAllByReviewId(review.getId()));
+        res.setTotalLike(likedReviewRepository.countAllByReviewId(review.getId()));
         return res;
     }
 
