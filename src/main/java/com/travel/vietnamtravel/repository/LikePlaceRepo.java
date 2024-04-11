@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface LikePlaceRepo extends JpaRepository<LikePlace, Long> {
 
-    @Query("SELECT lp FROM  LikePlace lp WHERE lp.userID = :userId ORDER BY lp.createdAt")
+    @Query("SELECT l FROM  LikePlace l WHERE l.userID = :userId ORDER BY l.createdAt DESC")
     List<LikePlace> findByUserID(Long userId);
 
-    @Query("SELECT count(lp) FROM  LikePlace lp WHERE lp.userID = :userId")
+    @Query("SELECT count(l) FROM  LikePlace l WHERE l.userID = :userId")
     int countLikeByUserId(Long userId);
 
-    @Query("SELECT lp FROM  LikePlace lp WHERE lp.placeId = :placeId ORDER BY lp.createdAt")
+    @Query("SELECT l FROM  LikePlace l WHERE l.placeId = :placeId ORDER BY l.createdAt DESC")
     List<LikePlace> findByPlaceId(Long placeId);
 
-    @Query("SELECT count(lp) FROM  LikePlace lp WHERE lp.placeId = :placeId")
+    @Query("SELECT count(l) FROM  LikePlace l WHERE l.placeId = :placeId")
     Long countLikeByPlaceId(Long placeId);
 
     Boolean existsByUserIDAndPlaceId(Long userId, Long placeId);

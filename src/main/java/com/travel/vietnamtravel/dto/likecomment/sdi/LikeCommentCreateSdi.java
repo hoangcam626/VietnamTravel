@@ -1,11 +1,11 @@
-package com.travel.vietnamtravel.dto.likeplace.sdi;
+package com.travel.vietnamtravel.dto.likecomment.sdi;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class LikePlaceCreateSdi {
+public class LikeCommentCreateSdi {
     private Long likedBy;
-    private Long placeID;
+    private Long commentId;
 }

@@ -11,19 +11,13 @@ import lombok.*;
 @Builder
 
 @Entity
-@Table(name = "liked_review")
+@Table(name = "like_review")
 public class LikeReview extends AbstractAudit {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-
-    @Column(name = "liked_by")
+    @Column(name = "user_id")
     private Long userID;
 
     @Column(name = "review_id")
     private Long reviewId;
 
-//    @Column(name = "created_at")
-//    private LocalDateTime createAt;
 }

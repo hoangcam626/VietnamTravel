@@ -1,7 +1,9 @@
 package com.travel.vietnamtravel.entity.relationship;
 
 import com.travel.vietnamtravel.entity.AbstractAudit;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +15,13 @@ import lombok.Setter;
 @Setter
 
 @Entity
-@Table(name = "like_place")
-public class LikePlace extends AbstractAudit {
+@Table(name = "like_post")
+public class LikePost extends AbstractAudit {
 
     @Column(name = "user_id")
     private Long userID;
 
-    @Column(name = "place_id")
-    private Long placeId;
+    @Column(name = "post_id")
+    private Long postId;
 
 }
