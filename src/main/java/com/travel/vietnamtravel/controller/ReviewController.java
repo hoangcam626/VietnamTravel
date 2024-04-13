@@ -1,14 +1,9 @@
 package com.travel.vietnamtravel.controller;
 
-import com.travel.vietnamtravel.dto.likereview.sdi.LikeReviewCreateSdi;
-import com.travel.vietnamtravel.dto.likereview.sdi.LikeReviewDeleteSdi;
-import com.travel.vietnamtravel.dto.likereview.sdo.LikeReviewCreateSdo;
-import com.travel.vietnamtravel.dto.likereview.sdo.LikeReviewDeleteSdo;
+import com.travel.vietnamtravel.dto.likereview.sdi.*;
+import com.travel.vietnamtravel.dto.likereview.sdo.*;
 import com.travel.vietnamtravel.dto.review.sdi.*;
-import com.travel.vietnamtravel.dto.review.sdo.ReviewCreateSdo;
-import com.travel.vietnamtravel.dto.review.sdo.ReviewDeleteSdo;
-import com.travel.vietnamtravel.dto.review.sdo.ReviewSelfSdo;
-import com.travel.vietnamtravel.dto.review.sdo.ReviewUpdateSdo;
+import com.travel.vietnamtravel.dto.review.sdo.*;
 import com.travel.vietnamtravel.service.LikeReviewService;
 import com.travel.vietnamtravel.service.ReviewService;
 import lombok.AllArgsConstructor;
@@ -56,7 +51,11 @@ public class ReviewController {
     }
 
     @DeleteMapping("/unlike")
-    public ResponseEntity<LikeReviewDeleteSdo> like(@RequestBody LikeReviewDeleteSdi req){
+    public ResponseEntity<LikeReviewDeleteSdo> unlike(@RequestBody LikeReviewDeleteSdi req){
         return ResponseEntity.ok(likeReviewService.unlike(req));
+    }
+    @GetMapping("/favourites")
+    public ResponseEntity<List<ReviewSelfSdo>> favourites(LikeReviewJoinUserSdi req){
+        return ResponseEntity.ok(likeReviewService.favorites(req));
     }
 }

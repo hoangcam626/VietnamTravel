@@ -1,15 +1,9 @@
 package com.travel.vietnamtravel.controller;
 
-import com.travel.vietnamtravel.dto.likepost.sdi.LikePostCreateSdi;
-import com.travel.vietnamtravel.dto.likepost.sdi.LikePostDeleteSdi;
-import com.travel.vietnamtravel.dto.likepost.sdi.LikePostJoinUserSdi;
-import com.travel.vietnamtravel.dto.likepost.sdo.LikePostCreateSdo;
-import com.travel.vietnamtravel.dto.likepost.sdo.LikePostDeleteSdo;
+import com.travel.vietnamtravel.dto.likepost.sdi.*;
+import com.travel.vietnamtravel.dto.likepost.sdo.*;
 import com.travel.vietnamtravel.dto.post.sdi.*;
-import com.travel.vietnamtravel.dto.post.sdo.PostCreateSdo;
-import com.travel.vietnamtravel.dto.post.sdo.PostDeleteSdo;
-import com.travel.vietnamtravel.dto.post.sdo.PostSelfSdo;
-import com.travel.vietnamtravel.dto.post.sdo.PostUpdateSdo;
+import com.travel.vietnamtravel.dto.post.sdo.*;
 import com.travel.vietnamtravel.service.LikePostService;
 import com.travel.vietnamtravel.service.PostService;
 import lombok.AllArgsConstructor;

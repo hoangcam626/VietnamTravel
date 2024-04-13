@@ -21,5 +21,6 @@ public interface LikeCommentRepo extends JpaRepository<LikeComment, Long> {
     Long countLikeByCommentId(Long commentId);
 
     Boolean existsByUserIDAndCommentId(Long userId, Long commentId);
+
     LikeComment findByUserIDAndCommentId(Long userId, Long commentId);
 }

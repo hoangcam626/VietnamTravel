@@ -27,7 +27,7 @@ public class PostSelfSdo {
 
     private Boolean isLike;
 
-    private Long countLike;
+    private Long totalLike;
 
-    private Long countComment;
+    private Long totalComment;
 }

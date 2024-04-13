@@ -21,4 +21,8 @@ public class CommentSelfSdo {
     private Long superCommentId;
 
     private Boolean isLike;
+
+    private Long totalLike;
+
+    private Long totalSubComment;
 }

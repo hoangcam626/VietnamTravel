@@ -9,4 +9,6 @@ public interface PlaceRepo extends JpaRepository<Place, Long> {
     List<Place> findAllByProvinceCode(String provinceCode);
     List<Place> findAllByDistrictCode(String districtCode);
     List<Place> findAllByWardCode(String wardCod);
+
+
 }

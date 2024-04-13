@@ -64,7 +64,7 @@ public class PostServiceImp implements PostService {
         res.setCreateBy(userInfoShortSelf);
         Long loginId = commonService.getIdLogin();
         res.setIsLike(likePostRepo.existsByUserIDAndPostId(loginId, post.getId()));
-        res.setCountLike(likePostRepo.countLikeByPostId(post.getId()));
+        res.setTotalLike(likePostRepo.countLikeByPostId(post.getId()));
         return res;
     }
 

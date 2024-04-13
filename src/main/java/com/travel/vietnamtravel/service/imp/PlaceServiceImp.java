@@ -1,13 +1,7 @@
 package com.travel.vietnamtravel.service.imp;
 
-import com.travel.vietnamtravel.dto.place.sdi.PlaceCreateSdi;
-import com.travel.vietnamtravel.dto.place.sdi.PlaceDeleteSdi;
-import com.travel.vietnamtravel.dto.place.sdi.PlaceSelfSdi;
-import com.travel.vietnamtravel.dto.place.sdi.PlaceUpdateSdi;
-import com.travel.vietnamtravel.dto.place.sdo.PlaceCreateSdo;
-import com.travel.vietnamtravel.dto.place.sdo.PlaceDeleteSdo;
-import com.travel.vietnamtravel.dto.place.sdo.PlaceSelfSdo;
-import com.travel.vietnamtravel.dto.place.sdo.PlaceUpdateSdo;
+import com.travel.vietnamtravel.dto.place.sdi.*;
+import com.travel.vietnamtravel.dto.place.sdo.*;
 import com.travel.vietnamtravel.entity.Place;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikePlaceRepo;
@@ -78,6 +72,16 @@ public class PlaceServiceImp implements PlaceService {
         res.setIsLike(likePlaceRepo.existsByUserIDAndPlaceId(userId, place.getId()));
         res.setTotalLike(likePlaceRepo.countLikeByPlaceId(place.getId()));
 
+        return res;
+    }
+
+    public PlaceRatingSdo showRating(PlaceRatingSdi req) {
+        PlaceRatingSdo res = new PlaceRatingSdo();
+        res.setOneStar(reviewRepo.countRating(req.getId(), 1));
+        res.setTwoStar(reviewRepo.countRating(req.getId(), 2));
+        res.setThreeStar(reviewRepo.countRating(req.getId(), 3));
+        res.setFourStar(reviewRepo.countRating(req.getId(), 4));
+        res.setFiveStar(reviewRepo.countRating(req.getId(), 5));
         return res;
     }
 

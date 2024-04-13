@@ -6,7 +6,9 @@ import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.entity.Comment;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.CommentRepo;
+import com.travel.vietnamtravel.repository.LikeCommentRepo;
 import com.travel.vietnamtravel.service.CommentService;
+import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.UserInfoService;
 import jakarta.transaction.Transactional;
@@ -25,8 +27,10 @@ import static com.travel.vietnamtravel.util.DataUtil.isNullObject;
 @RequiredArgsConstructor
 public class CommentServiceImp implements CommentService {
     private final CommentRepo commentRepo;
+    private final LikeCommentRepo likeCommentRepo;
     private final ImageService imageService;
     private final UserInfoService userInfoService;
+    private final CommonService commonService;
 
     public CommentCreateSdo create(CommentCreateSdi req) {
 
@@ -77,6 +81,10 @@ public class CommentServiceImp implements CommentService {
         Comment comment = getComment(req.getId());
         CommentSelfSdo res = copyProperties(comment, CommentSelfSdo.class);
         res.setCreatedBy(userInfoService.shortSelf(UserInfoSelfSdi.of(req.getId())));
+        Long loginId = commonService.getIdLogin();
+        res.setIsLike(likeCommentRepo.existsByUserIDAndCommentId(loginId, comment.getId()));
+        res.setTotalLike(likeCommentRepo.countLikeByCommentId(comment.getId()));
+        res.setTotalSubComment(commentRepo.countSubComment(comment.getId()));
         return res;
     }
 
@@ -99,7 +107,7 @@ public class CommentServiceImp implements CommentService {
         return res;
     }
     public List<CommentSelfSdo> subComments(CommentSelfSdi req){
-        List<Long> commentsId = commentRepo.findBySuperCommentId(req.getId());
+        List<Long> commentsId = commentRepo.findSubComment(req.getId());
         List<CommentSelfSdo> res = new ArrayList<>();
         commentsId.stream()
                 .map(id -> self(CommentSelfSdi.of(id)))

@@ -17,4 +17,7 @@ public interface ReviewRepo extends JpaRepository<Review, Long> {
 
     @Query("SELECT count(r) FROM Review r WHERE r.placeId =: placeId")
     Long countReviewByPlaceId(Long place);
+
+    @Query("SELECT count(r) FROM Review r WHERE r.placeId =: placeId and r.rating =: rating")
+    Long countRating(Long placeId, int rating);
 }

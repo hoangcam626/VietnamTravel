@@ -1,18 +1,9 @@
 package com.travel.vietnamtravel.controller;
 
-import com.travel.vietnamtravel.dto.likeplace.sdi.LikePlaceCreateSdi;
-import com.travel.vietnamtravel.dto.likeplace.sdi.LikePlaceDeleteSdi;
-import com.travel.vietnamtravel.dto.likeplace.sdi.LikePlaceJoinUserSdi;
-import com.travel.vietnamtravel.dto.likeplace.sdo.LikePlaceCreateSdo;
-import com.travel.vietnamtravel.dto.likeplace.sdo.LikePlaceDeleteSdo;
-import com.travel.vietnamtravel.dto.place.sdi.PlaceCreateSdi;
-import com.travel.vietnamtravel.dto.place.sdi.PlaceDeleteSdi;
-import com.travel.vietnamtravel.dto.place.sdi.PlaceSelfSdi;
-import com.travel.vietnamtravel.dto.place.sdi.PlaceUpdateSdi;
-import com.travel.vietnamtravel.dto.place.sdo.PlaceCreateSdo;
-import com.travel.vietnamtravel.dto.place.sdo.PlaceDeleteSdo;
-import com.travel.vietnamtravel.dto.place.sdo.PlaceSelfSdo;
-import com.travel.vietnamtravel.dto.place.sdo.PlaceUpdateSdo;
+import com.travel.vietnamtravel.dto.likeplace.sdi.*;
+import com.travel.vietnamtravel.dto.likeplace.sdo.*;
+import com.travel.vietnamtravel.dto.place.sdi.*;
+import com.travel.vietnamtravel.dto.place.sdo.*;
 import com.travel.vietnamtravel.service.LikePlaceService;
 import com.travel.vietnamtravel.service.PlaceService;
 import lombok.AllArgsConstructor;
