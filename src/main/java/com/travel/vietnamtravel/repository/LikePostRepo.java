@@ -15,10 +15,10 @@ public interface LikePostRepo extends JpaRepository<LikePost, Long> {
     int countLikeByUserId(Long userId);
 
     @Query("SELECT l FROM  LikePost l WHERE l.postId = :postId ORDER BY l.createdAt DESC")
-    List<LikePost> findByPlaceId(Long postId);
+    List<LikePost> findByPostId(Long postId);
 
     @Query("SELECT count(l) FROM  LikePost l WHERE l.postId = :postId")
-    Long countLikeByPlaceId(Long postId);
+    Long countLikeByPostId(Long postId);
 
     Boolean existsByUserIDAndPostId(Long userId, Long postId);
 

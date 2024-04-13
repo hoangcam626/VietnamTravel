@@ -9,7 +9,10 @@ import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import com.travel.vietnamtravel.entity.Post;
 import com.travel.vietnamtravel.exception.CustomException;
+import com.travel.vietnamtravel.repository.CommentRepo;
+import com.travel.vietnamtravel.repository.LikePostRepo;
 import com.travel.vietnamtravel.repository.PostRepo;
+import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.PostService;
 import com.travel.vietnamtravel.service.UserInfoService;
@@ -28,8 +31,12 @@ import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 @RequiredArgsConstructor
 public class PostServiceImp implements PostService {
     private final PostRepo postRepo;
+    private final CommentRepo commentRepo;
+    private final LikePostRepo likePostRepo;
     private final ImageService imageService;
     private final UserInfoService userInfoService;
+    private final CommonService commonService;
+
     public PostCreateSdo create(PostCreateSdi req){
         Post postImage = copyProperties(req, Post.class);
         Long imageId = imageService.uploadFile(req.getImage());
@@ -51,10 +58,13 @@ public class PostServiceImp implements PostService {
         return PostUpdateSdo.of(Boolean.TRUE);
     }
     public PostSelfSdo self(PostSelfSdi req){
-        Post postImage = getPost(req.getId());
+        Post post = getPost(req.getId());
         PostSelfSdo res = copyProperties(req, PostSelfSdo.class);
-        UserInfoShortSelfSdo userInfoShortSelf = userInfoService.shortSelf(UserInfoSelfSdi.of(postImage.getCreatedBy()));
+        UserInfoShortSelfSdo userInfoShortSelf = userInfoService.shortSelf(UserInfoSelfSdi.of(post.getCreatedBy()));
         res.setCreateBy(userInfoShortSelf);
+        Long loginId = commonService.getIdLogin();
+        res.setIsLike(likePostRepo.existsByUserIDAndPostId(loginId, post.getId()));
+        res.setCountLike(likePostRepo.countLikeByPostId(post.getId()));
         return res;
     }
 

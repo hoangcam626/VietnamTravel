@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class LikePlaceCreateSdi {
     private Long likedBy;
-    private Long placeID;
+    private Long placeId;
 }

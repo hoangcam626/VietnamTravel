@@ -23,21 +23,21 @@ import java.util.List;
 public class ImageController {
     private final ImageService imageService;
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImage(@RequestParam("req") MultipartFile req) {
 
         Long imgId = imageService.uploadFile(req);
         return ResponseEntity.ok("Success: " + imgId);
     }
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/upload-images")
     public ResponseEntity<List<Long>> uploadImages(@RequestParam("reqs") MultipartFile[] reqs) {
 
         return ResponseEntity.ok(imageService.uploadFiles(reqs));
     }
 
-    @GetMapping
+    @GetMapping("/resource")
     public ResponseEntity<Resource> getImage(@RequestParam("imageId") Long id) throws IOException {
 
         ImageSdo imageSdo = imageService.getResource(id);

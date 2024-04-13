@@ -37,7 +37,7 @@ public class LikePlaceServiceImp implements LikePlaceService {
 
     public LikePlaceCreateSdo like(LikePlaceCreateSdi req) {
         req.setLikedBy(commonService.getIdLogin());
-        if (likePlaceRepo.existsByUserIDAndPlaceId(req.getLikedBy(), req.getPlaceID())) {
+        if (likePlaceRepo.existsByUserIDAndPlaceId(req.getLikedBy(), req.getPlaceId())) {
 //            unlike(LikedReviewDeleteSdi.of(req.getLikedBy(), req.getReviewId()));
             throw new CustomException(ERROR_ALREADY_EXIT);
         }

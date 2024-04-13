@@ -1,10 +1,16 @@
 package com.travel.vietnamtravel.controller;
 
+import com.travel.vietnamtravel.dto.likepost.sdi.LikePostCreateSdi;
+import com.travel.vietnamtravel.dto.likepost.sdi.LikePostDeleteSdi;
+import com.travel.vietnamtravel.dto.likepost.sdi.LikePostJoinUserSdi;
+import com.travel.vietnamtravel.dto.likepost.sdo.LikePostCreateSdo;
+import com.travel.vietnamtravel.dto.likepost.sdo.LikePostDeleteSdo;
 import com.travel.vietnamtravel.dto.post.sdi.*;
 import com.travel.vietnamtravel.dto.post.sdo.PostCreateSdo;
 import com.travel.vietnamtravel.dto.post.sdo.PostDeleteSdo;
 import com.travel.vietnamtravel.dto.post.sdo.PostSelfSdo;
 import com.travel.vietnamtravel.dto.post.sdo.PostUpdateSdo;
+import com.travel.vietnamtravel.service.LikePostService;
 import com.travel.vietnamtravel.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +23,7 @@ import java.util.List;
 @RequestMapping("/api/v1/post")
 public class PostController {
     private final PostService postService;
-
+    private final LikePostService likePostService;
     @PostMapping
     public ResponseEntity<PostCreateSdo> create(@RequestBody PostCreateSdi req){
         return ResponseEntity.ok(postService.create(req));
@@ -48,5 +54,20 @@ public class PostController {
     @GetMapping("/posts/in-place")
     public ResponseEntity<List<PostSelfSdo>> postsInPlace(@RequestBody PostJoinPlaceSdi req){
         return ResponseEntity.ok(postService.postsInPlace(req));
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<LikePostCreateSdo> like(LikePostCreateSdi req){
+        return ResponseEntity.ok(likePostService.like(req));
+    }
+
+    @DeleteMapping("/unlike")
+    public ResponseEntity<LikePostDeleteSdo> like(LikePostDeleteSdi req){
+        return ResponseEntity.ok(likePostService.unlike(req));
+    }
+
+    @GetMapping("/favourites")
+    public ResponseEntity<List<PostSelfSdo>> favourites(LikePostJoinUserSdi req){
+        return ResponseEntity.ok(likePostService.favorites(req));
     }
 }

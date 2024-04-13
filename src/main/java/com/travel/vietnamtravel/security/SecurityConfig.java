@@ -1,6 +1,5 @@
 package com.travel.vietnamtravel.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,8 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    UserDetailsServiceImp userDetailsService;
+    private final UserDetailsServiceImp userDetailsService;
+
+    public SecurityConfig(UserDetailsServiceImp userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -51,8 +53,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api/image/**").permitAll()
-                                .requestMatchers("/api/icon/**").permitAll()
+                                .requestMatchers("/api/v1/image/resource/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 

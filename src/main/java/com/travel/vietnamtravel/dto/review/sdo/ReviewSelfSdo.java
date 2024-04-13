@@ -26,4 +26,6 @@ public class ReviewSelfSdo {
     private Timestamp updatedAt;
 
     private Long totalLike;
+
+    private Boolean isLike;
 }
