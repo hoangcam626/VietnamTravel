@@ -4,7 +4,6 @@ import com.travel.vietnamtravel.dto.likereview.sdi.*;
 import com.travel.vietnamtravel.dto.likereview.sdo.*;
 import com.travel.vietnamtravel.dto.review.sdi.*;
 import com.travel.vietnamtravel.dto.review.sdo.*;
-import com.travel.vietnamtravel.service.LikeReviewService;
 import com.travel.vietnamtravel.service.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -5,7 +5,6 @@ import com.travel.vietnamtravel.dto.comment.sdo.*;
 import com.travel.vietnamtravel.dto.likecomment.sdi.*;
 import com.travel.vietnamtravel.dto.likecomment.sdo.*;
 import com.travel.vietnamtravel.service.CommentService;
-import com.travel.vietnamtravel.service.LikeCommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/v1/comment")
 public class CommentController {
     private final CommentService commentService;
-    private final LikeCommentService likeCommentService;
     @PostMapping
     public ResponseEntity<CommentCreateSdo> create(@RequestBody CommentCreateSdi req){
         return ResponseEntity.ok(commentService.create(req));
@@ -53,17 +51,17 @@ public class CommentController {
     }
     @PostMapping("/like")
     public ResponseEntity<LikeCommentCreateSdo> like(LikeCommentCreateSdi req){
-        return ResponseEntity.ok(likeCommentService.like(req));
+        return ResponseEntity.ok(commentService.like(req));
     }
 
     @DeleteMapping("/unlike")
     public ResponseEntity<LikeCommentDeleteSdo> like(LikeCommentDeleteSdi req){
-        return ResponseEntity.ok(likeCommentService.unlike(req));
+        return ResponseEntity.ok(commentService.unlike(req));
     }
 
     @GetMapping("/favourites")
     public ResponseEntity<List<CommentSelfSdo>> favourites(LikeCommentJoinUserSdi req){
-        return ResponseEntity.ok(likeCommentService.favorites(req));
+        return ResponseEntity.ok(commentService.favorites(req));
     }
 
 }

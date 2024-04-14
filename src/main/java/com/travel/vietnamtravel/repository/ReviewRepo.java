@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface ReviewRepo extends JpaRepository<Review, Long> {
 
-    List<Review> findAllByUserId(Long userId);
+    @Query("SELECT r.id FROM Review r WHERE r.userId =: userId")
+    List<Long> findAllByUserId(Long userId);
 
-    List<Review> findAllByPlaceId(Long placeId);
+    @Query("SELECT r.id FROM Review r WHERE r.placeId =: placeId")
+    List<Long> findAllByPlaceId(Long placeId);
 
     @Query("SELECT sum(r.rating)/count(r) FROM Review r WHERE r.placeId =: placeId")
     Double rating(Long placeId);

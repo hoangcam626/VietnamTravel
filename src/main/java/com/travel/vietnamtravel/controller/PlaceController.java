@@ -4,7 +4,6 @@ import com.travel.vietnamtravel.dto.likeplace.sdi.*;
 import com.travel.vietnamtravel.dto.likeplace.sdo.*;
 import com.travel.vietnamtravel.dto.place.sdi.*;
 import com.travel.vietnamtravel.dto.place.sdo.*;
-import com.travel.vietnamtravel.service.LikePlaceService;
 import com.travel.vietnamtravel.service.PlaceService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/v1/place")
 public class PlaceController {
     private final PlaceService placeService;
-    private final LikePlaceService likePlaceService;
     @PostMapping
     public ResponseEntity<PlaceCreateSdo> create( PlaceCreateSdi req){
         return ResponseEntity.ok(placeService.create(req));
@@ -38,16 +36,16 @@ public class PlaceController {
 
     @PostMapping("/like")
     public ResponseEntity<LikePlaceCreateSdo> like( LikePlaceCreateSdi req){
-        return ResponseEntity.ok(likePlaceService.like(req));
+        return ResponseEntity.ok(placeService.like(req));
     }
 
     @DeleteMapping("/unlike")
     public ResponseEntity<LikePlaceDeleteSdo> like( LikePlaceDeleteSdi req){
-        return ResponseEntity.ok(likePlaceService.unlike(req));
+        return ResponseEntity.ok(placeService.unlike(req));
     }
 
     @GetMapping("/favourites")
     public ResponseEntity<List<PlaceSelfSdo>> favourites(LikePlaceJoinUserSdi req){
-        return ResponseEntity.ok(likePlaceService.favorites(req));
+        return ResponseEntity.ok(placeService.favorites(req));
     }
 }
