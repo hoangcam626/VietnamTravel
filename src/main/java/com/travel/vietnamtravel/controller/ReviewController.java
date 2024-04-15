@@ -16,26 +16,25 @@ import java.util.List;
 @RequestMapping("/api/v1/review")
 public class ReviewController {
     private final ReviewService reviewService;
-    private final LikeReviewService likeReviewService;
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ReviewCreateSdo> create(@RequestBody ReviewCreateSdi req){
         return ResponseEntity.ok(reviewService.create(req));
     }
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<ReviewUpdateSdo> update(@RequestBody ReviewUpdateSdi req){
         return ResponseEntity.ok(reviewService.update(req));
     }
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<ReviewDeleteSdo> delete(@RequestBody ReviewDeleteSdi req){
         return ResponseEntity.ok(reviewService.delete(req));
     }
 
-    @GetMapping
+    @GetMapping("/self")
     public ResponseEntity<ReviewSelfSdo> self(@RequestBody ReviewSelfSdi req){
         return ResponseEntity.ok(reviewService.self(req));
     }
 
-    @GetMapping("/reviews/creat-by")
+    @GetMapping("/reviews/create-by")
     public ResponseEntity<List<ReviewSelfSdo>> getReviewsCreateBy(@RequestBody ReviewJoinUserSdi req){
         return ResponseEntity.ok(reviewService.getReviewsCreateBy(req));
     }
@@ -46,15 +45,15 @@ public class ReviewController {
 
     @PostMapping("/like")
     public ResponseEntity<LikeReviewCreateSdo> like(@RequestBody LikeReviewCreateSdi req){
-        return ResponseEntity.ok(likeReviewService.like(req));
+        return ResponseEntity.ok(reviewService.like(req));
     }
 
     @DeleteMapping("/unlike")
     public ResponseEntity<LikeReviewDeleteSdo> unlike(@RequestBody LikeReviewDeleteSdi req){
-        return ResponseEntity.ok(likeReviewService.unlike(req));
+        return ResponseEntity.ok(reviewService.unlike(req));
     }
     @GetMapping("/favourites")
     public ResponseEntity<List<ReviewSelfSdo>> favourites(LikeReviewJoinUserSdi req){
-        return ResponseEntity.ok(likeReviewService.favorites(req));
+        return ResponseEntity.ok(reviewService.favorites(req));
     }
 }

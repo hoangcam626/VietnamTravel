@@ -16,20 +16,20 @@ import java.util.List;
 @RequestMapping("/api/v1/place")
 public class PlaceController {
     private final PlaceService placeService;
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<PlaceCreateSdo> create( PlaceCreateSdi req){
         return ResponseEntity.ok(placeService.create(req));
     }
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<PlaceUpdateSdo> update( PlaceUpdateSdi req){
         return ResponseEntity.ok(placeService.update(req));
     }
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<PlaceDeleteSdo> delete( PlaceDeleteSdi req){
         return ResponseEntity.ok(placeService.delete(req));
     }
 
-    @GetMapping
+    @GetMapping("/self")
     public ResponseEntity<PlaceSelfSdo> self( PlaceSelfSdi req){
         return ResponseEntity.ok(placeService.self(req));
     }

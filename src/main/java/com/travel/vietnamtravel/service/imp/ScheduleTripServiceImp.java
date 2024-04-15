@@ -31,7 +31,7 @@ public class ScheduleTripServiceImp  implements ScheduleTripService {
         ScheduleTrip scheduleTrip = copyProperties(req, ScheduleTrip.class);
 
         Long userId = commonService.getIdLogin();
-        scheduleTrip.setUserId(userId);
+        scheduleTrip.setCreatedBy(userId);
 
         if (req.getImageLabel() != null) {
             Long imageId = imageService.uploadFile(req.getImageLabel());

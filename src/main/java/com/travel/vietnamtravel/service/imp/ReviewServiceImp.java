@@ -1,20 +1,17 @@
 package com.travel.vietnamtravel.service.imp;
 
-import com.travel.vietnamtravel.dto.likereview.sdi.LikeJoinReviewSdi;
-import com.travel.vietnamtravel.dto.likereview.sdi.LikeReviewCreateSdi;
-import com.travel.vietnamtravel.dto.likereview.sdi.LikeReviewDeleteSdi;
-import com.travel.vietnamtravel.dto.likereview.sdi.LikeReviewJoinUserSdi;
-import com.travel.vietnamtravel.dto.likereview.sdo.LikeReviewCreateSdo;
-import com.travel.vietnamtravel.dto.likereview.sdo.LikeReviewDeleteSdo;
+import com.travel.vietnamtravel.dto.likereview.sdi.*;
+import com.travel.vietnamtravel.dto.likereview.sdo.*;
 import com.travel.vietnamtravel.dto.review.sdi.*;
 import com.travel.vietnamtravel.dto.review.sdo.*;
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
-import com.travel.vietnamtravel.entity.media.Image;
 import com.travel.vietnamtravel.entity.Review;
 import com.travel.vietnamtravel.entity.relationship.LikeReview;
+import com.travel.vietnamtravel.entity.relationship.ReviewImage;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikeReviewRepo;
+import com.travel.vietnamtravel.repository.ReviewImageRepo;
 import com.travel.vietnamtravel.repository.ReviewRepo;
 import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
@@ -29,13 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.travel.vietnamtravel.constant.Error.*;
-import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DataUtil.*;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ReviewServiceImp implements ReviewService {
 
     private final ReviewRepo reviewRepo;
+    private final ReviewImageRepo reviewImageRepo;
     private final LikeReviewRepo likeReviewRepo;
     private final ImageService imageService;
     private final UserInfoService userInfoService;
@@ -43,55 +42,61 @@ public class ReviewServiceImp implements ReviewService {
 
     public ReviewCreateSdo create(ReviewCreateSdi req) {
 
-        Long loginId= commonService.getIdLogin();
+        Long loginId = commonService.getIdLogin();
         req.setCreateBy(loginId);
         Review review = copyProperties(req, Review.class);
 
-        List<Long> imagesID = imageService.uploadFiles(req.getImage());
-        List<Image> images = new ArrayList<>();
-        for (Long id : imagesID) {
-            Image image = imageService.getImage(id);
-            images.add(image);
-        }
-        review.setImages(images);
-
+        List<Long> imageIds = imageService.uploadFiles(req.getImage());
         reviewRepo.save(review);
+        imageIds.stream()
+                .map(imageId -> ReviewImage.builder()
+                        .imageId(imageId)
+                        .reviewId(review.getId()).build())
+                .forEach(reviewImageRepo::save);
         return ReviewCreateSdo.of(review.getId());
     }
 
     @Transactional
     public ReviewUpdateSdo update(ReviewUpdateSdi req) {
-        Long loginId= commonService.getIdLogin();
+
+        Long loginId = commonService.getIdLogin();
         Review review = getReview(req.getId());
-        if(!loginId.equals(review.getUserId())){
+        if (!loginId.equals(review.getCreatedBy())) {
             throw new CustomException(ERROR_NOT_ROLE);
         }
 
-        List<Image> images = review.getImages();
-
-        if (!req.getDeleteImagesId().isEmpty()) {
-
-            List<Long> deleteImagesId = req.getDeleteImagesId();
-            List<Image> deleteImages = new ArrayList<>();
-            for (Long id : deleteImagesId) {
-                Image image = imageService.getImage(id);
-                deleteImages.add(image);
-            }
-
-            for (Image image : deleteImages) {
-                if (!images.contains(image)) {
-                    throw new CustomException(ERROR_NOT_EXIT);
-                }
-                images.remove(image);
-            }
+//        List<Image> images = review.getImages();
+//
+//        if (!req.getDeleteImagesId().isEmpty()) {
+//
+//            List<Long> deleteImagesId = req.getDeleteImagesId();
+//            List<Image> deleteImages = new ArrayList<>();
+//            for (Long id : deleteImagesId) {
+//                Image image = imageService.getImage(id);
+//                deleteImages.add(image);
+//            }
+//
+//            for (Image image : deleteImages) {
+//                if (!images.contains(image)) {
+//                    throw new CustomException(ERROR_NOT_EXIT);
+//                }
+//                images.remove(image);
+//            }
+//        }
+        List<ReviewImage> reviewImages = getReviewImage(review.getId());
+        if (!isNullOrEmpty(reviewImages)) {
+            reviewImages.stream().map(ReviewImage::getImageId)
+                    .forEach(imageService::delete);
+            reviewImageRepo.deleteAll(reviewImages);
         }
 
-        if (req.getNewImages() != null) {
+        if (!isNullObject(req.getNewImages())) {
             List<Long> newImagesId = imageService.uploadFiles(req.getNewImages());
-            for (Long id : newImagesId) {
-                Image image = imageService.getImage(id);
-                images.add(image);
-            }
+            newImagesId.stream()
+                    .map(imageId -> ReviewImage.builder()
+                            .imageId(imageId)
+                            .reviewId(review.getId()).build())
+                    .forEach(reviewImageRepo::save);
         }
 
         review.setRating(req.getRating());
@@ -112,7 +117,8 @@ public class ReviewServiceImp implements ReviewService {
         Review review = getReview(req.getId());
 
         ReviewSelfSdo res = copyProperties(review, ReviewSelfSdo.class);
-        res.setCreateBy(userInfoService.shortSelf(UserInfoSelfSdi.of(review.getUserId())));
+        res.setImagesId(getImageIds(review.getId()));
+        res.setCreateBy(userInfoService.shortSelf(UserInfoSelfSdi.of(review.getCreatedBy())));
         res.setTotalLike(likeReviewRepo.countAllByReviewId(review.getId()));
         Long loginId = commonService.getIdLogin();
         res.setIsLike(likeReviewRepo.existsByUserIDAndReviewId(loginId, review.getId()));
@@ -186,7 +192,14 @@ public class ReviewServiceImp implements ReviewService {
         return reviewRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }
 
-    public List<ReviewSelfSdo> listSelf(List<Long> req){
+    public List<ReviewImage> getReviewImage(Long id) {
+        return reviewImageRepo.findByReviewId(id);
+    }
+    public List<Long> getImageIds(Long id) {
+        return reviewImageRepo.findImageByReviewId(id);
+    }
+
+    public List<ReviewSelfSdo> listSelf(List<Long> req) {
         List<ReviewSelfSdo> res = new ArrayList<>();
         req.stream()
                 .map(id -> self(ReviewSelfSdi.of(id)))

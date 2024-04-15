@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReviewRepo extends JpaRepository<Review, Long> {
 
-    @Query("SELECT r.id FROM Review r WHERE r.userId =: userId")
+    @Query("SELECT r.id FROM Review r WHERE r.createdBy =: userId")
     List<Long> findAllByUserId(Long userId);
 
     @Query("SELECT r.id FROM Review r WHERE r.placeId =: placeId")

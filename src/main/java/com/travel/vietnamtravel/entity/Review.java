@@ -1,14 +1,10 @@
 package com.travel.vietnamtravel.entity;
 
-import com.travel.vietnamtravel.entity.media.Image;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,8 +19,8 @@ public class Review extends AbstractAudit{
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
 
-    @Column(name = "createBy")
-    private Long userId;
+    @Column(name = "created_by")
+    private Long createdBy;
 
     @Column(name = "place_id")
     private Long placeId;
@@ -34,9 +30,6 @@ public class Review extends AbstractAudit{
 
     @Column(name = "description")
     private String description;
-
-    @OneToMany
-    private List<Image> images = new ArrayList<>();
 
 //    @Column(name = "created_at")
 //    private LocalDateTime createAt;

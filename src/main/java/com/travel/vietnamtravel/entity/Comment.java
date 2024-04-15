@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "comment")
 public class Comment extends AbstractAudit{
 
-    @Column(name = "creator_By")
+    @Column(name = "created_by")
     private Long createdBy;
 
     @Column(name = "content")

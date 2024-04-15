@@ -16,25 +16,25 @@ import java.util.List;
 @RequestMapping("/api/v1/post")
 public class PostController {
     private final PostService postService;
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<PostCreateSdo> create(@RequestBody PostCreateSdi req){
         return ResponseEntity.ok(postService.create(req));
     }
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<PostUpdateSdo> update(@RequestBody PostUpdateSdi req){
         return ResponseEntity.ok(postService.update(req));
     }
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<PostDeleteSdo> delete(@RequestBody PostDeleteSdi req){
         return ResponseEntity.ok(postService.delete(req));
     }
 
-    @GetMapping
+    @GetMapping("/self")
     public ResponseEntity<PostSelfSdo> self(@RequestBody PostSelfSdi req){
         return ResponseEntity.ok(postService.self(req));
     }
 
-    @GetMapping("/posts/all")
+    @GetMapping("/posts")
     public ResponseEntity<List<PostSelfSdo>> allPosts(){
         return ResponseEntity.ok(postService.allPosts());
     }

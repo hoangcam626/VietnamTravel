@@ -1,6 +1,7 @@
 package com.travel.vietnamtravel.controller;
 
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
+import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoUpdateAvatarSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoUpdateSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoSelfSdo;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
@@ -16,9 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserInfoService userInfoService;
 
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<UserInfoUpdateSdo> update (UserInfoUpdateSdi req){
         return ResponseEntity.ok(userInfoService.update(req));
+    }
+    @PutMapping("/update-avatar")
+    public ResponseEntity<UserInfoUpdateSdo> updateAvatar(UserInfoUpdateAvatarSdi req){
+        return ResponseEntity.ok(userInfoService.updateAvatar(req));
     }
     @GetMapping("/self")
     public  ResponseEntity<UserInfoSelfSdo> self(UserInfoSelfSdi req){

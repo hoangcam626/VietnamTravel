@@ -1,21 +1,16 @@
 package com.travel.vietnamtravel.service.imp;
 
-import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
-import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoUpdateSdi;
-import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoSelfSdo;
-import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
-import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoUpdateSdo;
+import com.travel.vietnamtravel.dto.userinfo.sdi.*;
+import com.travel.vietnamtravel.dto.userinfo.sdo.*;
 import com.travel.vietnamtravel.entity.User;
 import com.travel.vietnamtravel.entity.UserInfo;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.UserInfoRepo;
 import com.travel.vietnamtravel.repository.UserRepo;
-import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -51,15 +46,15 @@ public class UserInfoServiceImp implements UserInfoService {
     }
 
 
-    public UserInfoUpdateSdo updateAvatar(Long userId, MultipartFile image) {
+    public UserInfoUpdateSdo updateAvatar(UserInfoUpdateAvatarSdi req) {
 
-        UserInfo userInfo = userInfoRepo.findByUserId(userId);
+        UserInfo userInfo = userInfoRepo.findByUserId(req.getUserId());
 
         if (userInfo.getAvatarId() != null) {
             imageService.delete(userInfo.getAvatarId());
         }
 
-        Long avatarId = imageService.uploadFile(image);
+        Long avatarId = imageService.uploadFile(req.getImage());
         userInfo.setAvatarId(avatarId);
 
         userInfoRepo.save(userInfo);

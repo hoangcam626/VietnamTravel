@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +19,7 @@ public class ScheduleTrip extends AbstractAudit{
 //    private Long id;
 
     @Column(name = "user_id")
-    private Long userId;
+    private Long createdBy;
 
     @Column(name = "name_schedule")
     private String nameSchedule;
