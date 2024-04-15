@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import static com.travel.vietnamtravel.util.DataUtil.safeToInt;
 
@@ -30,11 +31,11 @@ public abstract class AbstractAudit implements Serializable {
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
-    private Timestamp createdAt;
+    private LocalDate createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at", insertable = false)
-    private Timestamp updatedAt;
+    private LocalDate updatedAt;
 //
 //    @CreatedBy
 //    @Column(name = "created_by", updatable = false)

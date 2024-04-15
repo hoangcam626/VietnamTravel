@@ -18,7 +18,7 @@ public class UserInfoSelfSdo {
     private Long userId;
     private String username;
 
-    public void setUrlAvatar(long avatarId) {
-        this.urlAvatar = "/image/"+avatarId;
-    }
+//    public void setUrlAvatar(long avatarId) {
+//        this.urlAvatar = "/image/"+avatarId;
+//    }
 }
