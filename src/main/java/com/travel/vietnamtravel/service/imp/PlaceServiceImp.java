@@ -1,13 +1,10 @@
 package com.travel.vietnamtravel.service.imp;
 
-import com.travel.vietnamtravel.dto.likeplace.sdi.LikeJoinPlaceSdi;
-import com.travel.vietnamtravel.dto.likeplace.sdi.LikePlaceCreateSdi;
-import com.travel.vietnamtravel.dto.likeplace.sdi.LikePlaceDeleteSdi;
-import com.travel.vietnamtravel.dto.likeplace.sdi.LikePlaceJoinUserSdi;
-import com.travel.vietnamtravel.dto.likeplace.sdo.LikePlaceCreateSdo;
-import com.travel.vietnamtravel.dto.likeplace.sdo.LikePlaceDeleteSdo;
+import com.travel.vietnamtravel.dto.likeplace.sdi.*;
+import com.travel.vietnamtravel.dto.likeplace.sdo.*;
 import com.travel.vietnamtravel.dto.place.sdi.*;
 import com.travel.vietnamtravel.dto.place.sdo.*;
+
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import com.travel.vietnamtravel.entity.Place;
@@ -20,7 +17,6 @@ import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.PlaceService;
 import com.travel.vietnamtravel.service.UserInfoService;
-import com.travel.vietnamtravel.util.DataUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,12 +98,14 @@ public class PlaceServiceImp implements PlaceService {
     }
 
     public LikePlaceCreateSdo like(LikePlaceCreateSdi req) {
-        req.setLikedBy(commonService.getIdLogin());
-        if (likePlaceRepo.existsByUserIDAndPlaceId(req.getLikedBy(), req.getPlaceId())) {
-//            unlike(LikedReviewDeleteSdi.of(req.getLikedBy(), req.getReviewId()));
+        Long loginId = commonService.getIdLogin();
+        if (likePlaceRepo.existsByUserIDAndPlaceId(loginId, req.getPlaceId())) {
             throw new CustomException(ERROR_ALREADY_EXIT);
         }
-        LikePlace likePlace = DataUtil.copyProperties(req, LikePlace.class);
+        LikePlace likePlace = LikePlace.builder()
+                .userId(loginId)
+                .placeId(req.getPlaceId())
+                .build();
         likePlaceRepo.save(likePlace);
         return LikePlaceCreateSdo.of(likePlace.getId());
     }
@@ -115,13 +113,12 @@ public class PlaceServiceImp implements PlaceService {
     public LikePlaceDeleteSdo unlike(LikePlaceDeleteSdi req) {
 
         Long loginId = commonService.getIdLogin();
-        LikePlace likePlace = getLikePlace(req.getId());
-        if (likePlace.getUserID().equals(loginId)) {
-            likePlaceRepo.delete(likePlace);
-            return LikePlaceDeleteSdo.of(Boolean.TRUE);
+        if (!likePlaceRepo.existsByUserIDAndPlaceId(loginId, req.getPlaceId())) {
+            throw new CustomException(ERROR_NOT_EXIT);
         }
-        throw new CustomException(ERROR_NOT_EXIT);
-
+        LikePlace delete = likePlaceRepo.findByUserIDAndPlaceId(loginId, req.getPlaceId());
+        likePlaceRepo.delete(delete);
+        return LikePlaceDeleteSdo.of(Boolean.TRUE);
     }
 
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinPlaceSdi req) {
@@ -130,7 +127,7 @@ public class PlaceServiceImp implements PlaceService {
         List<UserInfoShortSelfSdo> res = new ArrayList<>();
 
         likePlaces.stream()
-                .map(lp -> userInfoService.shortSelf(UserInfoSelfSdi.of(lp.getUserID())))
+                .map(lp -> userInfoService.shortSelf(UserInfoSelfSdi.of(lp.getUserId())))
                 .forEach(res::add);
         return res;
     }
@@ -144,10 +141,6 @@ public class PlaceServiceImp implements PlaceService {
                 .forEach(res::add);
 
         return res;
-    }
-
-    public LikePlace getLikePlace(Long id) {
-        return likePlaceRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }
 
     public Place getPlace(Long id) {

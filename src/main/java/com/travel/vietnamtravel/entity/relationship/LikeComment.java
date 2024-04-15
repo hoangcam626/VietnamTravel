@@ -4,22 +4,19 @@ import com.travel.vietnamtravel.entity.AbstractAudit;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-
+@Builder
 @Entity
 @Table(name = "liked_Comment")
 public class LikeComment extends AbstractAudit {
 
     @Column(name = "user_id")
-    private Long userID;
+    private Long userId;
 
     @Column(name = "comment_id")
     private Long commentId;

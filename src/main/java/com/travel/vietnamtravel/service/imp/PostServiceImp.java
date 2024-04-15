@@ -23,7 +23,6 @@ import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.PostService;
 import com.travel.vietnamtravel.service.UserInfoService;
-import com.travel.vietnamtravel.util.DataUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +71,7 @@ public class PostServiceImp implements PostService {
         UserInfoShortSelfSdo userInfoShortSelf = userInfoService.shortSelf(UserInfoSelfSdi.of(post.getCreatedBy()));
         res.setCreateBy(userInfoShortSelf);
         Long loginId = commonService.getIdLogin();
-        res.setIsLike(likePostRepo.existsByUserIDAndPostId(loginId, post.getId()));
+        res.setIsLike(likePostRepo.existsByUserIdAndPostId(loginId, post.getId()));
         res.setTotalLike(likePostRepo.countLikeByPostId(post.getId()));
         return res;
     }
@@ -89,12 +88,14 @@ public class PostServiceImp implements PostService {
         return listSelf(postImageIds);
     }
     public LikePostCreateSdo like(LikePostCreateSdi req) {
-        req.setLikedBy(commonService.getIdLogin());
-        if (likePostRepo.existsByUserIDAndPostId(req.getLikedBy(), req.getPostId())) {
-//            unlike(LikedReviewDeleteSdi.of(req.getLikedBy(), req.getReviewId()));
+        Long loginId = commonService.getIdLogin();
+        if (likePostRepo.existsByUserIdAndPostId(loginId, req.getPostId())) {
             throw new CustomException(ERROR_ALREADY_EXIT);
         }
-        LikePost likePost = DataUtil.copyProperties(req, LikePost.class);
+        LikePost likePost = LikePost.builder()
+                .userId(loginId)
+                .postId(req.getPostId())
+                .build();
         likePostRepo.save(likePost);
         return LikePostCreateSdo.of(likePost.getId());
     }
@@ -102,13 +103,12 @@ public class PostServiceImp implements PostService {
     public LikePostDeleteSdo unlike(LikePostDeleteSdi req) {
 
         Long loginId = commonService.getIdLogin();
-        LikePost likePost = getLikePost(req.getId());
-        if (likePost.getUserID().equals(loginId)) {
-            likePostRepo.delete(likePost);
-            return LikePostDeleteSdo.of(Boolean.TRUE);
+        if (!likePostRepo.existsByUserIdAndPostId(loginId, req.getPostId())) {
+            throw new CustomException(ERROR_NOT_EXIT);
         }
-        throw new CustomException(ERROR_NOT_EXIT);
-
+        LikePost delete = likePostRepo.findByUserIdAndPostId(loginId, req.getPostId());
+        likePostRepo.delete(delete);
+        return LikePostDeleteSdo.of(Boolean.TRUE);
     }
 
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinPostSdi req) {
@@ -117,7 +117,7 @@ public class PostServiceImp implements PostService {
         List<UserInfoShortSelfSdo> res = new ArrayList<>();
 
         likePosts.stream()
-                .map(lp -> userInfoService.shortSelf(UserInfoSelfSdi.of(lp.getUserID())))
+                .map(lp -> userInfoService.shortSelf(UserInfoSelfSdi.of(lp.getUserId())))
                 .forEach(res::add);
         return res;
     }
@@ -133,9 +133,6 @@ public class PostServiceImp implements PostService {
         return res;
     }
 
-    public LikePost getLikePost(Long id) {
-        return likePostRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
-    }
     public Post getPost(Long id){
         return postRepo.findById(id).orElseThrow(()-> new CustomException(ERROR_NOT_EXIT));
     }

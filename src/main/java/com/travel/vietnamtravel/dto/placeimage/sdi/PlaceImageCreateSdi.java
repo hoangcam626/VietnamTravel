@@ -8,5 +8,5 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor(staticName = "of")
 public class PlaceImageCreateSdi {
     private Long placeId;
-    private MultipartFile image;
+    private MultipartFile[] images;
 }

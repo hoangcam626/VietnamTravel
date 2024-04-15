@@ -8,7 +8,6 @@ import com.travel.vietnamtravel.dto.likecomment.sdi.LikeCommentJoinUserSdi;
 import com.travel.vietnamtravel.dto.likecomment.sdi.LikeJoinCommentSdi;
 import com.travel.vietnamtravel.dto.likecomment.sdo.LikeCommentCreateSdo;
 import com.travel.vietnamtravel.dto.likecomment.sdo.LikeCommentDeleteSdo;
-import com.travel.vietnamtravel.dto.post.sdo.PostSelfSdo;
 import com.travel.vietnamtravel.dto.userinfo.sdi.UserInfoSelfSdi;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import com.travel.vietnamtravel.entity.Comment;
@@ -20,7 +19,6 @@ import com.travel.vietnamtravel.service.CommentService;
 import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.UserInfoService;
-import com.travel.vietnamtravel.util.DataUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -114,12 +112,14 @@ public class CommentServiceImp implements CommentService {
     }
 
     public LikeCommentCreateSdo like(LikeCommentCreateSdi req) {
-        req.setLikedBy(commonService.getIdLogin());
-        if (likeCommentRepo.existsByUserIDAndCommentId(req.getLikedBy(), req.getCommentId())) {
-//            unlike(LikedReviewDeleteSdi.of(req.getLikedBy(), req.getReviewId()));
+        Long loginId = commonService.getIdLogin();
+        if (likeCommentRepo.existsByUserIDAndCommentId(loginId, req.getCommentId())) {
             throw new CustomException(ERROR_ALREADY_EXIT);
         }
-        LikeComment likeComment = DataUtil.copyProperties(req, LikeComment.class);
+        LikeComment likeComment = LikeComment.builder()
+                .userId(loginId)
+                .commentId(req.getCommentId())
+                .build();
         likeCommentRepo.save(likeComment);
         return LikeCommentCreateSdo.of(likeComment.getId());
     }
@@ -127,13 +127,12 @@ public class CommentServiceImp implements CommentService {
     public LikeCommentDeleteSdo unlike(LikeCommentDeleteSdi req) {
 
         Long loginId = commonService.getIdLogin();
-        LikeComment likeComment = getLikeComment(req.getId());
-        if (likeComment.getUserID().equals(loginId)) {
-            likeCommentRepo.delete(likeComment);
-            return LikeCommentDeleteSdo.of(Boolean.TRUE);
+        if (!likeCommentRepo.existsByUserIDAndCommentId(loginId, req.getCommentId())) {
+            throw new CustomException(ERROR_NOT_EXIT);
         }
-        throw new CustomException(ERROR_NOT_EXIT);
-
+        LikeComment delete = likeCommentRepo.findByUserIDAndCommentId(loginId, req.getCommentId());
+        likeCommentRepo.delete(delete);
+        return LikeCommentDeleteSdo.of(Boolean.TRUE);
     }
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinCommentSdi req) {
 
@@ -141,7 +140,7 @@ public class CommentServiceImp implements CommentService {
         List<UserInfoShortSelfSdo> res = new ArrayList<>();
 
         likeComments.stream()
-                .map(lp -> userInfoService.shortSelf(UserInfoSelfSdi.of(lp.getUserID())))
+                .map(lp -> userInfoService.shortSelf(UserInfoSelfSdi.of(lp.getUserId())))
                 .forEach(res::add);
         return res;
     }
@@ -159,10 +158,6 @@ public class CommentServiceImp implements CommentService {
 
     public Comment getComment(Long id) {
         return commentRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
-    }
-
-    public LikeComment getLikeComment(Long id) {
-        return likeCommentRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }
 
     public List<CommentSelfSdo> listSelf(List<Long> req){

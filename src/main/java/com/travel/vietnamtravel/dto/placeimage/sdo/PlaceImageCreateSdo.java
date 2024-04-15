@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class PlaceImageCreateSdo {
 
-    private Long id;
+    private Boolean success;
 }

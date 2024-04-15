@@ -17,7 +17,6 @@ import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.ReviewService;
 import com.travel.vietnamtravel.service.UserInfoService;
-import com.travel.vietnamtravel.util.DataUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,12 +137,14 @@ public class ReviewServiceImp implements ReviewService {
     }
 
     public LikeReviewCreateSdo like(LikeReviewCreateSdi req) {
-        req.setLikedBy(commonService.getIdLogin());
-        if (likeReviewRepo.existsByUserIDAndReviewId(req.getLikedBy(), req.getReviewId())) {
-//            unlike(LikedReviewDeleteSdi.of(req.getLikedBy(), req.getReviewId()));
-            throw new CustomException("Error: exit.");
+        Long loginId = commonService.getIdLogin();
+        if (likeReviewRepo.existsByUserIDAndReviewId(loginId, req.getReviewId())) {
+            throw new CustomException(ERROR_ALREADY_EXIT);
         }
-        LikeReview likeReview = DataUtil.copyProperties(req, LikeReview.class);
+        LikeReview likeReview = LikeReview.builder()
+                .userID(loginId)
+                .reviewId(req.getReviewId())
+                .build();
         likeReviewRepo.save(likeReview);
         return LikeReviewCreateSdo.of(likeReview.getId());
     }
@@ -151,14 +152,12 @@ public class ReviewServiceImp implements ReviewService {
     public LikeReviewDeleteSdo unlike(LikeReviewDeleteSdi req) {
 
         Long loginId = commonService.getIdLogin();
-        LikeReview likeReview = getLikeReview(req.getId());
-        if (likeReview.getUserID().equals(loginId)) {
-
-            likeReviewRepo.delete(likeReview);
-            return LikeReviewDeleteSdo.of(Boolean.TRUE);
+        if (!likeReviewRepo.existsByUserIDAndReviewId(loginId, req.getReviewId())) {
+            throw new CustomException(ERROR_NOT_EXIT);
         }
-        throw new CustomException(ERROR_NOT_EXIT);
-
+        LikeReview delete = likeReviewRepo.findByUserIDAndReviewId(loginId, req.getReviewId());
+        likeReviewRepo.delete(delete);
+        return LikeReviewDeleteSdo.of(Boolean.TRUE);
     }
 
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinReviewSdi req) {
@@ -195,6 +194,7 @@ public class ReviewServiceImp implements ReviewService {
     public List<ReviewImage> getReviewImage(Long id) {
         return reviewImageRepo.findByReviewId(id);
     }
+
     public List<Long> getImageIds(Long id) {
         return reviewImageRepo.findImageByReviewId(id);
     }

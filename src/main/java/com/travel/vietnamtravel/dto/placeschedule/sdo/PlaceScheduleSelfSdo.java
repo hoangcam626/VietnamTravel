@@ -1,9 +1,8 @@
 package com.travel.vietnamtravel.dto.placeschedule.sdo;
 
+import com.travel.vietnamtravel.dto.place.sdo.PlaceSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor(staticName = "of")
@@ -13,9 +12,9 @@ public class PlaceScheduleSelfSdo {
 
     private Long scheduleId;
 
-    private Long placeId;
+    private PlaceSelfSdo placeSelf;
 
-    private LocalDate scheduledDate;
+    private String scheduledDate;
 
     private String description;
 

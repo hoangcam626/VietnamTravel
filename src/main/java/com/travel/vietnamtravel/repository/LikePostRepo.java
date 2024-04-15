@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface LikePostRepo extends JpaRepository<LikePost, Long> {
 
-    @Query("SELECT l FROM  LikePost l WHERE l.userID = :userId ORDER BY l.createdAt DESC")
+    @Query("SELECT l FROM  LikePost l WHERE l.userId = :userId ORDER BY l.createdAt DESC")
     List<LikePost> findByUserID(Long userId);
 
-    @Query("SELECT count(l) FROM  LikePost l WHERE l.userID = :userId")
+    @Query("SELECT count(l) FROM  LikePost l WHERE l.userId = :userId")
     int countLikeByUserId(Long userId);
 
     @Query("SELECT l FROM  LikePost l WHERE l.postId = :postId ORDER BY l.createdAt DESC")
@@ -20,7 +20,7 @@ public interface LikePostRepo extends JpaRepository<LikePost, Long> {
     @Query("SELECT count(l) FROM  LikePost l WHERE l.postId = :postId")
     Long countLikeByPostId(Long postId);
 
-    Boolean existsByUserIDAndPostId(Long userId, Long postId);
+    Boolean existsByUserIdAndPostId(Long userId, Long postId);
 
-    LikePost findByUserIDAndPostId(Long userId, Long postId);
+    LikePost findByUserIdAndPostId(Long userId, Long postId);
 }

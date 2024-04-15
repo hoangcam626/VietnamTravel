@@ -12,9 +12,9 @@ public class PlaceScheduleUpdateSdi {
 
     private Long placeId;
 
-    private LocalDate scheduledDate;
+private LocalDate scheduledDate;
 
     private String description;
 
-    private Boolean isComplete ;
+//    private Boolean isComplete ;
 }
