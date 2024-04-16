@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ import static com.travel.vietnamtravel.util.DataUtil.safeToInt;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractAudit implements Serializable {
+    @Serial
     private static final long serialVersionUID = 3581298718616904225L;
 
     @Id

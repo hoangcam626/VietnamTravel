@@ -1,7 +1,5 @@
 package com.travel.vietnamtravel.dto.administrative.administrativeunit.sdo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

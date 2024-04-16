@@ -49,20 +49,17 @@ public class AdministrativeServiceImp implements AdministrativeService {
 
     public ProvinceSelfSdo self(ProvinceSelfSdi req) {
         Province province = provinceRepo.findByCode(req.getCode());
-        ProvinceSelfSdo res = copyProperties(province, ProvinceSelfSdo.class);
-        return res;
+        return copyProperties(province, ProvinceSelfSdo.class);
     }
 
     public DistrictSelfSdo self(DistrictSelfSdi req) {
         District district = districtRepo.findByCode(req.getCode());
-        DistrictSelfSdo res = copyProperties(district, DistrictSelfSdo.class);
-        return res;
+        return copyProperties(district, DistrictSelfSdo.class);
     }
 
     public WardSelfSdo self(WardSelfSdi req) {
         Ward ward = wardRepo.findByCode(req.getCode());
-        WardSelfSdo res = copyProperties(ward, WardSelfSdo.class);
-        return res;
+        return copyProperties(ward, WardSelfSdo.class);
     }
 
     public RegionShortSelfSdo shortSelf(RegionSelfSdi req) {
