@@ -114,7 +114,7 @@ public class ScheduleTripServiceImp implements ScheduleTripService {
 
     public PlaceScheduleUpdateSdo updatePlace(PlaceScheduleUpdateSdi req) {
         PlaceSchedule placeSchedule = getPlaceSchedule(req.getId());
-        placeSchedule.setScheduledDate(req.getScheduledDate());
+        placeSchedule.setScheduleDate(req.getScheduleDate());
         placeSchedule.setPlaceId(req.getPlaceId());
         placeSchedule.setDescription(req.getDescription());
         placeScheduleRepo.save(placeSchedule);

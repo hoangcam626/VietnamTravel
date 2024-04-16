@@ -13,7 +13,7 @@ public class PlaceScheduleCreateSdi {
 
     private Long placeId;
 
-    private LocalDate scheduledDate;
+    private LocalDate scheduleDate;
 
     private String description;
 

@@ -16,50 +16,54 @@ import java.util.List;
 @RequestMapping("/api/v1/post")
 public class PostController {
     private final PostService postService;
+
     @PostMapping("/create")
-    public ResponseEntity<PostCreateSdo> create(@RequestBody PostCreateSdi req){
+    public ResponseEntity<PostCreateSdo> create(PostCreateSdi req) {
         return ResponseEntity.ok(postService.create(req));
     }
+
     @PutMapping("/update")
-    public ResponseEntity<PostUpdateSdo> update(@RequestBody PostUpdateSdi req){
+    public ResponseEntity<PostUpdateSdo> update(PostUpdateSdi req) {
         return ResponseEntity.ok(postService.update(req));
     }
+
     @DeleteMapping("/delete")
-    public ResponseEntity<PostDeleteSdo> delete(@RequestBody PostDeleteSdi req){
+    public ResponseEntity<PostDeleteSdo> delete(PostDeleteSdi req) {
         return ResponseEntity.ok(postService.delete(req));
     }
 
     @GetMapping("/self")
-    public ResponseEntity<PostSelfSdo> self(@RequestBody PostSelfSdi req){
+    public ResponseEntity<PostSelfSdo> self(PostSelfSdi req) {
         return ResponseEntity.ok(postService.self(req));
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostSelfSdo>> allPosts(){
+    public ResponseEntity<List<PostSelfSdo>> allPosts() {
         return ResponseEntity.ok(postService.allPosts());
     }
+
     @GetMapping("/posts/create-by")
-    public ResponseEntity<List<PostSelfSdo>> createBy(@RequestBody PostJoinUserSdi req){
+    public ResponseEntity<List<PostSelfSdo>> createBy(PostJoinUserSdi req) {
         return ResponseEntity.ok(postService.createBy(req));
     }
 
     @GetMapping("/posts/in-place")
-    public ResponseEntity<List<PostSelfSdo>> postsInPlace(@RequestBody PostJoinPlaceSdi req){
+    public ResponseEntity<List<PostSelfSdo>> postsInPlace(PostJoinPlaceSdi req) {
         return ResponseEntity.ok(postService.postsInPlace(req));
     }
 
     @PostMapping("/like")
-    public ResponseEntity<LikePostCreateSdo> like(LikePostCreateSdi req){
+    public ResponseEntity<LikePostCreateSdo> like(LikePostCreateSdi req) {
         return ResponseEntity.ok(postService.like(req));
     }
 
     @DeleteMapping("/unlike")
-    public ResponseEntity<LikePostDeleteSdo> like(LikePostDeleteSdi req){
+    public ResponseEntity<LikePostDeleteSdo> like(LikePostDeleteSdi req) {
         return ResponseEntity.ok(postService.unlike(req));
     }
 
     @GetMapping("/favourites")
-    public ResponseEntity<List<PostSelfSdo>> favourites(LikePostJoinUserSdi req){
+    public ResponseEntity<List<PostSelfSdo>> favourites(LikePostJoinUserSdi req) {
         return ResponseEntity.ok(postService.favorites(req));
     }
 }

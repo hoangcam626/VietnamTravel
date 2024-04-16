@@ -1,5 +1,8 @@
 package com.travel.vietnamtravel.service.imp;
 
+import com.travel.vietnamtravel.dto.administrative.districts.sdi.DistrictSelfSdi;
+import com.travel.vietnamtravel.dto.administrative.provinces.sdi.ProvinceSelfSdi;
+import com.travel.vietnamtravel.dto.administrative.wards.sdi.WardSelfSdi;
 import com.travel.vietnamtravel.dto.likeplace.sdi.*;
 import com.travel.vietnamtravel.dto.likeplace.sdo.*;
 import com.travel.vietnamtravel.dto.place.sdi.*;
@@ -13,10 +16,7 @@ import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikePlaceRepo;
 import com.travel.vietnamtravel.repository.PlaceRepo;
 import com.travel.vietnamtravel.repository.ReviewRepo;
-import com.travel.vietnamtravel.service.CommonService;
-import com.travel.vietnamtravel.service.ImageService;
-import com.travel.vietnamtravel.service.PlaceService;
-import com.travel.vietnamtravel.service.UserInfoService;
+import com.travel.vietnamtravel.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +38,7 @@ public class PlaceServiceImp implements PlaceService {
     private final UserInfoService userInfoService;
     private final CommonService commonService;
     private final ImageService imageService;
+    private final AdministrativeService administrativeService;
 
     public PlaceCreateSdo create(PlaceCreateSdi req) {
         Place place = copyProperties(req, Place.class);
@@ -78,10 +79,16 @@ public class PlaceServiceImp implements PlaceService {
         Place place = getPlace(req.getId());
 
         PlaceSelfSdo res = copyProperties(place, PlaceSelfSdo.class);
-        res.setRating(reviewRepo.rating(place.getId()));
+
+        res.setProvince(administrativeService.shortSelf(ProvinceSelfSdi.of(place.getProvinceCode())));
+        res.setDistrict(administrativeService.shortSelf(DistrictSelfSdi.of(place.getDistrictCode())));
+        res.setWard(administrativeService.shortSelf(WardSelfSdi.of(place.getWardCode())));
+
         res.setTotalReview(reviewRepo.countReviewByPlaceId(place.getId()));
+        res.setRating(reviewRepo.rating(place.getId()));
+
         Long userId = commonService.getIdLogin();
-        res.setIsLike(likePlaceRepo.existsByUserIDAndPlaceId(userId, place.getId()));
+        res.setIsLike(likePlaceRepo.existsByUserIdAndPlaceId(userId, place.getId()));
         res.setTotalLike(likePlaceRepo.countLikeByPlaceId(place.getId()));
 
         return res;
@@ -99,7 +106,7 @@ public class PlaceServiceImp implements PlaceService {
 
     public LikePlaceCreateSdo like(LikePlaceCreateSdi req) {
         Long loginId = commonService.getIdLogin();
-        if (likePlaceRepo.existsByUserIDAndPlaceId(loginId, req.getPlaceId())) {
+        if (likePlaceRepo.existsByUserIdAndPlaceId(loginId, req.getPlaceId())) {
             throw new CustomException(ERROR_ALREADY_EXIT);
         }
         LikePlace likePlace = LikePlace.builder()
@@ -113,10 +120,10 @@ public class PlaceServiceImp implements PlaceService {
     public LikePlaceDeleteSdo unlike(LikePlaceDeleteSdi req) {
 
         Long loginId = commonService.getIdLogin();
-        if (!likePlaceRepo.existsByUserIDAndPlaceId(loginId, req.getPlaceId())) {
+        if (!likePlaceRepo.existsByUserIdAndPlaceId(loginId, req.getPlaceId())) {
             throw new CustomException(ERROR_NOT_EXIT);
         }
-        LikePlace delete = likePlaceRepo.findByUserIDAndPlaceId(loginId, req.getPlaceId());
+        LikePlace delete = likePlaceRepo.findByUserIdAndPlaceId(loginId, req.getPlaceId());
         likePlaceRepo.delete(delete);
         return LikePlaceDeleteSdo.of(Boolean.TRUE);
     }

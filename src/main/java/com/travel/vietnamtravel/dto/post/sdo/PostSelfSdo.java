@@ -3,10 +3,12 @@ package com.travel.vietnamtravel.dto.post.sdo;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class PostSelfSdo {
     private Long id;

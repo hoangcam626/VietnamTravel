@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class ReviewJoinUserSdi {
 
-    private Long createBy;
+    private Long userId;
 }

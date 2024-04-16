@@ -17,36 +17,36 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
     @PostMapping
-    public ResponseEntity<CommentCreateSdo> create(@RequestBody CommentCreateSdi req){
+    public ResponseEntity<CommentCreateSdo> create( CommentCreateSdi req){
         return ResponseEntity.ok(commentService.create(req));
     }
     @PutMapping
-    public ResponseEntity<CommentUpdateSdo> update(@RequestBody CommentUpdateSdi req){
+    public ResponseEntity<CommentUpdateSdo> update( CommentUpdateSdi req){
         return ResponseEntity.ok(commentService.update(req));
     }
     @DeleteMapping
-    public ResponseEntity<CommentDeleteSdo> delete(@RequestBody CommentDeleteSdi req){
+    public ResponseEntity<CommentDeleteSdo> delete( CommentDeleteSdi req){
         return ResponseEntity.ok(commentService.delete(req));
     }
 
     @GetMapping
-    public ResponseEntity<CommentSelfSdo> self(@RequestBody CommentSelfSdi req){
+    public ResponseEntity<CommentSelfSdo> self( CommentSelfSdi req){
         return ResponseEntity.ok(commentService.self(req));
     }
 
 
     @GetMapping("/comments/create-by")
-    public ResponseEntity<List<CommentSelfSdo>> createBy(@RequestBody CommentJoinUserSdi req){
+    public ResponseEntity<List<CommentSelfSdo>> createBy( CommentJoinUserSdi req){
         return ResponseEntity.ok(commentService.createBy(req));
     }
 
     @GetMapping("/comments/in-post")
-    public ResponseEntity<List<CommentSelfSdo>> commentInPost(@RequestBody CommentJoinPostSdi req){
+    public ResponseEntity<List<CommentSelfSdo>> commentInPost( CommentJoinPostSdi req){
         return ResponseEntity.ok(commentService.commentsInPost(req));
     }
 
     @GetMapping("/comments/sub-comment")
-    public ResponseEntity<List<CommentSelfSdo>> subComments(@RequestBody CommentSelfSdi req){
+    public ResponseEntity<List<CommentSelfSdo>> subComments( CommentSelfSdi req){
         return ResponseEntity.ok(commentService.subComments(req));
     }
     @PostMapping("/like")

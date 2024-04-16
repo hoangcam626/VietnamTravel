@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class ReviewCreateSdi {
 
-    private Long createBy;
+    private Long createdBy;
 
     private Long placeId;
 
@@ -14,5 +14,5 @@ public class ReviewCreateSdi {
 
     private String description;
 
-    private MultipartFile[] image;
+    private MultipartFile[] images;
 }

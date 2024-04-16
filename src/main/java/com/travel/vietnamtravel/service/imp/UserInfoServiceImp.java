@@ -24,7 +24,8 @@ public class UserInfoServiceImp implements UserInfoService {
     private final UserRepo userRepo;
     private final UserInfoRepo userInfoRepo;
     private final ImageService imageService;
-     public UserInfoUpdateSdo update(UserInfoUpdateSdi req) {
+
+    public UserInfoUpdateSdo update(UserInfoUpdateSdi req) {
         UserInfo userInfo = userInfoRepo.findByUserId(req.getUserId());
 
         String address = req.getAddress();
@@ -38,7 +39,7 @@ public class UserInfoServiceImp implements UserInfoService {
         userInfo.setPhoneNumber(phoneNumber);
         userInfoRepo.save(userInfo);
 
-        User user = userRepo.findById(req.getUserId()).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
+        User user = getUser(req.getUserId());
         user.setUsername(req.getUsername());
         userRepo.save(user);
 
@@ -67,10 +68,7 @@ public class UserInfoServiceImp implements UserInfoService {
         UserInfo userInfo = userInfoRepo.findByUserId(req.getUserId());
         UserInfoSelfSdo userInfoSelfSdo = copyProperties(userInfo, UserInfoSelfSdo.class);
 
-        userInfoSelfSdo.setUrlAvatar(userInfo.getAvatarId());
-
-        User user = userRepo.findById(userInfo.getUserId()).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
-        userInfoSelfSdo.setUsername(user.getUsername());
+        userInfoSelfSdo.setUsername(getUser(userInfo.getUserId()).getUsername());
 
         return userInfoSelfSdo;
     }
@@ -83,5 +81,9 @@ public class UserInfoServiceImp implements UserInfoService {
 
     public UserInfo getUserInfo(Long userId) {
         return userInfoRepo.findByUserId(userId);
+    }
+
+    public User getUser(Long id) {
+        return userRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }
 }

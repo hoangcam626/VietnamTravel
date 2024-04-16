@@ -3,8 +3,10 @@ package com.travel.vietnamtravel.dto.comment.sdo;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class CommentSelfSdo {
 
@@ -25,4 +27,8 @@ public class CommentSelfSdo {
     private Long totalLike;
 
     private Long totalSubComment;
+
+    private Long createdAt;
+
+    private Long updatedAt;
 }

@@ -2,16 +2,12 @@ package com.travel.vietnamtravel.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.apache.tomcat.util.bcel.Const;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static com.travel.vietnamtravel.util.DataUtil.safeToInt;
 
@@ -31,12 +27,12 @@ public abstract class AbstractAudit implements Serializable {
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at", insertable = false)
-    private LocalDate updatedAt;
-//
+    private LocalDateTime updatedAt;
+
 //    @CreatedBy
 //    @Column(name = "created_by", updatable = false)
 //    private Long createdBy;

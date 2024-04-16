@@ -68,31 +68,34 @@ public class AdministrativeServiceImp implements AdministrativeService {
     public RegionShortSelfSdo shortSelf(RegionSelfSdi req) {
         AdministrativeRegions region = administrativeRegionRepo.findById(req.getId())
                 .orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
-        return copyProperties(region, RegionShortSelfSdo.class);
+        return RegionShortSelfSdo.of(region.getId(), region.getName());
     }
 
     public UnitShortSelfSdo shortSelf(UnitSelfSdi req) {
         AdministrativeUnit unit = administrativeUnitRepo.findById(req.getId())
                 .orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
-        return copyProperties(unit, UnitShortSelfSdo.class);
+        return UnitShortSelfSdo.of(unit.getId(), unit.getShortName());
     }
 
     public ProvinceShortSelfSdo shortSelf(ProvinceSelfSdi req) {
         Province province = provinceRepo.findByCode(req.getCode());
-        ProvinceShortSelfSdo res = copyProperties(province, ProvinceShortSelfSdo.class);
-        return res;
+        String name = shortSelf(UnitSelfSdi.of(province.getAdministrativeUnitId())).getShortName()
+                +" "+province.getName();
+        return ProvinceShortSelfSdo.of(province.getCode(), name);
     }
 
     public DistrictShortSelfSdo shortSelf(DistrictSelfSdi req) {
         District district = districtRepo.findByCode(req.getCode());
-        DistrictShortSelfSdo res = copyProperties(district, DistrictShortSelfSdo.class);
-        return res;
+        String name = shortSelf(UnitSelfSdi.of(district.getAdministrativeUnitId())).getShortName()
+                +" "+district.getName();
+        return DistrictShortSelfSdo.of(district.getCode(), name);
     }
 
     public WardShortSelfSdo shortSelf(WardSelfSdi req) {
         Ward ward = wardRepo.findByCode(req.getCode());
-        WardShortSelfSdo res = copyProperties(ward, WardShortSelfSdo.class);
-        return res;
+        String name = shortSelf(UnitSelfSdi.of(ward.getAdministrativeUnitId())).getShortName()
+                +" "+ward.getName();
+        return WardShortSelfSdo.of(ward.getCode(), name);
     }
 
 }

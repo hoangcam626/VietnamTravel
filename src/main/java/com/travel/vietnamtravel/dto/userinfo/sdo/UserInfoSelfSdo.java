@@ -2,10 +2,12 @@ package com.travel.vietnamtravel.dto.userinfo.sdo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class UserInfoSelfSdo {
 
@@ -14,7 +16,7 @@ public class UserInfoSelfSdo {
     private int level;
     private String fullName;
     private String phoneNumber;
-    private String urlAvatar;
+    private Long avatarId;
     private Long userId;
     private String username;
 

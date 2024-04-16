@@ -91,7 +91,7 @@ public class CommentServiceImp implements CommentService {
         CommentSelfSdo res = copyProperties(comment, CommentSelfSdo.class);
         res.setCreatedBy(userInfoService.shortSelf(UserInfoSelfSdi.of(req.getId())));
         Long loginId = commonService.getIdLogin();
-        res.setIsLike(likeCommentRepo.existsByUserIDAndCommentId(loginId, comment.getId()));
+        res.setIsLike(likeCommentRepo.existsByUserIdAndCommentId(loginId, comment.getId()));
         res.setTotalLike(likeCommentRepo.countLikeByCommentId(comment.getId()));
         res.setTotalSubComment(commentRepo.countSubComment(comment.getId()));
         return res;
@@ -113,7 +113,7 @@ public class CommentServiceImp implements CommentService {
 
     public LikeCommentCreateSdo like(LikeCommentCreateSdi req) {
         Long loginId = commonService.getIdLogin();
-        if (likeCommentRepo.existsByUserIDAndCommentId(loginId, req.getCommentId())) {
+        if (likeCommentRepo.existsByUserIdAndCommentId(loginId, req.getCommentId())) {
             throw new CustomException(ERROR_ALREADY_EXIT);
         }
         LikeComment likeComment = LikeComment.builder()
@@ -127,10 +127,10 @@ public class CommentServiceImp implements CommentService {
     public LikeCommentDeleteSdo unlike(LikeCommentDeleteSdi req) {
 
         Long loginId = commonService.getIdLogin();
-        if (!likeCommentRepo.existsByUserIDAndCommentId(loginId, req.getCommentId())) {
+        if (!likeCommentRepo.existsByUserIdAndCommentId(loginId, req.getCommentId())) {
             throw new CustomException(ERROR_NOT_EXIT);
         }
-        LikeComment delete = likeCommentRepo.findByUserIDAndCommentId(loginId, req.getCommentId());
+        LikeComment delete = likeCommentRepo.findByUserIdAndCommentId(loginId, req.getCommentId());
         likeCommentRepo.delete(delete);
         return LikeCommentDeleteSdo.of(Boolean.TRUE);
     }

@@ -42,10 +42,10 @@ public class ReviewServiceImp implements ReviewService {
     public ReviewCreateSdo create(ReviewCreateSdi req) {
 
         Long loginId = commonService.getIdLogin();
-        req.setCreateBy(loginId);
+        req.setCreatedBy(loginId);
         Review review = copyProperties(req, Review.class);
 
-        List<Long> imageIds = imageService.uploadFiles(req.getImage());
+        List<Long> imageIds = imageService.uploadFiles(req.getImages());
         reviewRepo.save(review);
         imageIds.stream()
                 .map(imageId -> ReviewImage.builder()
@@ -126,7 +126,7 @@ public class ReviewServiceImp implements ReviewService {
 
     public List<ReviewSelfSdo> getReviewsCreateBy(ReviewJoinUserSdi req) {
 
-        List<Long> reviewIds = reviewRepo.findAllByUserId(req.getCreateBy());
+        List<Long> reviewIds = reviewRepo.findAllByUserId(req.getUserId());
         return listSelf(reviewIds);
     }
 

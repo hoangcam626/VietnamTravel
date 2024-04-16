@@ -26,7 +26,7 @@ public class PlaceSchedule extends AbstractAudit {
     private Long placeId;
 
     @Column(name = "schedule_date")
-    private LocalDate scheduledDate;
+    private LocalDate scheduleDate;
 
     @Column(name = "description")
     private String description;

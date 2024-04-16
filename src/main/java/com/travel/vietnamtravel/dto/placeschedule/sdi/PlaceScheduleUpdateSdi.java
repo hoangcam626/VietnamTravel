@@ -2,6 +2,7 @@ package com.travel.vietnamtravel.dto.placeschedule.sdi;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 import java.time.LocalDate;
 
 @Data
@@ -12,7 +13,7 @@ public class PlaceScheduleUpdateSdi {
 
     private Long placeId;
 
-private LocalDate scheduledDate;
+    private LocalDate scheduleDate;
 
     private String description;
 

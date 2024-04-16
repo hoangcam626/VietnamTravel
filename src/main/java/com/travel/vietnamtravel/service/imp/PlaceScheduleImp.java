@@ -37,7 +37,7 @@ public class PlaceScheduleImp implements PlaceScheduleService {
         placeSchedule.setPlaceId(req.getPlaceId());
 
         placeSchedule.setDescription(req.getDescription());
-        placeSchedule.setScheduledDate(req.getScheduledDate());
+        placeSchedule.setScheduleDate(req.getScheduleDate());
         placeScheduleRepo.save(placeSchedule);
 
         return PlaceScheduleUpdateSdo.of(Boolean.TRUE);

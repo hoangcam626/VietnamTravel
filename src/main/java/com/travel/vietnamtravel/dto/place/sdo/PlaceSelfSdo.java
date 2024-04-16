@@ -1,22 +1,29 @@
 package com.travel.vietnamtravel.dto.place.sdo;
 
+import com.travel.vietnamtravel.dto.administrative.districts.sdo.DistrictShortSelfSdo;
+import com.travel.vietnamtravel.dto.administrative.provinces.sdo.ProvinceShortSelfSdo;
+import com.travel.vietnamtravel.dto.administrative.wards.sdo.WardShortSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class PlaceSelfSdo {
+    private Long id;
+
     private String name;
 
-    private String provinceCode;
+    private ProvinceShortSelfSdo province;
 
-    private String districtCode;
+    private DistrictShortSelfSdo district;
 
-    private String wardCode;
+    private WardShortSelfSdo ward;
 
     private String description;
 
-//    private Set<Image> images = new HashSet<>();
+    private Long imageId;
 
     private Boolean isLike;
 

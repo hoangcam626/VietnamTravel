@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class PlaceDeleteSdi {
     private Long id;
-    private Long placeId;
-    private Long imageId;
+//    private Long placeId;
+//    private Long imageId;
 }
