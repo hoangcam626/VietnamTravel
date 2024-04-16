@@ -20,7 +20,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleNodataFoundException(CustomException ex) {
+    public ResponseEntity<Object> handleNodataFoundException(Exception ex) {
         ErrorMessage exceptionResponse = new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 LocalDateTime.now().toString(),
                 ex.getMessage(),
