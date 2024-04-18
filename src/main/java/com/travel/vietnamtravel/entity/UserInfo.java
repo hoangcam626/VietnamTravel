@@ -16,10 +16,6 @@ import java.time.LocalDateTime;
 @Table(name = "user_info")
 public class UserInfo extends AbstractAudit{
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-
     @Column(name = "user_id")
     private Long userId;
 
@@ -41,9 +37,6 @@ public class UserInfo extends AbstractAudit{
     @Column(name = "level")
     private int level;
 
-//    @Column(name = "created_at")
-//    private LocalDateTime createAt;
-//
-//    @Column(name = "updated_at")
-//    private LocalDateTime updatedAt;
+    @Column(name = "descripton")
+    private String description;
 }

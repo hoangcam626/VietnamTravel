@@ -29,7 +29,7 @@ public class PlaceController {
         return ResponseEntity.ok(placeService.delete(req));
     }
 
-    @GetMapping("/self")
+    @PostMapping("/self")
     public ResponseEntity<PlaceSelfSdo> self( PlaceSelfSdi req){
         return ResponseEntity.ok(placeService.self(req));
     }
@@ -44,7 +44,7 @@ public class PlaceController {
         return ResponseEntity.ok(placeService.unlike(req));
     }
 
-    @GetMapping("/favourites")
+    @PostMapping("/favourites")
     public ResponseEntity<List<PlaceSelfSdo>> favourites(LikePlaceJoinUserSdi req){
         return ResponseEntity.ok(placeService.favorites(req));
     }

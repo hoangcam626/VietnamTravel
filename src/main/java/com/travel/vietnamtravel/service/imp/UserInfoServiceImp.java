@@ -7,6 +7,7 @@ import com.travel.vietnamtravel.entity.UserInfo;
 import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.UserInfoRepo;
 import com.travel.vietnamtravel.repository.UserRepo;
+import com.travel.vietnamtravel.service.CommonService;
 import com.travel.vietnamtravel.service.ImageService;
 import com.travel.vietnamtravel.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,12 @@ public class UserInfoServiceImp implements UserInfoService {
     private final UserRepo userRepo;
     private final UserInfoRepo userInfoRepo;
     private final ImageService imageService;
+    private final CommonService commonService;
 
     public UserInfoUpdateSdo update(UserInfoUpdateSdi req) {
-        UserInfo userInfo = userInfoRepo.findByUserId(req.getUserId());
+        Long loginId = commonService.getIdLogin();
+
+        UserInfo userInfo = userInfoRepo.findByUserId(loginId);
 
         String address = req.getAddress();
         LocalDate birthOfDate = req.getBirthOfDate();
@@ -48,12 +52,13 @@ public class UserInfoServiceImp implements UserInfoService {
 
 
     public UserInfoUpdateSdo updateAvatar(UserInfoUpdateAvatarSdi req) {
+        Long loginId = commonService.getIdLogin();
 
-        UserInfo userInfo = userInfoRepo.findByUserId(req.getUserId());
+        UserInfo userInfo = userInfoRepo.findByUserId(loginId);
 
-        if (userInfo.getAvatarId() != null) {
-            imageService.delete(userInfo.getAvatarId());
-        }
+//        if (userInfo.getAvatarId() != null) {
+//            imageService.delete(userInfo.getAvatarId());
+//        }
 
         Long avatarId = imageService.uploadFile(req.getImage());
         userInfo.setAvatarId(avatarId);

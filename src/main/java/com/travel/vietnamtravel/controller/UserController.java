@@ -25,7 +25,7 @@ public class UserController {
     public ResponseEntity<UserInfoUpdateSdo> updateAvatar(UserInfoUpdateAvatarSdi req){
         return ResponseEntity.ok(userInfoService.updateAvatar(req));
     }
-    @GetMapping("/self")
+    @PostMapping ("/self")
     public  ResponseEntity<UserInfoSelfSdo> self(UserInfoSelfSdi req){
         return ResponseEntity.ok(userInfoService.self(req));
     }

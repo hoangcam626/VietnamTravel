@@ -32,7 +32,7 @@ public class ScheduleTripController {
         return ResponseEntity.ok(scheduleTripService.delete(req));
     }
 
-    @GetMapping("/self")
+    @PostMapping("/self")
     public ResponseEntity<ScheduleTripSelfSdo> self(@RequestBody ScheduleTripSelfSdi req) {
         return ResponseEntity.ok(scheduleTripService.self(req));
     }
@@ -52,13 +52,13 @@ public class ScheduleTripController {
         return ResponseEntity.ok(scheduleTripService.deletePlace(req));
     }
 
-    @GetMapping("/place-of-schedule/self")
+    @PostMapping("/place-of-schedule/self")
     public ResponseEntity<PlaceScheduleSelfSdo> selfPlace(PlaceScheduleSelfSdi req) {
         return ResponseEntity.ok(scheduleTripService.selfPlace(req));
     }
 
 
-    @GetMapping("/my-schedules")
+    @PostMapping("/my-schedules")
     public ResponseEntity<List<ScheduleTripSelfSdo>> mySchedules() {
         return ResponseEntity.ok(scheduleTripService.mySchedules());
     }

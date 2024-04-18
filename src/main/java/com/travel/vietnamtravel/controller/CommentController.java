@@ -16,36 +16,36 @@ import java.util.List;
 @RequestMapping("/api/v1/comment")
 public class CommentController {
     private final CommentService commentService;
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<CommentCreateSdo> create( CommentCreateSdi req){
         return ResponseEntity.ok(commentService.create(req));
     }
-    @PutMapping
+    @PutMapping("/update")
     public ResponseEntity<CommentUpdateSdo> update( CommentUpdateSdi req){
         return ResponseEntity.ok(commentService.update(req));
     }
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public ResponseEntity<CommentDeleteSdo> delete( CommentDeleteSdi req){
         return ResponseEntity.ok(commentService.delete(req));
     }
 
-    @GetMapping
+    @PostMapping("/self")
     public ResponseEntity<CommentSelfSdo> self( CommentSelfSdi req){
         return ResponseEntity.ok(commentService.self(req));
     }
 
 
-    @GetMapping("/comments/create-by")
+    @PostMapping("/comments/create-by")
     public ResponseEntity<List<CommentSelfSdo>> createBy( CommentJoinUserSdi req){
         return ResponseEntity.ok(commentService.createBy(req));
     }
 
-    @GetMapping("/comments/in-post")
+    @PostMapping("/comments/in-post")
     public ResponseEntity<List<CommentSelfSdo>> commentInPost( CommentJoinPostSdi req){
         return ResponseEntity.ok(commentService.commentsInPost(req));
     }
 
-    @GetMapping("/comments/sub-comment")
+    @PostMapping("/comments/sub-comment")
     public ResponseEntity<List<CommentSelfSdo>> subComments( CommentSelfSdi req){
         return ResponseEntity.ok(commentService.subComments(req));
     }
@@ -59,7 +59,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.unlike(req));
     }
 
-    @GetMapping("/favourites")
+    @PostMapping("/favourites")
     public ResponseEntity<List<CommentSelfSdo>> favourites(LikeCommentJoinUserSdi req){
         return ResponseEntity.ok(commentService.favorites(req));
     }

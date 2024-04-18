@@ -32,22 +32,22 @@ public class PostController {
         return ResponseEntity.ok(postService.delete(req));
     }
 
-    @GetMapping("/self")
+    @PostMapping("/self")
     public ResponseEntity<PostSelfSdo> self(PostSelfSdi req) {
         return ResponseEntity.ok(postService.self(req));
     }
 
-    @GetMapping("/posts")
+    @PostMapping("/posts")
     public ResponseEntity<List<PostSelfSdo>> allPosts() {
         return ResponseEntity.ok(postService.allPosts());
     }
 
-    @GetMapping("/posts/create-by")
+    @PostMapping("/posts/create-by")
     public ResponseEntity<List<PostSelfSdo>> createBy(PostJoinUserSdi req) {
         return ResponseEntity.ok(postService.createBy(req));
     }
 
-    @GetMapping("/posts/in-place")
+    @PostMapping("/posts/in-place")
     public ResponseEntity<List<PostSelfSdo>> postsInPlace(PostJoinPlaceSdi req) {
         return ResponseEntity.ok(postService.postsInPlace(req));
     }
@@ -62,7 +62,7 @@ public class PostController {
         return ResponseEntity.ok(postService.unlike(req));
     }
 
-    @GetMapping("/favourites")
+    @PostMapping("/favourites")
     public ResponseEntity<List<PostSelfSdo>> favourites(LikePostJoinUserSdi req) {
         return ResponseEntity.ok(postService.favorites(req));
     }

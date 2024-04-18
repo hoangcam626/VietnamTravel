@@ -32,17 +32,17 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.delete(req));
     }
 
-    @GetMapping("/self")
+    @PostMapping("/self")
     public ResponseEntity<ReviewSelfSdo> self(ReviewSelfSdi req) {
         return ResponseEntity.ok(reviewService.self(req));
     }
 
-    @GetMapping("/reviews/create-by")
+    @PostMapping("/reviews/create-by")
     public ResponseEntity<List<ReviewSelfSdo>> getReviewsCreateBy(ReviewJoinUserSdi req) {
         return ResponseEntity.ok(reviewService.getReviewsCreateBy(req));
     }
 
-    @GetMapping("/reviews/for-place")
+    @PostMapping("/reviews/for-place")
     public ResponseEntity<List<ReviewSelfSdo>> getReviewsForPlace(ReviewJoinPlaceSdi req) {
         return ResponseEntity.ok(reviewService.getReviewsForPlace(req));
     }
@@ -57,7 +57,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.unlike(req));
     }
 
-    @GetMapping("/favourites")
+    @PostMapping("/favourites")
     public ResponseEntity<List<ReviewSelfSdo>> favourites(LikeReviewJoinUserSdi req) {
         return ResponseEntity.ok(reviewService.favorites(req));
     }
