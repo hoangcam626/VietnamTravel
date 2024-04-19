@@ -12,10 +12,6 @@ import lombok.*;
 @Entity
 public class Post extends AbstractAudit{
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-
     @Column(name = "created_by")
     private Long createdBy;
 

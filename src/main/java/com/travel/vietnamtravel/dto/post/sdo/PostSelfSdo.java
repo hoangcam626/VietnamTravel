@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -21,9 +22,9 @@ public class PostSelfSdo {
 
     private String content;
 
-    private Timestamp createAt;
+    private LocalDateTime createAt;
 
-    private Timestamp updateAt;
+    private LocalDateTime updateAt;
 
     private Boolean isUpdate;
 

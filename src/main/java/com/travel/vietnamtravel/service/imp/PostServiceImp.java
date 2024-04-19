@@ -46,6 +46,8 @@ public class PostServiceImp implements PostService {
     private final CommonService commonService;
 
     public PostCreateSdo create(PostCreateSdi req){
+        Long loginId = commonService.getIdLogin();
+        req.setCreatedBy(loginId);
         Post postImage = copyProperties(req, Post.class);
         Long imageId = imageService.uploadFile(req.getImage());
         postImage.setImageId(imageId);
