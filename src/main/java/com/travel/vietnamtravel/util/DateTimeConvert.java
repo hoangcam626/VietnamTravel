@@ -1,10 +1,9 @@
 package com.travel.vietnamtravel.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Locale;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.travel.vietnamtravel.util.DataUtil.isNullOrEmpty;
 
@@ -13,8 +12,7 @@ public class DateTimeConvert {
         if (date == null || isNullOrEmpty(pattern)) {
             return null;
         }
-
-        DateFormat df = new SimpleDateFormat(pattern, new Locale("vi"));
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
         return df.format(date);
     }
 
@@ -22,8 +20,16 @@ public class DateTimeConvert {
         if (date == null || isNullOrEmpty(pattern)) {
             return null;
         }
-
-        DateFormat df = new SimpleDateFormat(pattern, new Locale("vi"));
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
         return df.format(date);
     }
+
+    public static String timeToString(LocalTime time, String pattern) {
+        if (time == null || isNullOrEmpty(pattern)) {
+            return null;
+        }
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
+        return df.format(time);
+    }
+
 }

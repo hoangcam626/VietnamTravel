@@ -150,7 +150,7 @@ public class ReviewServiceImp implements ReviewService {
                 .reviewId(req.getReviewId())
                 .build();
         likeReviewRepo.save(likeReview);
-        return LikeReviewCreateSdo.of(likeReview.getId());
+        return LikeReviewCreateSdo.of(Boolean.TRUE);
     }
 
     public LikeReviewDeleteSdo unlike(LikeReviewDeleteSdi req) {
@@ -161,7 +161,7 @@ public class ReviewServiceImp implements ReviewService {
         }
         LikeReview delete = likeReviewRepo.findByUserIDAndReviewId(loginId, req.getReviewId());
         likeReviewRepo.delete(delete);
-        return LikeReviewDeleteSdo.of(Boolean.TRUE);
+        return LikeReviewDeleteSdo.of(Boolean.FALSE);
     }
 
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinReviewSdi req) {

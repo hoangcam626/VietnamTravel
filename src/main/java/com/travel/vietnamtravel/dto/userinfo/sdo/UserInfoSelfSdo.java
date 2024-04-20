@@ -4,15 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class UserInfoSelfSdo {
 
     private String address;
-    private LocalDate birthOfDate;
+//    private LocalDate birthOfDate;
     private int level;
     private String fullName;
     private String phoneNumber;

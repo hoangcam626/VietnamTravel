@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(staticName = "of")
 public class LikeCommentCreateSdo {
-    private long id;
+    private Boolean isLike;
 }

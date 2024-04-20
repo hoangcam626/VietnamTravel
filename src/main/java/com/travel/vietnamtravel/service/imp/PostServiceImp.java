@@ -108,7 +108,7 @@ public class PostServiceImp implements PostService {
                 .postId(req.getPostId())
                 .build();
         likePostRepo.save(likePost);
-        return LikePostCreateSdo.of(likePost.getId());
+        return LikePostCreateSdo.of(Boolean.TRUE);
     }
 
     public LikePostDeleteSdo unlike(LikePostDeleteSdi req) {
@@ -119,7 +119,7 @@ public class PostServiceImp implements PostService {
         }
         LikePost delete = likePostRepo.findByUserIdAndPostId(loginId, req.getPostId());
         likePostRepo.delete(delete);
-        return LikePostDeleteSdo.of(Boolean.TRUE);
+        return LikePostDeleteSdo.of(Boolean.FALSE);
     }
 
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinPostSdi req) {

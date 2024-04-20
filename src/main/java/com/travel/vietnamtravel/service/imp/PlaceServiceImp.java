@@ -93,6 +93,7 @@ public class PlaceServiceImp implements PlaceService {
         res.setIsLike(likePlaceRepo.existsByUserIdAndPlaceId(userId, place.getId()));
         res.setTotalLike(likePlaceRepo.countLikeByPlaceId(place.getId()));
 
+        res.setTotalVisit(visitRepo.countByPlaceId(place.getId()));
         return res;
     }
 
@@ -116,7 +117,7 @@ public class PlaceServiceImp implements PlaceService {
                 .placeId(req.getPlaceId())
                 .build();
         likePlaceRepo.save(likePlace);
-        return LikePlaceCreateSdo.of(likePlace.getId());
+        return LikePlaceCreateSdo.of(Boolean.TRUE);
     }
 
     public LikePlaceDeleteSdo unlike(LikePlaceDeleteSdi req) {
@@ -127,7 +128,7 @@ public class PlaceServiceImp implements PlaceService {
         }
         LikePlace delete = likePlaceRepo.findByUserIdAndPlaceId(loginId, req.getPlaceId());
         likePlaceRepo.delete(delete);
-        return LikePlaceDeleteSdo.of(Boolean.TRUE);
+        return LikePlaceDeleteSdo.of(Boolean.FALSE);
     }
 
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinPlaceSdi req) {
@@ -168,8 +169,6 @@ public class PlaceServiceImp implements PlaceService {
         List<Long> searchPlaceIds = placeRepo.searchPlace(req.getKeyword());
         return listSelf(searchPlaceIds);
     }
-
-
 
 
 }

@@ -1,7 +1,5 @@
 package com.travel.vietnamtravel.controller;
 
-import com.travel.vietnamtravel.dto.placeschedule.sdi.*;
-import com.travel.vietnamtravel.dto.placeschedule.sdo.*;
 import com.travel.vietnamtravel.dto.scheduletrip.sdi.*;
 import com.travel.vietnamtravel.dto.scheduletrip.sdo.*;
 import com.travel.vietnamtravel.service.ScheduleTripService;
@@ -37,25 +35,7 @@ public class ScheduleTripController {
         return ResponseEntity.ok(scheduleTripService.self(req));
     }
 
-    @PostMapping("/place-of-schedule/create")
-    public ResponseEntity<PlaceScheduleCreateSdo> createPlace(PlaceScheduleCreateSdi req) {
-        return ResponseEntity.ok(scheduleTripService.createPlace(req));
-    }
 
-    @PutMapping("/place-of-schedule/update")
-    public ResponseEntity<PlaceScheduleUpdateSdo> updatePlace(@RequestBody PlaceScheduleUpdateSdi req) {
-        return ResponseEntity.ok(scheduleTripService.updatePlace(req));
-    }
-
-    @DeleteMapping("/place-of-schedule/delete")
-    public ResponseEntity<PlaceScheduleDeleteSdo> deletePlace(PlaceScheduleDeleteSdi req) {
-        return ResponseEntity.ok(scheduleTripService.deletePlace(req));
-    }
-
-    @PostMapping("/place-of-schedule/self")
-    public ResponseEntity<PlaceScheduleSelfSdo> selfPlace(PlaceScheduleSelfSdi req) {
-        return ResponseEntity.ok(scheduleTripService.selfPlace(req));
-    }
 
 
     @PostMapping("/my-schedules")

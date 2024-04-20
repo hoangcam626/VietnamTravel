@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,9 +17,7 @@ import java.time.LocalDate;
 @Table(name = "place_schudule")
 
 public class PlaceSchedule extends AbstractAudit {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
+
     @Column(name = "schedule_id")
     private Long scheduleId;
 
@@ -31,5 +30,15 @@ public class PlaceSchedule extends AbstractAudit {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "is_complete")
     private Boolean isComplete ;
+
+    @Column(name = "begin_time")
+    private LocalTime scheduleBeginTime;
+
+    @Column(name = "finish_time")
+    private LocalTime scheduleFinishTime;
+
+    @Column(name = "tranport")
+    private String transport;
 }

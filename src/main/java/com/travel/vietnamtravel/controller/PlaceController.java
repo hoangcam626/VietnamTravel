@@ -48,4 +48,9 @@ public class PlaceController {
     public ResponseEntity<List<PlaceSelfSdo>> favourites(LikePlaceJoinUserSdi req){
         return ResponseEntity.ok(placeService.favorites(req));
     }
+
+    @PostMapping("/post")
+    public ResponseEntity<List<PlaceSelfSdo>> search(PlaceSearchSdi req){
+        return ResponseEntity.ok(placeService.search(req));
+    }
 }

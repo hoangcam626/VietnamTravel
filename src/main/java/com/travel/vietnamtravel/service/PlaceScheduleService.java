@@ -1,10 +1,7 @@
 package com.travel.vietnamtravel.service;
 
 import com.travel.vietnamtravel.dto.placeschedule.sdi.*;
-import com.travel.vietnamtravel.dto.placeschedule.sdo.PlaceScheduleCreateSdo;
-import com.travel.vietnamtravel.dto.placeschedule.sdo.PlaceScheduleDeleteSdo;
-import com.travel.vietnamtravel.dto.placeschedule.sdo.PlaceScheduleSelfSdo;
-import com.travel.vietnamtravel.dto.placeschedule.sdo.PlaceScheduleUpdateSdo;
+import com.travel.vietnamtravel.dto.placeschedule.sdo.*;
 
 import java.util.List;
 
@@ -17,5 +14,7 @@ public interface PlaceScheduleService {
 
     PlaceScheduleSelfSdo self(PlaceScheduleSelfSdi req);
 
-    List<PlaceScheduleSelfSdo> placesInSchedule(PlaceScheduleJoinSdi req);
+    PlaceCompleteSdo isComplete(PlaceCompleteSdi req);
+
+    List<PlaceScheduleSelfSdo> placesInScheduleOnDate(PlaceScheduleJoinSdi req);
 }

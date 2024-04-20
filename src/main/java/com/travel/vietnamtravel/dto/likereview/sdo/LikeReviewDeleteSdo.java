@@ -6,5 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(staticName = "of")
 public class LikeReviewDeleteSdo {
-    private Boolean success;
+    private Boolean isLike;
+
 }

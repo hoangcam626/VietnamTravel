@@ -128,7 +128,7 @@ public class CommentServiceImp implements CommentService {
                 .commentId(req.getCommentId())
                 .build();
         likeCommentRepo.save(likeComment);
-        return LikeCommentCreateSdo.of(likeComment.getId());
+        return LikeCommentCreateSdo.of(Boolean.TRUE);
     }
 
     public LikeCommentDeleteSdo unlike(LikeCommentDeleteSdi req) {
@@ -139,7 +139,7 @@ public class CommentServiceImp implements CommentService {
         }
         LikeComment delete = likeCommentRepo.findByUserIdAndCommentId(loginId, req.getCommentId());
         likeCommentRepo.delete(delete);
-        return LikeCommentDeleteSdo.of(Boolean.TRUE);
+        return LikeCommentDeleteSdo.of(Boolean.FALSE);
     }
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinCommentSdi req) {
 

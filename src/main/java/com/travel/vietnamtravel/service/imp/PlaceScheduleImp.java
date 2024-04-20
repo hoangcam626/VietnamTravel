@@ -1,5 +1,6 @@
 package com.travel.vietnamtravel.service.imp;
 
+import com.travel.vietnamtravel.dto.place.sdi.PlaceSelfSdi;
 import com.travel.vietnamtravel.dto.placeschedule.sdi.*;
 import com.travel.vietnamtravel.dto.placeschedule.sdo.*;
 import com.travel.vietnamtravel.entity.relationship.PlaceSchedule;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DataUtil.isNullObject;
 import static com.travel.vietnamtravel.util.DateTimeUtils.*;
 import static com.travel.vietnamtravel.util.DateTimeConvert.*;
 
@@ -58,17 +60,31 @@ public class PlaceScheduleImp implements PlaceScheduleService {
         res.setUpdatedAt(dateTimeToString(placeSchedule.getUpdatedAt(), DATE_TIME_FORMAT));
         res.setCreatedAt(dateTimeToString(placeSchedule.getCreatedAt(), DATE_TIME_FORMAT));
         res.setScheduledDate(dateToString(placeSchedule.getScheduleDate(), DATE_FORMAT));
+        res.setScheduleBeginTime(timeToString(placeSchedule.getScheduleBeginTime(), "HH:mm"));
+        res.setScheduleBeginTime(timeToString(placeSchedule.getScheduleBeginTime(), "HH:mm"));
+        if (isNullObject(placeSchedule.getPlaceId())) {
+            res.setPlaceSelf(placeService.self(PlaceSelfSdi.of(placeSchedule.getPlaceId())));
+        }
         return res;
     }
 
-    public List<PlaceScheduleSelfSdo> placesInSchedule(PlaceScheduleJoinSdi req){
-        List<Long> placeScheduleIds = placeScheduleRepo.findByScheduleId(req.getScheduleId());
+    public PlaceCompleteSdo isComplete(PlaceCompleteSdi req) {
+        PlaceSchedule placeSchedule = getPlaceSchedule(req.getPlaceScheduleId());
+        placeSchedule.setIsComplete(Boolean.TRUE);
+        placeScheduleRepo.save(placeSchedule);
+        return PlaceCompleteSdo.of(Boolean.TRUE);
+    }
+
+    public List<PlaceScheduleSelfSdo> placesInScheduleOnDate(PlaceScheduleJoinSdi req) {
+
+        List<Long> placeScheduleIds = placeScheduleRepo.findByScheduleIdAAndScheduleDate(req.getScheduleId(), req.getDate());
         List<PlaceScheduleSelfSdo> res = new ArrayList<>();
         placeScheduleIds.stream()
-                .map(id-> self(PlaceScheduleSelfSdi.of(id)))
+                .map(id -> self(PlaceScheduleSelfSdi.of(id)))
                 .forEach(res::add);
         return res;
     }
+
     public PlaceSchedule getPlaceSchedule(Long id) {
         return placeScheduleRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }

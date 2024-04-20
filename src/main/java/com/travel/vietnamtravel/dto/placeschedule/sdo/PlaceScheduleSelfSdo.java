@@ -18,11 +18,18 @@ public class PlaceScheduleSelfSdo {
 
     private String scheduledDate;
 
+    private String scheduleBeginTime;
+
+    private String scheduleFinishTime;
+
+    private String transport;
+
     private String description;
 
-    private Boolean isComplete ;
+    private Boolean isComplete;
 
     private String createdAt;
 
     private String updatedAt;
+
 }

@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +20,6 @@ public class Visit extends AbstractAudit {
     private Long userId;
     @Column(name = "place_Id")
     private Long placeId;
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "time")
+    private LocalDateTime time;
 }
