@@ -30,6 +30,8 @@ import static com.travel.vietnamtravel.constant.Error.ERROR_ALREADY_EXIT;
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 import static com.travel.vietnamtravel.util.DataUtil.isNullObject;
+import static com.travel.vietnamtravel.util.DateTimeUtils.DATE_TIME_FORMAT;
+import static com.travel.vietnamtravel.util.DateTimeConvert.*;
 
 @Service
 @Transactional
@@ -75,7 +77,7 @@ public class CommentServiceImp implements CommentService {
         Comment comment = getComment(req.getId());
 
         if (isNullObject(req.getImage()) && !isNullObject(comment.getImageId())) {
-            imageService.delete(comment.getImageId());
+//            imageService.delete(comment.getImageId());
             comment.setImageId(null);
         } else if (!isNullObject(req.getImage())) {
             Long imageId = imageService.uploadFile(req.getImage());
@@ -87,9 +89,14 @@ public class CommentServiceImp implements CommentService {
     }
 
     public CommentSelfSdo self(CommentSelfSdi req) {
+
         Comment comment = getComment(req.getId());
         CommentSelfSdo res = copyProperties(comment, CommentSelfSdo.class);
         res.setCreatedBy(userInfoService.shortSelf(UserInfoSelfSdi.of(req.getId())));
+
+        res.setCreatedAt(dateTimeToString(comment.getCreatedAt(), DATE_TIME_FORMAT));
+        res.setUpdatedAt(dateTimeToString(comment.getUpdatedAt(), DATE_TIME_FORMAT));
+
         Long loginId = commonService.getIdLogin();
         res.setIsLike(likeCommentRepo.existsByUserIdAndCommentId(loginId, comment.getId()));
         res.setTotalLike(likeCommentRepo.countLikeByCommentId(comment.getId()));

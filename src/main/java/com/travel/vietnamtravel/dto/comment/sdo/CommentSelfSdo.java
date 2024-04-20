@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
@@ -30,7 +28,7 @@ public class CommentSelfSdo {
 
     private Long totalSubComment;
 
-    private LocalDateTime createAt;
+    private String createdAt;
 
-    private LocalDateTime updateAt;
+    private String updatedAt;
 }

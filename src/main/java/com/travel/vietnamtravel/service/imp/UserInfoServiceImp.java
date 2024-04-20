@@ -17,6 +17,8 @@ import java.time.LocalDate;
 
 import static com.travel.vietnamtravel.constant.Error.*;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DateTimeUtils.DATE_TIME_FORMAT;
+import static com.travel.vietnamtravel.util.DateTimeConvert.*;
 
 @Service
 @RequiredArgsConstructor
@@ -56,9 +58,9 @@ public class UserInfoServiceImp implements UserInfoService {
 
         UserInfo userInfo = userInfoRepo.findByUserId(loginId);
 
-//        if (userInfo.getAvatarId() != null) {
-//            imageService.delete(userInfo.getAvatarId());
-//        }
+        if (userInfo.getAvatarId() != null) {
+            imageService.delete(userInfo.getAvatarId());
+        }
 
         Long avatarId = imageService.uploadFile(req.getImage());
         userInfo.setAvatarId(avatarId);
@@ -71,11 +73,11 @@ public class UserInfoServiceImp implements UserInfoService {
     public UserInfoSelfSdo self(UserInfoSelfSdi req) {
 
         UserInfo userInfo = userInfoRepo.findByUserId(req.getUserId());
-        UserInfoSelfSdo userInfoSelfSdo = copyProperties(userInfo, UserInfoSelfSdo.class);
+        UserInfoSelfSdo res = copyProperties(userInfo, UserInfoSelfSdo.class);
 
-        userInfoSelfSdo.setUsername(getUser(userInfo.getUserId()).getUsername());
-
-        return userInfoSelfSdo;
+        res.setUsername(getUser(userInfo.getUserId()).getUsername());
+        res.setCreatedAt(dateTimeToString(userInfo.getCreatedAt(), DATE_TIME_FORMAT));
+        return res;
     }
 
     public UserInfoShortSelfSdo shortSelf(UserInfoSelfSdi req) {

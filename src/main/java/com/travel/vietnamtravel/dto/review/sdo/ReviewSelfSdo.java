@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -24,9 +22,9 @@ public class ReviewSelfSdo {
 
     private List<Long> imagesId;
 
-    private LocalDateTime createAt;
+    private String createdAt;
 
-    private LocalDateTime updateAt;
+    private String updatedAt;
 
     private Long totalLike;
 

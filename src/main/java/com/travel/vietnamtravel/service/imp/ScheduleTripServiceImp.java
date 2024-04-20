@@ -24,6 +24,8 @@ import java.util.List;
 import static com.travel.vietnamtravel.constant.Error.*;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
 import static com.travel.vietnamtravel.util.DataUtil.isNullOrEmpty;
+import static com.travel.vietnamtravel.util.DateTimeUtils.*;
+import static com.travel.vietnamtravel.util.DateTimeConvert.*;
 
 @Service
 @RequiredArgsConstructor
@@ -88,7 +90,10 @@ public class ScheduleTripServiceImp implements ScheduleTripService {
                     .forEach(places::add);
             res.setPlaces(places);
         }
-
+        res.setStartDate(dateToString(scheduleTrip.getStartDate(), DATE_FORMAT));
+        res.setUpdatedAt(dateTimeToString(scheduleTrip.getUpdatedAt(), DATE_TIME_FORMAT));
+        res.setCreatedAt(dateTimeToString(scheduleTrip.getCreatedAt(), DATE_TIME_FORMAT));
+        res.setUpdatedAt(dateTimeToString(scheduleTrip.getUpdatedAt(), DATE_TIME_FORMAT));
         return res;
     }
 

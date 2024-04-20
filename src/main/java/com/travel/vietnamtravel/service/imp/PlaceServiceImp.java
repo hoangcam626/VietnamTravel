@@ -16,6 +16,7 @@ import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikePlaceRepo;
 import com.travel.vietnamtravel.repository.PlaceRepo;
 import com.travel.vietnamtravel.repository.ReviewRepo;
+import com.travel.vietnamtravel.repository.VisitRepo;
 import com.travel.vietnamtravel.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class PlaceServiceImp implements PlaceService {
     private final PlaceRepo placeRepo;
     private final LikePlaceRepo likePlaceRepo;
     private final ReviewRepo reviewRepo;
+    private final VisitRepo visitRepo;
     private final UserInfoService userInfoService;
     private final CommonService commonService;
     private final ImageService imageService;
@@ -161,4 +163,13 @@ public class PlaceServiceImp implements PlaceService {
                 .forEach(res::add);
         return res;
     }
+
+    public List<PlaceSelfSdo> search(PlaceSearchSdi req) {
+        List<Long> searchPlaceIds = placeRepo.searchPlace(req.getKeyword());
+        return listSelf(searchPlaceIds);
+    }
+
+
+
+
 }

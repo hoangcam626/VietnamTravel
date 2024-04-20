@@ -6,21 +6,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class ScheduleTripSelfSdo {
+
     private String nameSchedule;
 
     private MultipartFile imageLabel;
 
     private String description;
 
-    private LocalDate startDate;
+    private String startDate;
 
-    private LocalDate endDate;
+    private String endDate;
+
     private List<PlaceScheduleSelfSdo> places;
+
+    private String createdAt;
+
+    private String updatedAt;
 }

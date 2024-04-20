@@ -33,6 +33,8 @@ import java.util.List;
 import static com.travel.vietnamtravel.constant.Error.ERROR_ALREADY_EXIT;
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DateTimeUtils.DATE_TIME_FORMAT;
+import static com.travel.vietnamtravel.util.DateTimeConvert.*;
 
 @Service
 @Transactional
@@ -68,13 +70,20 @@ public class PostServiceImp implements PostService {
         return PostUpdateSdo.of(Boolean.TRUE);
     }
     public PostSelfSdo self(PostSelfSdi req){
+
         Post post = getPost(req.getId());
-        PostSelfSdo res = copyProperties(req, PostSelfSdo.class);
+        PostSelfSdo res = copyProperties(post, PostSelfSdo.class);
+
         UserInfoShortSelfSdo userInfoShortSelf = userInfoService.shortSelf(UserInfoSelfSdi.of(post.getCreatedBy()));
         res.setCreateBy(userInfoShortSelf);
+
         Long loginId = commonService.getIdLogin();
         res.setIsLike(likePostRepo.existsByUserIdAndPostId(loginId, post.getId()));
         res.setTotalLike(likePostRepo.countLikeByPostId(post.getId()));
+        res.setTotalComment(commentRepo.countComment(post.getId()));
+        res.setCreatedAt(dateTimeToString(post.getCreatedAt(), DATE_TIME_FORMAT));
+        res.setUpdatedAt(dateTimeToString(post.getUpdatedAt(), DATE_TIME_FORMAT));
+
         return res;
     }
 

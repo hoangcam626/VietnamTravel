@@ -3,8 +3,6 @@ package com.travel.vietnamtravel.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -24,7 +22,7 @@ public class Comment extends AbstractAudit{
     private Long imageId;
 
     @Column(name = "post_id")
-    private Long postID;
+    private Long postId;
 
     @Column(name = "super_comment_id")
     private Long superCommentId;

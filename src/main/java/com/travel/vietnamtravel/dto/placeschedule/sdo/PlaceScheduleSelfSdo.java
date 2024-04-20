@@ -21,4 +21,8 @@ public class PlaceScheduleSelfSdo {
     private String description;
 
     private Boolean isComplete ;
+
+    private String createdAt;
+
+    private String updatedAt;
 }

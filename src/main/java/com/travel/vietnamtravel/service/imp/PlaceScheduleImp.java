@@ -16,6 +16,9 @@ import java.util.List;
 
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DateTimeUtils.*;
+import static com.travel.vietnamtravel.util.DateTimeConvert.*;
+
 
 @Service
 @Transactional
@@ -52,6 +55,9 @@ public class PlaceScheduleImp implements PlaceScheduleService {
     public PlaceScheduleSelfSdo self(PlaceScheduleSelfSdi req) {
         PlaceSchedule placeSchedule = getPlaceSchedule(req.getId());
         PlaceScheduleSelfSdo res = copyProperties(placeSchedule, PlaceScheduleSelfSdo.class);
+        res.setUpdatedAt(dateTimeToString(placeSchedule.getUpdatedAt(), DATE_TIME_FORMAT));
+        res.setCreatedAt(dateTimeToString(placeSchedule.getCreatedAt(), DATE_TIME_FORMAT));
+        res.setScheduledDate(dateToString(placeSchedule.getScheduleDate(), DATE_FORMAT));
         return res;
     }
 

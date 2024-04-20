@@ -26,6 +26,8 @@ import java.util.List;
 
 import static com.travel.vietnamtravel.constant.Error.*;
 import static com.travel.vietnamtravel.util.DataUtil.*;
+import static com.travel.vietnamtravel.util.DateTimeUtils.DATE_TIME_FORMAT;
+import static com.travel.vietnamtravel.util.DateTimeConvert.*;
 
 @Service
 @Transactional
@@ -121,6 +123,8 @@ public class ReviewServiceImp implements ReviewService {
         res.setTotalLike(likeReviewRepo.countAllByReviewId(review.getId()));
         Long loginId = commonService.getIdLogin();
         res.setIsLike(likeReviewRepo.existsByUserIDAndReviewId(loginId, review.getId()));
+        res.setCreatedAt(dateTimeToString(review.getCreatedAt(), DATE_TIME_FORMAT));
+        res.setUpdatedAt(dateTimeToString(review.getUpdatedAt(), DATE_TIME_FORMAT));
         return res;
     }
 

@@ -1,7 +1,6 @@
 package com.travel.vietnamtravel.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.LocalDate;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -9,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
@@ -123,6 +124,15 @@ public class DateTimeUtils {
         return df.format(date);
     }
 
+    public static String safeToDate(LocalDate date, String pattern) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        try {
+            return simpleDateFormat.format(date);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     /*
      * @description: Get last date of month
      * */
@@ -139,10 +149,10 @@ public class DateTimeUtils {
     /*
      * @description: Get fist date of month
      * */
-    public static Date getFirstDayOfMonth(Date date) {
-        LocalDate today = new LocalDate(date);
-        return today.dayOfMonth().withMinimumValue().toDate();
-    }
+//    public static Date getFirstDayOfMonth(Date date) {
+//        LocalDate today = new LocalDate(date);
+//        return today.dayOfMonth().withMinimumValue().toDate();
+//    }
 
     /*
      * @description: Get year
@@ -367,14 +377,6 @@ public class DateTimeUtils {
         return Timestamp.from(instant);
     }
 
-    public static String formatDate(Date date, String pattern) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        try {
-            return simpleDateFormat.format(date);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     public static String getCurrentTimeWithFormat(String pattern) {
         try {
