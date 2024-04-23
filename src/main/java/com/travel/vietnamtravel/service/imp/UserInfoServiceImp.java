@@ -5,6 +5,7 @@ import com.travel.vietnamtravel.dto.userinfo.sdo.*;
 import com.travel.vietnamtravel.entity.User;
 import com.travel.vietnamtravel.entity.UserInfo;
 import com.travel.vietnamtravel.exception.CustomException;
+import com.travel.vietnamtravel.repository.PostRepo;
 import com.travel.vietnamtravel.repository.UserInfoRepo;
 import com.travel.vietnamtravel.repository.UserRepo;
 import com.travel.vietnamtravel.service.CommonService;
@@ -77,6 +78,9 @@ public class UserInfoServiceImp implements UserInfoService {
 
         res.setUsername(getUser(userInfo.getUserId()).getUsername());
         res.setCreatedAt(dateTimeToString(userInfo.getCreatedAt(), DATE_TIME_FORMAT));
+        res.setTotalPost(userInfoRepo.countMyPost(res.getUserId()));
+        res.setTotalReview(userInfoRepo.countMyReview(res.getUserId()));
+        res.setTotalVisit(userInfoRepo.countMyVisit(res.getUserId()));
         return res;
     }
 

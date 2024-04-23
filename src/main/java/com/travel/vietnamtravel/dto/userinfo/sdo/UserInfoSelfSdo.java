@@ -18,8 +18,8 @@ public class UserInfoSelfSdo {
     private Long userId;
     private String username;
     private String createdAt;
-
-//    public void setUrlAvatar(long avatarId) {
-//        this.urlAvatar = "/image/"+avatarId;
-//    }
+    private String description;
+    private Long totalPost;
+    private Long totalReview;
+    private Long totalVisit;
 }

@@ -14,8 +14,6 @@ public class ScheduleTripUpdateSdi {
 
     private String nameSchedule;
 
-    private MultipartFile imageLabel;
-
     private String description;
 
     private LocalDate startDate;

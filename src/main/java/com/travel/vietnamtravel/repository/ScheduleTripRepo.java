@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ScheduleTripRepo extends JpaRepository<ScheduleTrip, Long> {
 
-    @Query("SELECT st.id FROM ScheduleTrip st WHERE st.createdBy = :userId")
+    @Query("SELECT st.id FROM ScheduleTrip st WHERE st.createdBy = :userId ORDER BY st.createdAt DESC ")
     List<Long> findByUserId(Long userId);
 }

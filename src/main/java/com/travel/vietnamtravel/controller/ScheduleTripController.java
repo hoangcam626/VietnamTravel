@@ -16,29 +16,26 @@ public class ScheduleTripController {
     private final ScheduleTripService scheduleTripService;
 
     @PostMapping("/create")
-    public ResponseEntity<ScheduleTripCreateSdo> create(@RequestBody ScheduleTripCreateSdi req) {
+    public ResponseEntity<ScheduleTripCreateSdo> create(ScheduleTripCreateSdi req) {
         return ResponseEntity.ok(scheduleTripService.create(req));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ScheduleTripUpdateSdo> update(@RequestBody ScheduleTripUpdateSdi req) {
+    public ResponseEntity<ScheduleTripUpdateSdo> update( ScheduleTripUpdateSdi req) {
         return ResponseEntity.ok(scheduleTripService.update(req));
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ScheduleTripDeleteSdo> delete(@RequestBody ScheduleTripDeleteSdi req) {
+    public ResponseEntity<ScheduleTripDeleteSdo> delete(ScheduleTripDeleteSdi req) {
         return ResponseEntity.ok(scheduleTripService.delete(req));
     }
 
     @PostMapping("/self")
-    public ResponseEntity<ScheduleTripSelfSdo> self(@RequestBody ScheduleTripSelfSdi req) {
+    public ResponseEntity<ScheduleTripSelfSdo> self( ScheduleTripSelfSdi req) {
         return ResponseEntity.ok(scheduleTripService.self(req));
     }
 
-
-
-
-    @PostMapping("/my-schedules")
+    @GetMapping("/my-schedules")
     public ResponseEntity<List<ScheduleTripSelfSdo>> mySchedules() {
         return ResponseEntity.ok(scheduleTripService.mySchedules());
     }

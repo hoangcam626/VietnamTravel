@@ -23,11 +23,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.travel.vietnamtravel.constant.Error.ERROR_ALREADY_EXIT;
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
-import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DataUtil.*;
 
 @Service
 @Transactional
@@ -151,6 +153,23 @@ public class PlaceServiceImp implements PlaceService {
                 .forEach(res::add);
 
         return res;
+    }
+
+    public List<PlaceSelfSdo> getPlaces(PlaceSdi req){
+        List<Long> ids =new ArrayList<>();
+        if(!isNullObject(req.getWardCode())){
+            ids.addAll(placeRepo.findAllByWardCode(req.getWardCode()));
+        } else if (!isNullObject(req.getDistrictCode())) {
+            ids.addAll(placeRepo.findAllByDistrictCode(req.getDistrictCode()));
+        } else if(!isNullObject(req.getProvinceCode())){
+            ids.addAll(placeRepo.findAllByProvinceCode(req.getProvinceCode()));
+        } else {
+            ids.addAll(placeRepo.findAllIds());
+        }
+        return ids.stream()
+                .map(id -> self(PlaceSelfSdi.of(id)))
+                .sorted(Comparator.comparing(PlaceSelfSdo::getRating).reversed())
+                .collect(Collectors.toList());
     }
 
     public Place getPlace(Long id) {

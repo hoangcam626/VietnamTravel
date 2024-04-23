@@ -7,12 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PlaceRepo extends JpaRepository<Place, Long> {
-    List<Place> findAllByProvinceCode(String provinceCode);
+    @Query("select p.id from Place p WHERE p.provinceCode = :provinceCode")
+    List<Long> findAllByProvinceCode(String provinceCode);
 
-    List<Place> findAllByDistrictCode(String districtCode);
+    @Query("select p.id from Place p WHERE p.districtCode = :districtCode")
+    List<Long> findAllByDistrictCode(String districtCode);
 
-    List<Place> findAllByWardCode(String wardCod);
+    @Query("select p.id from Place p WHERE p.wardCode = :wardCode")
+    List<Long> findAllByWardCode(String wardCod);
 
+    @Query("select p.id from Place p")
+    List<Long> findAllIds();
     @Query("select p.id from Place p left join Province pr ON pr.code = p.provinceCode " +
             "left join District  d on d.code = p.districtCode " +
             "left join Ward w on w.code = p.wardCode " +

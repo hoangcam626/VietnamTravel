@@ -15,7 +15,7 @@ public class ScheduleTripSelfSdo {
 
     private String nameSchedule;
 
-    private MultipartFile imageLabel;
+    private Long imageLabelId;
 
     private String description;
 

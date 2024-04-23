@@ -26,7 +26,7 @@ public class UserInfo extends AbstractAudit{
     private LocalDate birthOfDate;
 
     @Column(name = "avatar_id")
-    private Long avatarId;
+     private Long avatarId;
 
     @Column(name = "phone_number")
     private String phoneNumber;

@@ -30,6 +30,9 @@ public class ScheduleTripServiceImp implements ScheduleTripService {
     private final ImageService imageService;
 
     public ScheduleTripCreateSdo create(ScheduleTripCreateSdi req) {
+        if(req.getEndDate().isBefore(req.getStartDate())){
+            throw new CustomException("End date");
+        }
 
         ScheduleTrip scheduleTrip = copyProperties(req, ScheduleTrip.class);
 
@@ -53,14 +56,6 @@ public class ScheduleTripServiceImp implements ScheduleTripService {
         scheduleTrip.setStartDate(req.getStartDate());
         scheduleTrip.setEndDate(req.getEndDate());
 
-        if (req.getImageLabel() == null && scheduleTrip.getImageLabelId() != null) {
-            imageService.delete(scheduleTrip.getImageLabelId());
-            scheduleTrip.setImageLabelId(null);
-        } else if (req.getImageLabel() != null) {
-            Long imageId = imageService.uploadFile(req.getImageLabel());
-            scheduleTrip.setImageLabelId(imageId);
-        }
-
         scheduleTripRepo.save(scheduleTrip);
         return ScheduleTripUpdateSdo.of(Boolean.TRUE);
     }
@@ -75,7 +70,7 @@ public class ScheduleTripServiceImp implements ScheduleTripService {
         ScheduleTrip scheduleTrip = getScheduleTrip(req.getId());
         ScheduleTripSelfSdo res = copyProperties(scheduleTrip, ScheduleTripSelfSdo.class);
         res.setStartDate(dateToString(scheduleTrip.getStartDate(), DATE_FORMAT));
-        res.setUpdatedAt(dateTimeToString(scheduleTrip.getUpdatedAt(), DATE_TIME_FORMAT));
+        res.setEndDate(dateToString(scheduleTrip.getEndDate(), DATE_FORMAT));
         res.setCreatedAt(dateTimeToString(scheduleTrip.getCreatedAt(), DATE_TIME_FORMAT));
         res.setUpdatedAt(dateTimeToString(scheduleTrip.getUpdatedAt(), DATE_TIME_FORMAT));
         return res;
