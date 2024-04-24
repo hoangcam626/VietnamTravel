@@ -23,4 +23,8 @@ public class PlaceSelfSdo {
     private Long totalLike;
     private Long totalReview;
     private Long totalVisit;
+    private Long totalPost;
+    private Boolean hasPost;
+    private Boolean hasReview;
+    private Boolean isVisit;
 }

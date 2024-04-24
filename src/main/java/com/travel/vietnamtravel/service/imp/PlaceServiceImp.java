@@ -80,6 +80,7 @@ public class PlaceServiceImp implements PlaceService {
 
     public PlaceSelfSdo self(PlaceSelfSdi req) {
 
+        Long loginId = commonService.getIdLogin();
         Place place = getPlace(req.getId());
 
         PlaceSelfSdo res = copyProperties(place, PlaceSelfSdo.class);
@@ -89,13 +90,16 @@ public class PlaceServiceImp implements PlaceService {
         res.setWard(administrativeService.shortSelf(WardSelfSdi.of(place.getWardCode())));
 
         res.setTotalReview(reviewRepo.countReviewByPlaceId(place.getId()));
-        res.setRating(reviewRepo.rating(place.getId()));
-
-        Long userId = commonService.getIdLogin();
-        res.setIsLike(likePlaceRepo.existsByUserIdAndPlaceId(userId, place.getId()));
+        res.setTotalPost(placeRepo.countPost(place.getId()));
         res.setTotalLike(likePlaceRepo.countLikeByPlaceId(place.getId()));
-
+        res.setRating(reviewRepo.rating(place.getId()));
         res.setTotalVisit(visitRepo.countByPlaceId(place.getId()));
+        
+        res.setHasReview(placeRepo.hasReview(place.getId(), loginId));
+        res.setHasPost(placeRepo.hasPost(place.getId(), loginId));
+        res.setIsVisit(visitRepo.existsByUserIdAndPlaceId(loginId, place.getId()));
+        res.setIsLike(likePlaceRepo.existsByUserIdAndPlaceId(loginId, place.getId()));
+
         return res;
     }
 
@@ -155,19 +159,25 @@ public class PlaceServiceImp implements PlaceService {
         return res;
     }
 
-    public List<PlaceSelfSdo> getPlaces(PlaceSdi req){
-        List<Long> ids =new ArrayList<>();
-        if(!isNullObject(req.getWardCode())){
+    public List<PlaceSelfSdo> getPlaces(PlaceSdi req) {
+        List<Long> ids = new ArrayList<>();
+        if (!isNullObject(req.getWardCode())) {
             ids.addAll(placeRepo.findAllByWardCode(req.getWardCode()));
         } else if (!isNullObject(req.getDistrictCode())) {
             ids.addAll(placeRepo.findAllByDistrictCode(req.getDistrictCode()));
-        } else if(!isNullObject(req.getProvinceCode())){
+        } else if (!isNullObject(req.getProvinceCode())) {
             ids.addAll(placeRepo.findAllByProvinceCode(req.getProvinceCode()));
         } else {
             ids.addAll(placeRepo.findAllIds());
         }
-        return ids.stream()
-                .map(id -> self(PlaceSelfSdi.of(id)))
+        return listSelf(ids).stream()
+                .sorted(Comparator.comparing(PlaceSelfSdo::getRating).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<PlaceSelfSdo> getAll() {
+        List<Long> ids = placeRepo.findAllIds();
+        return listSelf(ids).stream()
                 .sorted(Comparator.comparing(PlaceSelfSdo::getRating).reversed())
                 .collect(Collectors.toList());
     }

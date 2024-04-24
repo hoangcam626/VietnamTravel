@@ -6,6 +6,7 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 @Data
 public class PlaceSdi {
+
     private String provinceCode;
 
     private String districtCode;

@@ -25,7 +25,6 @@ public interface PlaceService {
 
     Place getPlace(Long id);
 
-    PlaceRatingSdo showRating(PlaceRatingSdi req);
 
     LikePlaceCreateSdo like(LikePlaceCreateSdi req);
 
@@ -36,4 +35,10 @@ public interface PlaceService {
     List<PlaceSelfSdo> favorites(LikePlaceJoinUserSdi req);
 
     List<PlaceSelfSdo> search(PlaceSearchSdi req);
+
+    PlaceRatingSdo showRating(PlaceRatingSdi req);
+
+    List<PlaceSelfSdo> getPlaces(PlaceSdi req);
+
+    List<PlaceSelfSdo> getAll();
 }

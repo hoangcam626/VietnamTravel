@@ -8,7 +8,6 @@ import com.travel.vietnamtravel.dto.visit.sdo.VisitSelfSdo;
 import com.travel.vietnamtravel.service.VisitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,7 @@ public class VisitController {
         return ResponseEntity.ok(visitService.create(req));
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public ResponseEntity<VisitDeleteSdo> delete(VisitDeleteSdi req) {
         return ResponseEntity.ok(visitService.delete(req));
     }

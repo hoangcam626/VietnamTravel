@@ -27,7 +27,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.update(req));
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public ResponseEntity<ReviewDeleteSdo> delete(ReviewDeleteSdi req) {
         return ResponseEntity.ok(reviewService.delete(req));
     }
@@ -52,7 +52,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.like(req));
     }
 
-    @DeleteMapping("/unlike")
+    @PostMapping("/unlike")
     public ResponseEntity<LikeReviewDeleteSdo> unlike(LikeReviewDeleteSdi req) {
         return ResponseEntity.ok(reviewService.unlike(req));
     }

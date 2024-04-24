@@ -23,4 +23,16 @@ public interface PlaceRepo extends JpaRepository<Place, Long> {
             "left join Ward w on w.code = p.wardCode " +
             "where p.name like %:keyword% or pr.name like %:keyword% or d.name like %:keyword or w.name like %:keyword%")
     List<Long> searchPlace(String keyword);
+
+    @Query("select count(p) from Place p inner join Post ps on ps.placeId = p.id where p.id =:id")
+    Long countPost(Long id);
+
+    @Query("select count(p)>0 from Place p inner join Post ps on ps.placeId = p.id where p.id =:id and ps.createdBy =:userId")
+    Boolean hasPost(Long id, Long userId);
+
+    @Query("select count(p) from Place p inner join Review r on r.placeId = p.id where p.id =:id")
+    Long countReview(Long id);
+
+    @Query("select count(p)>0 from Place p inner join Review r on r.placeId = p.id where p.id =:id and r.createdBy =:userId")
+    Boolean hasReview(Long id, Long userId);
 }

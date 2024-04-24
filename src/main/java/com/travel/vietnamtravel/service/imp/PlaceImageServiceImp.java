@@ -2,6 +2,7 @@ package com.travel.vietnamtravel.service.imp;
 
 import com.travel.vietnamtravel.dto.place.sdi.PlaceDeleteSdi;
 import com.travel.vietnamtravel.dto.placeimage.sdi.PlaceImageCreateSdi;
+import com.travel.vietnamtravel.dto.placeimage.sdi.PlaceImageJoinSdi;
 import com.travel.vietnamtravel.dto.placeimage.sdo.PlaceImageCreateSdo;
 import com.travel.vietnamtravel.dto.placeimage.sdo.PlaceImageDeleteSdo;
 import com.travel.vietnamtravel.entity.relationship.PlaceImage;
@@ -41,6 +42,10 @@ public class PlaceImageServiceImp implements PlaceImageService {
         placeImageRepo.delete(placeImage);
         return PlaceImageDeleteSdo.of(Boolean.TRUE);
     }
+    public List<Long> getImagePlace(PlaceImageJoinSdi req){
+        return placeImageRepo.findImagIdByPlaceId(req.getPlaceId());
+    }
+
 
     public PlaceImage getPlaceImage(Long id) {
         return placeImageRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));

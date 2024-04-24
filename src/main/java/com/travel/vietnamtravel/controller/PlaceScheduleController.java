@@ -25,7 +25,7 @@ public class PlaceScheduleController {
         return ResponseEntity.ok(scheduleTripService.update(req));
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public ResponseEntity<PlaceScheduleDeleteSdo> delete(PlaceScheduleDeleteSdi req) {
         return ResponseEntity.ok(scheduleTripService.delete(req));
     }

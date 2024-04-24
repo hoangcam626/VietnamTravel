@@ -4,7 +4,6 @@ import com.travel.vietnamtravel.dto.placeschedule.sdo.PlaceScheduleSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -12,6 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class ScheduleTripSelfSdo {
+
+    private Long id;
 
     private String nameSchedule;
 

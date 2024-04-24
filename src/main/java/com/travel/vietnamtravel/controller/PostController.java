@@ -27,7 +27,7 @@ public class PostController {
         return ResponseEntity.ok(postService.update(req));
     }
 
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public ResponseEntity<PostDeleteSdo> delete(PostDeleteSdi req) {
         return ResponseEntity.ok(postService.delete(req));
     }
@@ -57,7 +57,7 @@ public class PostController {
         return ResponseEntity.ok(postService.like(req));
     }
 
-    @DeleteMapping("/unlike")
+    @PostMapping("/unlike")
     public ResponseEntity<LikePostDeleteSdo> like(LikePostDeleteSdi req) {
         return ResponseEntity.ok(postService.unlike(req));
     }
