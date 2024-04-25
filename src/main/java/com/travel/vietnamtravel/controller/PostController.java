@@ -37,7 +37,7 @@ public class PostController {
         return ResponseEntity.ok(postService.self(req));
     }
 
-    @PostMapping("/posts")
+    @GetMapping("/posts")
     public ResponseEntity<List<PostSelfSdo>> allPosts() {
         return ResponseEntity.ok(postService.allPosts());
     }

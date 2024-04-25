@@ -24,7 +24,7 @@ public class CommentController {
     public ResponseEntity<CommentUpdateSdo> update( CommentUpdateSdi req){
         return ResponseEntity.ok(commentService.update(req));
     }
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     public ResponseEntity<CommentDeleteSdo> delete( CommentDeleteSdi req){
         return ResponseEntity.ok(commentService.delete(req));
     }
@@ -54,7 +54,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.like(req));
     }
 
-    @DeleteMapping("/unlike")
+    @PostMapping("/unlike")
     public ResponseEntity<LikeCommentDeleteSdo> like(LikeCommentDeleteSdi req){
         return ResponseEntity.ok(commentService.unlike(req));
     }

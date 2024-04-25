@@ -1,5 +1,6 @@
 package com.travel.vietnamtravel.dto.post.sdo;
 
+import com.travel.vietnamtravel.dto.place.sdo.PlaceShortSelfSdo;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class PostSelfSdo {
 
     private UserInfoShortSelfSdo createBy;
 
-    private Long placeId;
+    private PlaceShortSelfSdo place;
 
     private Long imageId;
 

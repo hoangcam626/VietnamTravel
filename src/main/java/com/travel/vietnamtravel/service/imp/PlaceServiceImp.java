@@ -193,11 +193,27 @@ public class PlaceServiceImp implements PlaceService {
                 .forEach(res::add);
         return res;
     }
+    public List<PlaceShortSelfSdo> listShortSelf(List<Long> req) {
+        List<PlaceShortSelfSdo> res = new ArrayList<>();
+        req.stream()
+                .map(this::shortSelf)
+                .forEach(res::add);
+        return res;
+    }
+    public PlaceShortSelfSdo shortSelf(Long id){
+        Place place = getPlace(id);
 
-    public List<PlaceSelfSdo> search(PlaceSearchSdi req) {
-        List<Long> searchPlaceIds = placeRepo.searchPlace(req.getKeyword());
-        return listSelf(searchPlaceIds);
+        PlaceShortSelfSdo res = copyProperties(place, PlaceShortSelfSdo.class);
+
+        res.setProvince(administrativeService.shortSelf(ProvinceSelfSdi.of(place.getProvinceCode())));
+        res.setDistrict(administrativeService.shortSelf(DistrictSelfSdi.of(place.getDistrictCode())));
+        res.setWard(administrativeService.shortSelf(WardSelfSdi.of(place.getWardCode())));
+
+        return res;
     }
 
-
+    public List<PlaceShortSelfSdo> search(PlaceSearchSdi req) {
+        List<Long> searchPlaceIds = placeRepo.searchPlace(req.getKeyword());
+        return listShortSelf(searchPlaceIds);
+    }
 }

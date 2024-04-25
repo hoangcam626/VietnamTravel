@@ -13,10 +13,7 @@ import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.LikeReviewRepo;
 import com.travel.vietnamtravel.repository.ReviewImageRepo;
 import com.travel.vietnamtravel.repository.ReviewRepo;
-import com.travel.vietnamtravel.service.CommonService;
-import com.travel.vietnamtravel.service.ImageService;
-import com.travel.vietnamtravel.service.ReviewService;
-import com.travel.vietnamtravel.service.UserInfoService;
+import com.travel.vietnamtravel.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +36,7 @@ public class ReviewServiceImp implements ReviewService {
     private final LikeReviewRepo likeReviewRepo;
     private final ImageService imageService;
     private final UserInfoService userInfoService;
+    private final PlaceService placeService;
     private final CommonService commonService;
 
     public ReviewCreateSdo create(ReviewCreateSdi req) {
@@ -125,13 +123,12 @@ public class ReviewServiceImp implements ReviewService {
         res.setIsLike(likeReviewRepo.existsByUserIDAndReviewId(loginId, review.getId()));
         res.setCreatedAt(dateTimeToString(review.getCreatedAt(), DATE_TIME_FORMAT));
         res.setUpdatedAt(dateTimeToString(review.getUpdatedAt(), DATE_TIME_FORMAT));
+        res.setPlace(placeService.shortSelf(review.getPlaceId()));
         return res;
     }
 
     public List<ReviewSelfSdo> getReviewsCreateBy(ReviewJoinUserSdi req) {
-
-        List<Long> reviewIds = reviewRepo.findAllByUserId(req.getUserId());
-        return listSelf(reviewIds);
+        return listSelf(reviewRepo.findAllByUserId(req.getUserId()));
     }
 
     public List<ReviewSelfSdo> getReviewsForPlace(ReviewJoinPlaceSdi req) {
@@ -210,6 +207,10 @@ public class ReviewServiceImp implements ReviewService {
                 .forEach(res::add);
 
         return res;
+    }
+
+    public List<ReviewSelfSdo> getAll() {
+        return listSelf(reviewRepo.getAll());
     }
 
 }

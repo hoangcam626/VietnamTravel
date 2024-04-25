@@ -45,7 +45,10 @@ public class CommentServiceImp implements CommentService {
 
     public CommentCreateSdo create(CommentCreateSdi req) {
 
-        if(!isNullObject(req.getSuperCommentId())){
+        Long loginId = commonService.getIdLogin();
+        req.setCreatedBy(loginId);
+
+        if (!isNullObject(req.getSuperCommentId())) {
             getComment(req.getSuperCommentId());
         }
 
@@ -113,7 +116,8 @@ public class CommentServiceImp implements CommentService {
         List<Long> commentsId = commentRepo.findByPostID(req.getPostId());
         return listSelf(commentsId);
     }
-    public List<CommentSelfSdo> subComments(CommentSelfSdi req){
+
+    public List<CommentSelfSdo> subComments(CommentSelfSdi req) {
         List<Long> commentsId = commentRepo.findSubComment(req.getId());
         return listSelf(commentsId);
     }
@@ -141,6 +145,7 @@ public class CommentServiceImp implements CommentService {
         likeCommentRepo.delete(delete);
         return LikeCommentDeleteSdo.of(Boolean.FALSE);
     }
+
     public List<UserInfoShortSelfSdo> likedBy(LikeJoinCommentSdi req) {
 
         List<LikeComment> likeComments = likeCommentRepo.findByCommentId(req.getCommentId());
@@ -167,12 +172,12 @@ public class CommentServiceImp implements CommentService {
         return commentRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }
 
-    public List<CommentSelfSdo> listSelf(List<Long> req){
+    public List<CommentSelfSdo> listSelf(List<Long> req) {
         List<CommentSelfSdo> res = new ArrayList<>();
         req.stream()
                 .map(id -> self(CommentSelfSdi.of(id)))
                 .forEach(res::add);
         return res;
     }
-    
+
 }

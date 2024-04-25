@@ -34,11 +34,12 @@ public interface PlaceService {
 
     List<PlaceSelfSdo> favorites(LikePlaceJoinUserSdi req);
 
-    List<PlaceSelfSdo> search(PlaceSearchSdi req);
+    List<PlaceShortSelfSdo> search(PlaceSearchSdi req);
 
     PlaceRatingSdo showRating(PlaceRatingSdi req);
 
     List<PlaceSelfSdo> getPlaces(PlaceSdi req);
 
     List<PlaceSelfSdo> getAll();
+    PlaceShortSelfSdo shortSelf(Long id);
 }

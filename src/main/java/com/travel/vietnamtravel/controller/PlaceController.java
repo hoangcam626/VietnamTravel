@@ -53,7 +53,8 @@ public class PlaceController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<PlaceSelfSdo>> search(PlaceSearchSdi req) {
+    public ResponseEntity<List<PlaceShortSelfSdo>> search(PlaceSearchSdi req) {
+
         return ResponseEntity.ok(placeService.search(req));
     }
     @PostMapping("/rating")

@@ -19,10 +19,7 @@ import com.travel.vietnamtravel.exception.CustomException;
 import com.travel.vietnamtravel.repository.CommentRepo;
 import com.travel.vietnamtravel.repository.LikePostRepo;
 import com.travel.vietnamtravel.repository.PostRepo;
-import com.travel.vietnamtravel.service.CommonService;
-import com.travel.vietnamtravel.service.ImageService;
-import com.travel.vietnamtravel.service.PostService;
-import com.travel.vietnamtravel.service.UserInfoService;
+import com.travel.vietnamtravel.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +30,7 @@ import java.util.List;
 import static com.travel.vietnamtravel.constant.Error.ERROR_ALREADY_EXIT;
 import static com.travel.vietnamtravel.constant.Error.ERROR_NOT_EXIT;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DataUtil.isNullObject;
 import static com.travel.vietnamtravel.util.DateTimeUtils.DATE_TIME_FORMAT;
 import static com.travel.vietnamtravel.util.DateTimeConvert.*;
 
@@ -46,8 +44,9 @@ public class PostServiceImp implements PostService {
     private final ImageService imageService;
     private final UserInfoService userInfoService;
     private final CommonService commonService;
+    private final PlaceService placeService;
 
-    public PostCreateSdo create(PostCreateSdi req){
+    public PostCreateSdo create(PostCreateSdi req) {
         Long loginId = commonService.getIdLogin();
         req.setCreatedBy(loginId);
         Post postImage = copyProperties(req, Post.class);
@@ -56,20 +55,23 @@ public class PostServiceImp implements PostService {
         postRepo.save(postImage);
         return PostCreateSdo.of(postImage.getId());
     }
-    public PostDeleteSdo delete(PostDeleteSdi req){
+
+    public PostDeleteSdo delete(PostDeleteSdi req) {
         Post postImage = getPost(req.getId());
         imageService.delete(postImage.getImageId());
         postRepo.delete(postImage);
         return PostDeleteSdo.of(Boolean.TRUE);
     }
-    public PostUpdateSdo update(PostUpdateSdi req){
+
+    public PostUpdateSdo update(PostUpdateSdi req) {
         Post postImage = getPost(req.getId());
         postImage.setContent(req.getContent());
         postImage.setPlaceId(req.getPlaceId());
         postRepo.save(postImage);
         return PostUpdateSdo.of(Boolean.TRUE);
     }
-    public PostSelfSdo self(PostSelfSdi req){
+
+    public PostSelfSdo self(PostSelfSdi req) {
 
         Post post = getPost(req.getId());
         PostSelfSdo res = copyProperties(post, PostSelfSdo.class);
@@ -83,21 +85,28 @@ public class PostServiceImp implements PostService {
         res.setTotalComment(commentRepo.countComment(post.getId()));
         res.setCreatedAt(dateTimeToString(post.getCreatedAt(), DATE_TIME_FORMAT));
         res.setUpdatedAt(dateTimeToString(post.getUpdatedAt(), DATE_TIME_FORMAT));
+        if (!isNullObject(post.getPlaceId())) {
 
+            res.setPlace(placeService.shortSelf(post.getPlaceId()));
+        }
         return res;
     }
 
-    public List<PostSelfSdo> allPosts(){
+    public List<PostSelfSdo> allPosts() {
         List<Long> postImageIds = postRepo.findAllOrderByCreatAt();
         return listSelf(postImageIds);
     }
-    public List<PostSelfSdo> createBy(PostJoinUserSdi req){
+
+    public List<PostSelfSdo> createBy(PostJoinUserSdi req) {
         List<Long> postImageIds = postRepo.findByUserId(req.getUserId());
         return listSelf(postImageIds);
-    }public List<PostSelfSdo> postsInPlace(PostJoinPlaceSdi req){
+    }
+
+    public List<PostSelfSdo> postsInPlace(PostJoinPlaceSdi req) {
         List<Long> postImageIds = postRepo.findByPlaceId(req.getPlaceId());
         return listSelf(postImageIds);
     }
+
     public LikePostCreateSdo like(LikePostCreateSdi req) {
         Long loginId = commonService.getIdLogin();
         if (likePostRepo.existsByUserIdAndPostId(loginId, req.getPostId())) {
@@ -144,10 +153,11 @@ public class PostServiceImp implements PostService {
         return res;
     }
 
-    public Post getPost(Long id){
-        return postRepo.findById(id).orElseThrow(()-> new CustomException(ERROR_NOT_EXIT));
+    public Post getPost(Long id) {
+        return postRepo.findById(id).orElseThrow(() -> new CustomException(ERROR_NOT_EXIT));
     }
-    public List<PostSelfSdo> listSelf(List<Long> req){
+
+    public List<PostSelfSdo> listSelf(List<Long> req) {
         List<PostSelfSdo> res = new ArrayList<>();
         req.stream()
                 .map(id -> self(PostSelfSdi.of(id)))

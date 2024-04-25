@@ -10,21 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
-public class PlaceSelfSdo {
+public class PlaceShortSelfSdo {
     private Long id;
     private String name;
     private ProvinceShortSelfSdo province;
     private DistrictShortSelfSdo district;
     private WardShortSelfSdo ward;
     private Long imageId;
-    private String description;
-    private Boolean isLike;
-    private Double rating;
-    private Long totalLike;
-    private Long totalReview;
-    private Long totalVisit;
-    private Long totalPost;
-    private Boolean hasPost;
-    private Boolean hasReview;
-    private Boolean isVisit;
 }

@@ -28,4 +28,6 @@ public interface ReviewService {
     LikeReviewDeleteSdo unlike(LikeReviewDeleteSdi req);
     List<UserInfoShortSelfSdo> likedBy(LikeJoinReviewSdi req);
     List<ReviewSelfSdo> favorites(LikeReviewJoinUserSdi req);
+
+    List<ReviewSelfSdo> getAll();
 }

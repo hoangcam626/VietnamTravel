@@ -1,5 +1,6 @@
 package com.travel.vietnamtravel.dto.review.sdo;
 
+import com.travel.vietnamtravel.dto.place.sdo.PlaceShortSelfSdo;
 import com.travel.vietnamtravel.dto.userinfo.sdo.UserInfoShortSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class ReviewSelfSdo {
+    private Long id;
 
     private UserInfoShortSelfSdo createBy;
 
-    private Long placeId;
+    private PlaceShortSelfSdo place;
 
     private int rating;
 

@@ -34,6 +34,7 @@ public class ReviewController {
 
     @PostMapping("/self")
     public ResponseEntity<ReviewSelfSdo> self(ReviewSelfSdi req) {
+
         return ResponseEntity.ok(reviewService.self(req));
     }
 
@@ -60,5 +61,9 @@ public class ReviewController {
     @PostMapping("/favourites")
     public ResponseEntity<List<ReviewSelfSdo>> favourites(LikeReviewJoinUserSdi req) {
         return ResponseEntity.ok(reviewService.favorites(req));
+    }
+    @GetMapping("/reviews")
+    public ResponseEntity<List<ReviewSelfSdo>> getAll() {
+        return ResponseEntity.ok(reviewService.getAll());
     }
 }

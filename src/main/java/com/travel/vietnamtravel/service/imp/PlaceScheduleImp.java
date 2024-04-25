@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,12 @@ public class PlaceScheduleImp implements PlaceScheduleService {
 
     public PlaceScheduleCreateSdo create(PlaceScheduleCreateSdi req) {
         PlaceSchedule placeSchedule = copyProperties(req, PlaceSchedule.class);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        // Chuyển đổi chuỗi thời gian sang LocalTime
+//        placeSchedule.setScheduleFinishTime( LocalTime.parse(req.getScheduleFinishTime(), formatter));
+//        placeSchedule.setScheduleBeginTime( LocalTime.parse(req.getScheduleBeginTime(), formatter));
+
         placeScheduleRepo.save(placeSchedule);
         return PlaceScheduleCreateSdo.of(placeSchedule.getId());
     }
@@ -62,8 +70,8 @@ public class PlaceScheduleImp implements PlaceScheduleService {
         res.setScheduledDate(dateToString(placeSchedule.getScheduleDate(), DATE_FORMAT));
         res.setScheduleBeginTime(timeToString(placeSchedule.getScheduleBeginTime(), "HH:mm"));
         res.setScheduleBeginTime(timeToString(placeSchedule.getScheduleBeginTime(), "HH:mm"));
-        if (isNullObject(placeSchedule.getPlaceId())) {
-            res.setPlaceSelf(placeService.self(PlaceSelfSdi.of(placeSchedule.getPlaceId())));
+        if (!isNullObject(placeSchedule.getPlaceId())) {
+            res.setPlace(placeService.shortSelf(placeSchedule.getPlaceId()));
         }
         return res;
     }

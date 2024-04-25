@@ -1,6 +1,7 @@
 package com.travel.vietnamtravel.dto.placeschedule.sdo;
 
 import com.travel.vietnamtravel.dto.place.sdo.PlaceSelfSdo;
+import com.travel.vietnamtravel.dto.place.sdo.PlaceShortSelfSdo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ public class PlaceScheduleSelfSdo {
 
     private Long scheduleId;
 
-    private PlaceSelfSdo placeSelf;
+    private PlaceShortSelfSdo place;
 
     private String scheduledDate;
 

@@ -5,43 +5,42 @@ import com.travel.vietnamtravel.dto.placeschedule.sdo.*;
 import com.travel.vietnamtravel.service.PlaceScheduleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/v1/on-schedule")
+@RestController
 @AllArgsConstructor
+@RequestMapping("/api/v1/on-schedule")
 public class PlaceScheduleController {
-    private final PlaceScheduleService scheduleTripService;
+    private final PlaceScheduleService placeScheduleService;
     @PostMapping("/create")
     public ResponseEntity<PlaceScheduleCreateSdo> create(PlaceScheduleCreateSdi req) {
-        return ResponseEntity.ok(scheduleTripService.create(req));
+        return ResponseEntity.ok(placeScheduleService.create(req));
     }
 
     @PutMapping("/update")
     public ResponseEntity<PlaceScheduleUpdateSdo> update(@RequestBody PlaceScheduleUpdateSdi req) {
-        return ResponseEntity.ok(scheduleTripService.update(req));
+        return ResponseEntity.ok(placeScheduleService.update(req));
     }
 
     @PostMapping("/delete")
     public ResponseEntity<PlaceScheduleDeleteSdo> delete(PlaceScheduleDeleteSdi req) {
-        return ResponseEntity.ok(scheduleTripService.delete(req));
+        return ResponseEntity.ok(placeScheduleService.delete(req));
     }
 
     @PostMapping("/self")
     public ResponseEntity<PlaceScheduleSelfSdo> self(PlaceScheduleSelfSdi req) {
-        return ResponseEntity.ok(scheduleTripService.self(req));
+        return ResponseEntity.ok(placeScheduleService.self(req));
     }
 
     @PostMapping("/is-complete")
     public ResponseEntity<PlaceCompleteSdo> isComplete(PlaceCompleteSdi req){
-        return ResponseEntity.ok(scheduleTripService.isComplete(req));
+        return ResponseEntity.ok(placeScheduleService.isComplete(req));
     }
 
     @PostMapping("/on-date")
     public ResponseEntity<List<PlaceScheduleSelfSdo>> placesInScheduleOnDate(PlaceScheduleJoinSdi req){
-        return ResponseEntity.ok(scheduleTripService.placesInScheduleOnDate(req));
+        return ResponseEntity.ok(placeScheduleService.placesInScheduleOnDate(req));
     }
 }
