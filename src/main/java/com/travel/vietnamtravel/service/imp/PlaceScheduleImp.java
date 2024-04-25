@@ -69,7 +69,7 @@ public class PlaceScheduleImp implements PlaceScheduleService {
         res.setCreatedAt(dateTimeToString(placeSchedule.getCreatedAt(), DATE_TIME_FORMAT));
         res.setScheduledDate(dateToString(placeSchedule.getScheduleDate(), DATE_FORMAT));
         res.setScheduleBeginTime(timeToString(placeSchedule.getScheduleBeginTime(), "HH:mm"));
-        res.setScheduleBeginTime(timeToString(placeSchedule.getScheduleBeginTime(), "HH:mm"));
+        res.setScheduleFinishTime(timeToString(placeSchedule.getScheduleFinishTime(), "HH:mm"));
         if (!isNullObject(placeSchedule.getPlaceId())) {
             res.setPlace(placeService.shortSelf(placeSchedule.getPlaceId()));
         }
