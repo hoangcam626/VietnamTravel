@@ -19,4 +19,13 @@ public interface PostRepo extends JpaRepository<Post, Long> {
     @Query("SELECT count(p) FROM Post p WHERE p.placeId = :placeId")
     Long countByPlaceId(Long placeId);
 
+    @Query("select ps.id from Post ps inner join Place p on p.id = ps.placeId " +
+            "left join Province pr ON pr.code = p.provinceCode " +
+            "left join District  d on d.code = p.districtCode " +
+            "left join Ward w on w.code = p.wardCode " +
+            "where p.name like %:keyword% " +
+            "or pr.name like %:keyword% " +
+            "or d.name like %:keyword " +
+            "or w.name like %:keyword%")
+    List<Long> searchPost(String keyword);
 }

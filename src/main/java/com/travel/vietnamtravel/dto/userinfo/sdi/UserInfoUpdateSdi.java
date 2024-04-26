@@ -14,5 +14,4 @@ public class UserInfoUpdateSdi {
     private LocalDate birthOfDate;
     private String phoneNumber;
     private String address;
-    private int level;
 }

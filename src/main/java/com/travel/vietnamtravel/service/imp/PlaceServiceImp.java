@@ -212,8 +212,8 @@ public class PlaceServiceImp implements PlaceService {
         return res;
     }
 
-    public List<PlaceShortSelfSdo> search(PlaceSearchSdi req) {
+    public List<PlaceSelfSdo> search(PlaceSearchSdi req) {
         List<Long> searchPlaceIds = placeRepo.searchPlace(req.getKeyword());
-        return listShortSelf(searchPlaceIds);
+        return listSelf(searchPlaceIds);
     }
 }

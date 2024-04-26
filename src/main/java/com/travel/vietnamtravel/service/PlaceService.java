@@ -34,7 +34,7 @@ public interface PlaceService {
 
     List<PlaceSelfSdo> favorites(LikePlaceJoinUserSdi req);
 
-    List<PlaceShortSelfSdo> search(PlaceSearchSdi req);
+    List<PlaceSelfSdo> search(PlaceSearchSdi req);
 
     PlaceRatingSdo showRating(PlaceRatingSdi req);
 

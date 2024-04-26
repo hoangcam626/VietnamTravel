@@ -14,7 +14,7 @@ public class CommentCreateSdi {
 
     private MultipartFile image;
 
-    private Long postID;
+    private Long postId;
 
     private Long superCommentId;
 }

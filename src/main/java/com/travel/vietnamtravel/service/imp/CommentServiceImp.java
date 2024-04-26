@@ -95,7 +95,7 @@ public class CommentServiceImp implements CommentService {
 
         Comment comment = getComment(req.getId());
         CommentSelfSdo res = copyProperties(comment, CommentSelfSdo.class);
-        res.setCreatedBy(userInfoService.shortSelf(UserInfoSelfSdi.of(req.getId())));
+        res.setCreatedBy(userInfoService.shortSelf(UserInfoSelfSdi.of(comment.getCreatedBy())));
 
         res.setCreatedAt(dateTimeToString(comment.getCreatedAt(), DATE_TIME_FORMAT));
         res.setUpdatedAt(dateTimeToString(comment.getUpdatedAt(), DATE_TIME_FORMAT));
