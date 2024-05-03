@@ -12,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,13 +44,14 @@ public class PlaceScheduleImp implements PlaceScheduleService {
     public PlaceScheduleUpdateSdo update(PlaceScheduleUpdateSdi req) {
         PlaceSchedule placeSchedule = getPlaceSchedule(req.getId());
 
-        placeService.getPlace(req.getPlaceId());
+//        placeService.getPlace(req.getPlaceId());
         placeSchedule.setPlaceId(req.getPlaceId());
-
+        placeSchedule.setScheduleBeginTime(req.getScheduleBeginTime());
+        placeSchedule.setScheduleFinishTime(req.getScheduleFinishTime());
+        placeSchedule.setTransport(req.getTransport());
         placeSchedule.setDescription(req.getDescription());
         placeSchedule.setScheduleDate(req.getScheduleDate());
         placeScheduleRepo.save(placeSchedule);
-
         return PlaceScheduleUpdateSdo.of(Boolean.TRUE);
     }
 

@@ -18,6 +18,7 @@ import java.time.LocalDate;
 
 import static com.travel.vietnamtravel.constant.Error.*;
 import static com.travel.vietnamtravel.util.DataUtil.copyProperties;
+import static com.travel.vietnamtravel.util.DataUtil.isNullObject;
 import static com.travel.vietnamtravel.util.DateTimeUtils.DATE_TIME_FORMAT;
 import static com.travel.vietnamtravel.util.DateTimeConvert.*;
 
@@ -41,9 +42,15 @@ public class UserInfoServiceImp implements UserInfoService {
         String phoneNumber = req.getPhoneNumber();
 
         userInfo.setFullName(fullName);
-        userInfo.setBirthOfDate(birthOfDate);
+        if (!isNullObject(birthOfDate)){
+            if (birthOfDate.isBefore(LocalDate.now())) {
+                throw new CustomException("ERROR: Birth day is not validate");
+            }
+            userInfo.setBirthOfDate(birthOfDate);
+        }
         userInfo.setAddress(address);
         userInfo.setPhoneNumber(phoneNumber);
+        userInfo.setDescription(req.getDescription());
         userInfoRepo.save(userInfo);
 
         User user = getUser(req.getUserId());

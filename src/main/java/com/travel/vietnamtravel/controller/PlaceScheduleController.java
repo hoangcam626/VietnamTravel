@@ -20,7 +20,7 @@ public class PlaceScheduleController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<PlaceScheduleUpdateSdo> update(@RequestBody PlaceScheduleUpdateSdi req) {
+    public ResponseEntity<PlaceScheduleUpdateSdo> update( PlaceScheduleUpdateSdi req) {
         return ResponseEntity.ok(placeScheduleService.update(req));
     }
 

@@ -37,6 +37,6 @@ public class UserInfo extends AbstractAudit{
     @Column(name = "level")
     private int level;
 
-    @Column(name = "descripton")
+    @Column(name = "description")
     private String description;
 }
